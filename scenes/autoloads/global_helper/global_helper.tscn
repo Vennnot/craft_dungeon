@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c18a0gvaxywto"]
+
+[ext_resource type="Script" path="res://scenes/autoloads/global_helper/global_helper.gd" id="1_tr5k0"]
+
+[node name="GlobalHelper" type="Node"]
+script = ExtResource("1_tr5k0")
