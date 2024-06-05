@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://donmo6355gahi"]
+
+[ext_resource type="PackedScene" uid="uid://cykrfveafif46" path="res://scenes/UI/material_inventory/material_inventory.tscn" id="1_eyyp4"]
+[ext_resource type="PackedScene" uid="uid://bnawb73tath4t" path="res://scenes/UI/equipment_inventory/equipment_inventory.tscn" id="2_0en5r"]
+[ext_resource type="PackedScene" uid="uid://bbxnnec35jwhk" path="res://scenes/UI/passive_inventory/passive_inventory.tscn" id="3_4orsx"]
+[ext_resource type="PackedScene" uid="uid://dik5uc6qd6beg" path="res://scenes/UI/stats_display/stats_display.tscn" id="4_5iflj"]
+
+[node name="Inventory" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -374.0
+offset_bottom = -436.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="MaterialInventory" parent="HBoxContainer" instance=ExtResource("1_eyyp4")]
+layout_mode = 2
+
+[node name="EquipmentInventory" parent="HBoxContainer" instance=ExtResource("2_0en5r")]
+layout_mode = 2
+
+[node name="passive_inventory" parent="HBoxContainer" instance=ExtResource("3_4orsx")]
+layout_mode = 2
+
+[node name="Stats_Display" parent="HBoxContainer" instance=ExtResource("4_5iflj")]
+layout_mode = 2

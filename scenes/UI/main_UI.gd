@@ -2,7 +2,7 @@ extends CanvasLayer
 
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("inventory"):
 		_toggle_inventory_UI()
 	elif Input.is_action_just_pressed("interact"):

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dik5uc6qd6beg"]
+
+[ext_resource type="PackedScene" uid="uid://dg73d56symt02" path="res://scenes/UI/stat_box/stat_box.tscn" id="1_34hcf"]
+
+[node name="Stats_Display" type="VBoxContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="StatBox" parent="." instance=ExtResource("1_34hcf")]
+layout_mode = 2
+
+[node name="StatBox2" parent="." instance=ExtResource("1_34hcf")]
+layout_mode = 2
+
+[node name="StatBox3" parent="." instance=ExtResource("1_34hcf")]
+layout_mode = 2
+
+[node name="StatBox4" parent="." instance=ExtResource("1_34hcf")]
+layout_mode = 2
+
+[node name="StatBox5" parent="." instance=ExtResource("1_34hcf")]
+layout_mode = 2

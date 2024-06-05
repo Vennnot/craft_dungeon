@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bdkh7qsi4qnme"]
 
-[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="1_kxqpb"]
+[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="1_lk4ev"]
 
-[node name="Inventory" type="Control"]
+[node name="HUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,7 @@ vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_kxqpb")
+texture = ExtResource("1_lk4ev")
 
 [node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -52,7 +52,7 @@ vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer2/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_kxqpb")
+texture = ExtResource("1_lk4ev")
 
 [node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -67,7 +67,7 @@ vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_kxqpb")
+texture = ExtResource("1_lk4ev")
 
 [node name="PanelContainer4" type="PanelContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -82,4 +82,4 @@ vertical_alignment = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/PanelContainer4/VBoxContainer"]
 layout_mode = 2
-texture = ExtResource("1_kxqpb")
+texture = ExtResource("1_lk4ev")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dg73d56symt02"]
+
+[ext_resource type="Texture2D" uid="uid://dbfnv3s5f8la1" path="res://assets/visuals/crafting_materials/carrot.png" id="1_vfr0q"]
+
+[node name="StatBox" type="HBoxContainer"]
+offset_right = 64.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_vfr0q")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "123"
