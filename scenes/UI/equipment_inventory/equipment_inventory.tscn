@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bnawb73tath4t"]
 
-[ext_resource type="PackedScene" uid="uid://7oemkg1x60rq" path="res://scenes/UI/item_box/item_box.tscn" id="1_7id5y"]
+[ext_resource type="PackedScene" uid="uid://7oemkg1x60rq" path="res://scenes/UI/material_box/material_box.tscn" id="1_vmvqu"]
 [ext_resource type="Texture2D" uid="uid://dbfnv3s5f8la1" path="res://assets/visuals/crafting_materials/carrot.png" id="2_kc8h6"]
 
 [node name="EquipmentInventory" type="PanelContainer"]
@@ -19,13 +19,13 @@ layout_mode = 2
 [node name="EquipmentContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="ItemBox" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
-[node name="ItemBox2" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox2" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
-[node name="ItemBox3" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox3" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
@@ -35,17 +35,17 @@ texture = ExtResource("2_kc8h6")
 [node name="ActiveItemContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="ItemBox" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ActiveItemContainer"]
 layout_mode = 2
 
-[node name="ItemBox2" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox2" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
-[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2
 
-[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_7id5y")]
+[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_vmvqu")]
 layout_mode = 2

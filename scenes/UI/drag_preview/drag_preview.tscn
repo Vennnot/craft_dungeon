@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbykxbrrbk685"]
+
+[ext_resource type="Script" path="res://scenes/UI/drag_preview/drag_preview.gd" id="1_lf8my"]
+
+[node name="DragPreview" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.427451)
+z_index = 1
+script = ExtResource("1_lf8my")
