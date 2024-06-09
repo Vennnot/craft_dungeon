@@ -1,51 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnawb73tath4t"]
+[gd_scene load_steps=4 format=3 uid="uid://bnawb73tath4t"]
 
-[ext_resource type="PackedScene" uid="uid://7oemkg1x60rq" path="res://scenes/UI/material_box/material_box.tscn" id="1_vmvqu"]
-[ext_resource type="Texture2D" uid="uid://dbfnv3s5f8la1" path="res://assets/visuals/crafting_materials/carrot.png" id="2_kc8h6"]
+[ext_resource type="Script" path="res://scenes/UI/material_box/material_box.gd" id="1_1seqn"]
+[ext_resource type="PackedScene" uid="uid://dbykxbrrbk685" path="res://scenes/UI/drag_preview/drag_preview.tscn" id="2_knyin"]
+[ext_resource type="Resource" uid="uid://cqcf4rfv7im5" path="res://resources/crafting_materials/test_resource.tres" id="3_7xbi6"]
 
-[node name="EquipmentInventory" type="PanelContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -1.0
-offset_right = -958.0
-offset_bottom = -491.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="EquimentInventory" type="HBoxContainer"]
+offset_right = 104.0
+offset_bottom = 158.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="ActiveItemContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="EquipmentContainer" type="VBoxContainer" parent="HBoxContainer"]
+[node name="MaterialBox1" type="PanelContainer" parent="ActiveItemContainer"]
+layout_mode = 2
+script = ExtResource("1_1seqn")
+drag_preview_instance = ExtResource("2_knyin")
+crafting_material = ExtResource("3_7xbi6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ActiveItemContainer"]
 layout_mode = 2
 
-[node name="ItemBox" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
+[node name="MaterialBox2" type="PanelContainer" parent="ActiveItemContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("1_1seqn")
+drag_preview_instance = ExtResource("2_knyin")
+crafting_material = ExtResource("3_7xbi6")
 
-[node name="ItemBox2" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
+[node name="MaterialBox3" type="PanelContainer" parent="ActiveItemContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("1_1seqn")
+drag_preview_instance = ExtResource("2_knyin")
+crafting_material = ExtResource("3_7xbi6")
 
-[node name="ItemBox3" parent="HBoxContainer/EquipmentContainer" instance=ExtResource("1_vmvqu")]
+[node name="MaterialBox4" type="PanelContainer" parent="ActiveItemContainer"]
 layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("2_kc8h6")
-
-[node name="ActiveItemContainer" type="VBoxContainer" parent="HBoxContainer"]
-layout_mode = 2
-
-[node name="ItemBox" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_vmvqu")]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/ActiveItemContainer"]
-layout_mode = 2
-
-[node name="ItemBox2" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_vmvqu")]
-layout_mode = 2
-
-[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer/HBoxContainer" instance=ExtResource("1_vmvqu")]
-layout_mode = 2
-
-[node name="ItemBox3" parent="HBoxContainer/ActiveItemContainer" instance=ExtResource("1_vmvqu")]
-layout_mode = 2
+script = ExtResource("1_1seqn")
+drag_preview_instance = ExtResource("2_knyin")
+crafting_material = ExtResource("3_7xbi6")

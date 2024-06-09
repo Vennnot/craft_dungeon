@@ -1,6 +1,9 @@
 extends PanelContainer
 class_name ItemBox
 
+#TODO currently doesn't accept replacing an out of inventory 
+#		item with an in inventory one
+
 @export var drag_preview_instance : PackedScene
 
 @onready var quantity_label: Label = $QuantityLabel
@@ -61,8 +64,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	data["target_node"] = self
-
 	return _check_item_box_combatibility(data)
 
 
@@ -78,6 +79,7 @@ func _check_item_box_combatibility(data:Variant) -> bool:
 	if data["origin_node"] == self:
 		return false
 	
+	data["target_node"] = self
 	var compatible : bool = data["origin_node"] is ItemBox and data["target_node"] is ItemBox
 	if not compatible:
 		return compatible

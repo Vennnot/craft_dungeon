@@ -11,9 +11,9 @@ class_name MaterialBox
 	set(value):
 		crafting_material = value
 		if texture_rect != null:
-			_update_crafting_material()
+			_update_crafting_material_texture()
 
-var quantity : int :
+var quantity : int = 0:
 	set(value):
 		if value < 0:
 			value = 0
@@ -24,11 +24,16 @@ var quantity : int :
 var original_owner : MaterialBox = null
 
 func _ready() -> void:
-	quantity = 1
-	_update_crafting_material()
+	_update_crafting_material_texture()
+	
+	#testing
+	if crafting_material:
+		quantity = 1
+	else:
+		quantity_label.visible = false
 
 
-func _update_crafting_material() -> void:
+func _update_crafting_material_texture() -> void:
 	if crafting_material != null:
 		texture_rect.texture = crafting_material.texture
 	else:
@@ -39,11 +44,13 @@ func _quantity_validator() -> void:
 		texture_rect.modulate.a = 0.5
 		if not in_inventory:
 			crafting_material = null
+			print("material set to null")
 	elif quantity > 0:
 		texture_rect.modulate.a = 1
 
 	if not in_inventory:
 		return
+	
 	quantity_label.visible = true
 	quantity_label.text = "x"+str(quantity)
 
@@ -62,7 +69,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	data["target_node"] = self
 	return _check_material_box_combatibility(data)
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
@@ -79,6 +85,8 @@ func _check_material_box_combatibility(data:Variant) -> bool:
 	if data["origin_node"] == self:
 		return false
 	
+	data["target_node"] = self
+	
 	var compatible : bool = data["origin_node"] is MaterialBox and data["target_node"] is MaterialBox
 	
 	return compatible
@@ -93,7 +101,11 @@ func _set_original_owner(data:Variant) -> void:
 
 
 func _restore_original_values(data:Variant) -> void:
+	if in_inventory:
+		return
+	
 	if original_owner != null and data["origin_node"].in_inventory and not in_inventory:
+		print("restored original owner")
 		original_owner.quantity += 1
 		original_owner = null
 	_set_original_owner(data)
