@@ -9,4 +9,4 @@ script = ExtResource("1_ks1mo")
 id = &""
 name = ""
 result_item = ExtResource("2_x6oly")
-ingredients_list = Array[Resource]([ExtResource("1_adudl")])
+ingredients_list = Array[Resource]([ExtResource("1_adudl"), null, null, null, null])

@@ -58,6 +58,9 @@ func _update_resource():
 			else:
 				item = null
 	
+	if item == null and crafting_material == null and quantity != 0:
+		quantity = 0
+	
 	if is_crafting_slot:
 		contents_changed.emit(_get_resource(),id)
 
@@ -113,17 +116,12 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		data["origin_node"].quantity -= 1
 	
 	#slot has material now
-	if data["origin_node"].crafting_material != null:
-		if item != null:
-			item = null
-			quantity = 0
+	if data["origin_resource"] is CraftingMaterial:
+		item = null
 		crafting_material = data["origin_resource"]
-	
 	# slot has item now
-	else:
-		if crafting_material != null:
-			crafting_material = null
-			quantity = 0
+	elif data["origin_resource"] is Item:
+		crafting_material = null
 		item = origin_item
 	
 	quantity += 1

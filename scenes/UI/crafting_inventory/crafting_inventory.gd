@@ -13,8 +13,7 @@ var ingredients : Array[Resource] = [null,null,null,null,null]
 var result : Item :
 	set(value):
 		result = value
-		result_box.item = result
-		result_box.quantity += 1
+		_generate_preview()
 
 func _ready() -> void:
 	_initialize_children()
@@ -42,3 +41,12 @@ func _initialize_children() -> void:
 func _on_contents_changed(ingredient:Resource, id:int) -> void:
 	ingredients[id] = ingredient
 	result = CraftingManager.get_resource(ingredients)
+	print(result)
+
+
+func _generate_preview() -> void:
+	if result == null:
+		return
+	
+	result_box.texture_rect.texture = result.texture
+	result_box.texture_rect.modulate.a = 0.5
