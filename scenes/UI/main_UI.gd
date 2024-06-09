@@ -57,6 +57,7 @@ func _toggle_crafting_inventory_UI() -> void:
 		crafting_inventory.visible = false
 		_toggle_inventory_UI()
 		interactable_menu_open = false
+		crafting_inventory.on_menu_close()
 	else:
 		crafting_inventory.visible = true
 		_toggle_inventory_UI()

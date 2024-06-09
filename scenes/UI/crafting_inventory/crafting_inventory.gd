@@ -18,7 +18,5 @@ func _on_reset_pressed() -> void:
 		ingredient.restore_original_values()
 		ingredient.reset()
 
-func _on_menu_close() -> void:
+func on_menu_close() -> void:
 	_on_reset_pressed()
-	# send result resource back to inventory but how?
-	# add method in inventory for items

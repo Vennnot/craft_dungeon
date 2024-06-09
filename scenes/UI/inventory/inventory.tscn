@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://donmo6355gahi"]
+[gd_scene load_steps=6 format=3 uid="uid://donmo6355gahi"]
 
+[ext_resource type="Script" path="res://scenes/UI/inventory/inventory.gd" id="1_1xfhu"]
 [ext_resource type="PackedScene" uid="uid://cykrfveafif46" path="res://scenes/UI/material_inventory/material_inventory.tscn" id="1_eyyp4"]
 [ext_resource type="PackedScene" uid="uid://bnawb73tath4t" path="res://scenes/UI/equipment_inventory/equipment_inventory.tscn" id="2_0en5r"]
 [ext_resource type="PackedScene" uid="uid://bbxnnec35jwhk" path="res://scenes/UI/item_inventory/item_inventory.tscn" id="3_4orsx"]
@@ -15,6 +16,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_1xfhu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -27,7 +29,8 @@ layout_mode = 2
 [node name="EquipmentInventory" parent="HBoxContainer" instance=ExtResource("2_0en5r")]
 layout_mode = 2
 
-[node name="PassiveInventory" parent="HBoxContainer" instance=ExtResource("3_4orsx")]
+[node name="ItemInventory" parent="HBoxContainer" instance=ExtResource("3_4orsx")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="StatsDisplay" parent="HBoxContainer" instance=ExtResource("4_5iflj")]

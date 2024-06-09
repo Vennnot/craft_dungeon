@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalHelper="*res://scenes/autoloads/global_helper/global_helper.tscn"
+EventBus="*res://scenes/autoloads/event_bus/event_bus.tscn"
 
 [file_customization]
 

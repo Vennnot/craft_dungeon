@@ -92,7 +92,6 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	#restores values if replaced outside from within or outside by outside
 	if not (data["origin_node"].in_inventory and data["target_node"].in_inventory):
 		restore_original_values()
-		print("restored values")
 	_set_original_owner(data)
 	
 	var origin_item : Item = data["origin_resource"].duplicate()
@@ -123,8 +122,11 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 func restore_original_values() -> void:
 	if original_owner != null and item != null:
-		original_owner.item = item
-		original_owner.quantity += 1
+		if original_owner.item != null:
+			EventBus.emit_orphan_item(item)
+		else:
+			original_owner.item = item
+			original_owner.quantity += 1
 		original_owner = null
 
 
