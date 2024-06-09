@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GlobalHelper="*res://scenes/autoloads/global_helper/global_helper.tscn"
 EventBus="*res://scenes/autoloads/event_bus/event_bus.tscn"
+CraftingManager="*res://scenes/autoloads/crafting_manager/crafting_manager.tscn"
 
 [file_customization]
 

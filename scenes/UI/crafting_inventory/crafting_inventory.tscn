@@ -14,28 +14,38 @@ layout_mode = 2
 [node name="CraftingArea" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CraftingArea"]
-layout_mode = 2
-
-[node name="IngredientBox1" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+[node name="IngredientsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/CraftingArea"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="IngredientBox2" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+[node name="IngredientBox1" parent="HBoxContainer/CraftingArea/IngredientsHBoxContainer" instance=ExtResource("1_f4thu")]
 unique_name_in_owner = true
 layout_mode = 2
+is_crafting_slot = true
 
-[node name="IngredientBox3" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+[node name="IngredientBox2" parent="HBoxContainer/CraftingArea/IngredientsHBoxContainer" instance=ExtResource("1_f4thu")]
 unique_name_in_owner = true
 layout_mode = 2
+is_crafting_slot = true
+id = 1
 
-[node name="IngredientBox4" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+[node name="IngredientBox3" parent="HBoxContainer/CraftingArea/IngredientsHBoxContainer" instance=ExtResource("1_f4thu")]
 unique_name_in_owner = true
 layout_mode = 2
+is_crafting_slot = true
+id = 2
 
-[node name="IngredientBox5" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+[node name="IngredientBox4" parent="HBoxContainer/CraftingArea/IngredientsHBoxContainer" instance=ExtResource("1_f4thu")]
 unique_name_in_owner = true
 layout_mode = 2
+is_crafting_slot = true
+id = 3
+
+[node name="IngredientBox5" parent="HBoxContainer/CraftingArea/IngredientsHBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+is_crafting_slot = true
+id = 4
 
 [node name="ResultBox" parent="HBoxContainer/CraftingArea" instance=ExtResource("1_f4thu")]
 unique_name_in_owner = true

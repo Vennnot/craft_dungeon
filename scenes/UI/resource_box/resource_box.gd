@@ -1,6 +1,8 @@
 extends PanelContainer
 class_name ResourceBox
 
+signal contents_changed(contents, id)
+
 @export var drag_preview_instance : PackedScene
 
 @onready var quantity_label: Label = $QuantityLabel
@@ -20,6 +22,10 @@ class_name ResourceBox
 @export var is_passive_item_slot : bool = false
 @export var is_active_item_slot : bool = false
 
+@export_category("Misc")
+@export var is_crafting_slot : bool = false
+@export var id : int = 0
+
 var quantity : int :
 	set(value):
 		if value < 0:
@@ -32,11 +38,10 @@ var quantity : int :
 		_update_resource()
 		_update_display()
 
-
 var original_owner : ResourceBox = null
 
 func _ready() -> void:
-	quantity = 2
+	quantity = 1
 
 
 func _update_resource():
@@ -52,6 +57,9 @@ func _update_resource():
 				crafting_material = null
 			else:
 				item = null
+	
+	if is_crafting_slot:
+		contents_changed.emit(_get_resource(),id)
 
 
 func _update_display() -> void:
@@ -94,7 +102,8 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		restore_original_values()
 	_set_original_owner(data)
 	
-	var origin_item : Item = data["origin_resource"].duplicate()
+	
+	var origin_item : Resource = data["origin_resource"].duplicate()
 	
 	#swaps items when in inventory
 	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
@@ -121,11 +130,12 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 
 
 func restore_original_values() -> void:
-	if original_owner != null and item != null:
+	if original_owner != null and (item != null or crafting_material != null):
 		if original_owner.item != null:
 			EventBus.emit_orphan_item(item)
 		else:
 			original_owner.item = item
+			original_owner.crafting_material = crafting_material
 			original_owner.quantity += 1
 		original_owner = null
 
@@ -138,7 +148,7 @@ func reset() -> void:
 func _set_original_owner(data:Variant) -> void:
 	if data["origin_node"].in_inventory:
 		original_owner = data["origin_node"]
-	elif not data["origin_node"].in_inventory:
+	else:
 		original_owner = data["origin_node"].original_owner
 		data["origin_node"].original_owner = null
 
@@ -213,5 +223,5 @@ func _get_resource() -> Resource:
 	elif crafting_material != null:
 		return crafting_material
 	else:
-		print("Drag data registered null resource")
+		print("Get Resource returned null")
 		return null

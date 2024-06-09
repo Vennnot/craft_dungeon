@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd8isc88rd8ec"]
+
+[ext_resource type="Script" path="res://scenes/autoloads/crafting_manager/crafting_manager.gd" id="1_kpuc8"]
+
+[node name="CraftingManager" type="Node"]
+script = ExtResource("1_kpuc8")

@@ -3,6 +3,5 @@ class_name Recipe
 
 @export var id : StringName
 @export var name : String
-@export var texture : Texture
-@export var crafting_materials_list : Array[CraftingMaterial]
-@export var item : Item
+@export var result_item : Item
+@export var ingredients_list : Array[Resource]
