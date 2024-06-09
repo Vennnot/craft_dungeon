@@ -20,6 +20,5 @@ func _on_reset_pressed() -> void:
 
 func _on_menu_close() -> void:
 	_on_reset_pressed()
-	pass
 	# send result resource back to inventory but how?
 	# add method in inventory for items

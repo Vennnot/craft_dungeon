@@ -75,7 +75,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	
 	if item != null or (crafting_material != null and quantity > 0):
 		data["origin_node"] = self
-		data["origin_is_crafting_material"] = crafting_material != null
 		data["origin_resource"]= _get_resource()
 		
 		var drag_preview := drag_preview_instance.instantiate()
@@ -90,25 +89,29 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	#restores values if replaced outside inventory
-	restore_original_values(data)
+	#restores values if replaced outside from within or outside by outside
+	if not (data["origin_node"].in_inventory and data["target_node"].in_inventory):
+		restore_original_values()
+		print("restored values")
+	_set_original_owner(data)
+	
+	var origin_item : Item = data["origin_resource"].duplicate()
 	
 	#swaps items when in inventory
-	
-	var origin_item : Item = data["origin_resource"]
-	
-	if data["origin_node"].item != null and data["target_node"].item != null:
+	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
 		data["origin_node"].item = item
 		data["origin_node"].quantity += 0
 	else:
 		data["origin_node"].quantity -= 1
 	
-	if data["origin_is_crafting_material"]:
+	#slot has material now
+	if data["origin_node"].crafting_material != null:
 		if item != null:
 			item = null
 			quantity = 0
 		crafting_material = data["origin_resource"]
 	
+	# slot has item now
 	else:
 		if crafting_material != null:
 			crafting_material = null
@@ -118,19 +121,11 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	quantity += 1
 
 
-func restore_original_values(data:Variant={}) -> void:
-	if in_inventory:
-		return
-	
-	if original_owner != null:
-		if item != null:
-			original_owner.item = item
-		
+func restore_original_values() -> void:
+	if original_owner != null and item != null:
+		original_owner.item = item
 		original_owner.quantity += 1
 		original_owner = null
-	
-	if data:
-		_set_original_owner(data)
 
 
 func reset() -> void:
@@ -196,7 +191,8 @@ func _check_combatibility(data:Variant) -> bool:
 		return false
 	if data["target_node"].is_active_item_slot:
 		return not data["origin_resource"].is_passive
-
+	if data["origin_node"].is_active_item_slot and item != null:
+		return not item.is_passive
 	return true
 
 
