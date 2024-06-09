@@ -8,6 +8,7 @@ class_name ResourceBox
 
 
 @export var in_inventory : bool = false
+@export var is_result : bool = false
 
 @export_category("Material")
 @export var crafting_material : CraftingMaterial
@@ -16,8 +17,8 @@ class_name ResourceBox
 @export_category("Item")
 @export var item : Item
 @export var is_exclusively_item_slot : bool = false
-@export var is_passive_item : bool = false
-@export var is_active_item : bool = false
+@export var is_passive_item_slot : bool = false
+@export var is_active_item_slot : bool = false
 
 var quantity : int :
 	set(value):
@@ -89,28 +90,35 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
-	_restore_original_values(data)
+	#restores values if replaced outside inventory
+	restore_original_values(data)
+	
+	#swaps items when in inventory
+	
+	var origin_item : Item = data["origin_resource"]
+	
+	if data["origin_node"].item != null and data["target_node"].item != null:
+		data["origin_node"].item = item
+		data["origin_node"].quantity += 0
+	else:
+		data["origin_node"].quantity -= 1
 	
 	if data["origin_is_crafting_material"]:
 		if item != null:
 			item = null
 			quantity = 0
-		
 		crafting_material = data["origin_resource"]
+	
 	else:
 		if crafting_material != null:
 			crafting_material = null
 			quantity = 0
-		
-		item = data["origin_resource"]
+		item = origin_item
 	
 	quantity += 1
-	print(data["origin_node"].quantity)
-	data["origin_node"].quantity -= 1
-	print(data["origin_node"].quantity)
 
 
-func _restore_original_values(data:Variant) -> void:
+func restore_original_values(data:Variant={}) -> void:
 	if in_inventory:
 		return
 	
@@ -121,7 +129,13 @@ func _restore_original_values(data:Variant) -> void:
 		original_owner.quantity += 1
 		original_owner = null
 	
-	_set_original_owner(data)
+	if data:
+		_set_original_owner(data)
+
+
+func reset() -> void:
+	quantity = 0
+	original_owner = null
 
 
 func _set_original_owner(data:Variant) -> void:
@@ -134,6 +148,9 @@ func _set_original_owner(data:Variant) -> void:
 
 func _check_combatibility(data:Variant) -> bool:
 	if not data:
+		return false
+	
+	if is_result:
 		return false
 	
 	if data["origin_node"] == self:
@@ -149,10 +166,10 @@ func _check_combatibility(data:Variant) -> bool:
 		if data["target_node"].is_exclusively_material_slot:
 			return data["origin_node"].is_exclusively_material_slot == data["target_node"].is_exclusively_material_slot
 		elif data["target_node"].is_exclusively_item_slot:
-			if data["target_node"].is_passive_item:
-				return data["origin_node"].is_passive_item == data["target_node"].is_passive_item
-			elif data["target_node"].is_active_item:
-				return data["origin_node"].is_active_item == data["target_node"].is_active_item
+			if data["target_node"].is_passive_item_slot:
+				return data["origin_node"].is_passive_item_slot == data["target_node"].is_passive_item_slot
+			elif data["target_node"].is_active_item_slot:
+				return data["origin_node"].is_active_item_slot == data["target_node"].is_active_item_slot
 			return data["origin_node"].is_exclusively_item_slot == data["target_node"].is_exclusively_item_slot
 		return true
 	
@@ -163,9 +180,9 @@ func _check_combatibility(data:Variant) -> bool:
 		elif data["target_node"].is_exclusively_item_slot:
 			if data["origin_node"].item == null:
 				return false
-			if data["target_node"].is_passive_item:
+			if data["target_node"].is_passive_item_slot:
 				return data["origin_node"].item.is_passive
-			elif data["target_node"].is_active_item:
+			elif data["target_node"].is_active_item_slot:
 				return not data["origin_node"].item.is_passive
 		return true
 
@@ -175,10 +192,10 @@ func _check_combatibility(data:Variant) -> bool:
 		return false
 	if data["origin_node"].is_exclusively_item_slot != data["target_node"].is_exclusively_item_slot:
 		return false
-	if data["origin_node"].is_passive_item != data["target_node"].is_passive_item:
+	if data["origin_node"].is_passive_item_slot != data["target_node"].is_passive_item_slot:
 		return false
-	if data["origin_node"].is_active_item != data["target_node"].is_active_item:
-		return false
+	if data["target_node"].is_active_item_slot:
+		return not data["origin_resource"].is_passive
 
 	return true
 

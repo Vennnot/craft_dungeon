@@ -1,9 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://sv25h34iocl7"]
+[gd_scene load_steps=4 format=3 uid="uid://sv25h34iocl7"]
 
 [ext_resource type="Script" path="res://scenes/UI/main_UI.gd" id="1_c60ak"]
-[ext_resource type="PackedScene" uid="uid://bdkh7qsi4qnme" path="res://scenes/UI/HUD/HUD.tscn" id="2_14oil"]
+[ext_resource type="PackedScene" uid="uid://cpipmc05vewf7" path="res://scenes/UI/crafting_inventory/crafting_inventory.tscn" id="3_ke75j"]
+[ext_resource type="PackedScene" uid="uid://donmo6355gahi" path="res://scenes/UI/inventory/inventory.tscn" id="3_nxqy2"]
 
-[node name="Main_UI" type="CanvasLayer"]
+[node name="Main_UI" type="CanvasLayer" groups=["main_ui"]]
 script = ExtResource("1_c60ak")
 
-[node name="HUD" parent="." instance=ExtResource("2_14oil")]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -195.0
+offset_right = 344.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CraftingInventory" parent="VBoxContainer" instance=ExtResource("3_ke75j")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Inventory" parent="VBoxContainer" instance=ExtResource("3_nxqy2")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2

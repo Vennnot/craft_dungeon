@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfmdxmiwg82fk"]
+
+[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="1_n7j07"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ltr3e"]
+radius = 81.0
+
+[node name="CraftingTable" type="Node2D" groups=["crafting_tables", "interactable_menus"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 0.32549, 1)
+texture = ExtResource("1_n7j07")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ltr3e")

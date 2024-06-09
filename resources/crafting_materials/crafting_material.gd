@@ -1,6 +1,6 @@
 extends Resource
 class_name CraftingMaterial
 
-@export var id : int
+@export var id : StringName
 @export var name : String
 @export var texture : Texture

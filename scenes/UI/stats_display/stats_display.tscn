@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dg73d56symt02" path="res://scenes/UI/stat_box/stat_box.tscn" id="1_34hcf"]
 
-[node name="Stats_Display" type="VBoxContainer"]
+[node name="StatsDisplay" type="VBoxContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 

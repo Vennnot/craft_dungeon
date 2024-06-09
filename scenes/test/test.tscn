@@ -1,10 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://c3goywx2ex3q"]
+[gd_scene load_steps=5 format=3 uid="uid://c3goywx2ex3q"]
 
+[ext_resource type="PackedScene" uid="uid://eejmgmli0ap6" path="res://scenes/managers/game_manager.tscn" id="1_dkhun"]
 [ext_resource type="PackedScene" uid="uid://deoakpedccwm" path="res://scenes/player/player.tscn" id="1_hvcfw"]
 [ext_resource type="PackedScene" uid="uid://sv25h34iocl7" path="res://scenes/UI/main_UI.tscn" id="2_4a8o8"]
+[ext_resource type="PackedScene" uid="uid://bfmdxmiwg82fk" path="res://scenes/interactables/crafting_table/crafting_table.tscn" id="3_ft462"]
 
 [node name="Test" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_hvcfw")]
+[node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
 
-[node name="Main_UI" parent="." instance=ExtResource("2_4a8o8")]
+[node name="Player" parent="GameManager" instance=ExtResource("1_hvcfw")]
+position = Vector2(315, 228)
+
+[node name="Main_UI" parent="GameManager" instance=ExtResource("2_4a8o8")]
+
+[node name="CraftingTable" parent="GameManager" instance=ExtResource("3_ft462")]
+position = Vector2(572, 229)

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CraftingMaterial" load_steps=3 format=3 uid="uid://cqcf4rfv7im5"]
+
+[ext_resource type="Script" path="res://resources/crafting_materials/crafting_material.gd" id="1_r1mky"]
+[ext_resource type="Texture2D" uid="uid://dbfnv3s5f8la1" path="res://assets/visuals/crafting_materials/carrot.png" id="2_w7xgu"]
+
+[resource]
+script = ExtResource("1_r1mky")
+id = &"material"
+name = ""
+texture = ExtResource("2_w7xgu")

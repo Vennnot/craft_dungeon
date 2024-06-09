@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpipmc05vewf7"]
+
+[ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_f4thu"]
+[ext_resource type="Script" path="res://scenes/UI/crafting_inventory/crafting_inventory.gd" id="1_iw5q6"]
+
+[node name="CraftingInventory" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_iw5q6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="CraftingArea" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CraftingArea"]
+layout_mode = 2
+
+[node name="IngredientBox1" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="IngredientBox2" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="IngredientBox3" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="IngredientBox4" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="IngredientBox5" parent="HBoxContainer/CraftingArea/HBoxContainer" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ResultBox" parent="HBoxContainer/CraftingArea" instance=ExtResource("1_f4thu")]
+unique_name_in_owner = true
+layout_mode = 2
+is_result = true
+
+[node name="CraftButton" type="Button" parent="HBoxContainer/CraftingArea"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "craft"
+
+[node name="ResetButton" type="Button" parent="HBoxContainer/CraftingArea"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "reset"
+
+[node name="Filters" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Filters"]
+layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/Filters/VBoxContainer"]
+layout_mode = 2
+text = "show craftable"
+
+[node name="CheckBox2" type="CheckBox" parent="HBoxContainer/Filters/VBoxContainer"]
+layout_mode = 2
+text = "show uncraftable"

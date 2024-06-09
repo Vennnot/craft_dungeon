@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnawb73tath4t"]
+[gd_scene load_steps=3 format=3 uid="uid://bnawb73tath4t"]
 
-[ext_resource type="Script" path="res://scenes/UI/material_box/material_box.gd" id="1_1seqn"]
-[ext_resource type="PackedScene" uid="uid://dbykxbrrbk685" path="res://scenes/UI/drag_preview/drag_preview.tscn" id="2_knyin"]
-[ext_resource type="Resource" uid="uid://cqcf4rfv7im5" path="res://resources/crafting_materials/test_resource.tres" id="3_7xbi6"]
+[ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_8ue2y"]
+[ext_resource type="Resource" uid="uid://cbw7man7kbbi6" path="res://resources/items/active_item.tres" id="2_p78jc"]
 
 [node name="EquimentInventory" type="HBoxContainer"]
 offset_right = 104.0
@@ -13,29 +12,32 @@ size_flags_vertical = 4
 [node name="ActiveItemContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="MaterialBox1" type="PanelContainer" parent="ActiveItemContainer"]
+[node name="ResourceBox1" parent="ActiveItemContainer" instance=ExtResource("1_8ue2y")]
 layout_mode = 2
-script = ExtResource("1_1seqn")
-drag_preview_instance = ExtResource("2_knyin")
-crafting_material = ExtResource("3_7xbi6")
+in_inventory = true
+item = ExtResource("2_p78jc")
+is_exclusively_item_slot = true
+is_active_item_slot = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ActiveItemContainer"]
 layout_mode = 2
 
-[node name="MaterialBox2" type="PanelContainer" parent="ActiveItemContainer/HBoxContainer"]
+[node name="ResourceBox2" parent="ActiveItemContainer/HBoxContainer" instance=ExtResource("1_8ue2y")]
 layout_mode = 2
-script = ExtResource("1_1seqn")
-drag_preview_instance = ExtResource("2_knyin")
-crafting_material = ExtResource("3_7xbi6")
+in_inventory = true
+is_exclusively_item_slot = true
+is_active_item_slot = true
 
-[node name="MaterialBox3" type="PanelContainer" parent="ActiveItemContainer/HBoxContainer"]
+[node name="ResourceBox3" parent="ActiveItemContainer/HBoxContainer" instance=ExtResource("1_8ue2y")]
 layout_mode = 2
-script = ExtResource("1_1seqn")
-drag_preview_instance = ExtResource("2_knyin")
-crafting_material = ExtResource("3_7xbi6")
+in_inventory = true
+item = ExtResource("2_p78jc")
+is_exclusively_item_slot = true
+is_active_item_slot = true
 
-[node name="MaterialBox4" type="PanelContainer" parent="ActiveItemContainer"]
+[node name="ResourceBox4" parent="ActiveItemContainer" instance=ExtResource("1_8ue2y")]
 layout_mode = 2
-script = ExtResource("1_1seqn")
-drag_preview_instance = ExtResource("2_knyin")
-crafting_material = ExtResource("3_7xbi6")
+in_inventory = true
+item = ExtResource("2_p78jc")
+is_exclusively_item_slot = true
+is_active_item_slot = true
