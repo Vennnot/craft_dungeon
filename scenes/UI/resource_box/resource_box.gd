@@ -25,14 +25,17 @@ var quantity : int :
 			value = 0
 		if item == null and crafting_material == null:
 			value = 0
+		if item != null and value > 1:
+			value = 1
 		quantity = value
 		_update_resource()
 		_update_display()
 
+
 var original_owner : ResourceBox = null
 
 func _ready() -> void:
-	quantity = 1
+	quantity = 2
 
 
 func _update_resource():
@@ -89,16 +92,22 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	_restore_original_values(data)
 	
 	if data["origin_is_crafting_material"]:
-		item = null
-		quantity = 0
+		if item != null:
+			item = null
+			quantity = 0
+		
 		crafting_material = data["origin_resource"]
 	else:
-		crafting_material = null
-		quantity = 0
+		if crafting_material != null:
+			crafting_material = null
+			quantity = 0
+		
 		item = data["origin_resource"]
 	
 	quantity += 1
+	print(data["origin_node"].quantity)
 	data["origin_node"].quantity -= 1
+	print(data["origin_node"].quantity)
 
 
 func _restore_original_values(data:Variant) -> void:
@@ -108,6 +117,7 @@ func _restore_original_values(data:Variant) -> void:
 	if original_owner != null:
 		if item != null:
 			original_owner.item = item
+		
 		original_owner.quantity += 1
 		original_owner = null
 	
@@ -147,7 +157,7 @@ func _check_combatibility(data:Variant) -> bool:
 		return true
 	
 	#from outside to inventory
-	if data["target_node"].in_inventory:
+	if not data["origin_node"].in_inventory and data["target_node"].in_inventory:
 		if data["target_node"].is_exclusively_material_slot:
 			return data["origin_node"].crafting_material != null
 		elif data["target_node"].is_exclusively_item_slot:
@@ -161,7 +171,7 @@ func _check_combatibility(data:Variant) -> bool:
 
 	
 	#from inventory to inventory
-	if data["origin_node"].is_exclusively_material_slot != data["target_node"].is_exclusively_material_slot:
+	if data["origin_node"].is_exclusively_material_slot or data["target_node"].is_exclusively_material_slot:
 		return false
 	if data["origin_node"].is_exclusively_item_slot != data["target_node"].is_exclusively_item_slot:
 		return false
