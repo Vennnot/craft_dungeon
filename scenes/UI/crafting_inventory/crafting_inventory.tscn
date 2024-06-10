@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpipmc05vewf7"]
+[gd_scene load_steps=4 format=3 uid="uid://cpipmc05vewf7"]
 
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_f4thu"]
 [ext_resource type="Script" path="res://scenes/UI/crafting_inventory/crafting_inventory.gd" id="1_iw5q6"]
+[ext_resource type="PackedScene" uid="uid://cysnld44x0wbm" path="res://scenes/UI/recipe_display/recipe_display.tscn" id="3_k6g8d"]
 
 [node name="CraftingInventory" type="PanelContainer"]
 offset_right = 40.0
@@ -62,16 +63,32 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "reset"
 
-[node name="Filters" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Recipes" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/Filters"]
+[node name="Filters" type="HBoxContainer" parent="HBoxContainer/Recipes"]
 layout_mode = 2
 
-[node name="CheckBox" type="CheckBox" parent="HBoxContainer/Filters/VBoxContainer"]
+[node name="SearchBar" type="LineEdit" parent="HBoxContainer/Recipes/Filters"]
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-text = "show craftable"
+placeholder_text = "search"
 
-[node name="CheckBox2" type="CheckBox" parent="HBoxContainer/Filters/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/Recipes/Filters"]
 layout_mode = 2
-text = "show uncraftable"
+text = "craft"
+
+[node name="CheckBox2" type="CheckBox" parent="HBoxContainer/Recipes/Filters"]
+layout_mode = 2
+text = "non-craft"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/Recipes"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RecipeList" type="VBoxContainer" parent="HBoxContainer/Recipes/ScrollContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RecipeDisplay" parent="HBoxContainer/Recipes/ScrollContainer/RecipeList" instance=ExtResource("3_k6g8d")]
+layout_mode = 2

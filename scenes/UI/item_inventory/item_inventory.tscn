@@ -44,41 +44,34 @@ is_exclusively_item_slot = true
 [node name="ResourceBox6" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox7" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox8" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox9" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox10" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox11" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox12" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
