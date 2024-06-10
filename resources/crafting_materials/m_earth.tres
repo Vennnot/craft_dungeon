@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CraftingMaterial" load_steps=3 format=3 uid="uid://b753qjvho6rkd"]
+
+[ext_resource type="Script" path="res://resources/crafting_materials/crafting_material.gd" id="1_fq5tp"]
+[ext_resource type="Texture2D" uid="uid://b8xwjj6dpv5u2" path="res://assets/visuals/crafting_materials/[32]-Iconset-Starter_Pack_43.png" id="2_sklig"]
+
+[resource]
+script = ExtResource("1_fq5tp")
+id = &"earth"
+name = ""
+texture = ExtResource("2_sklig")

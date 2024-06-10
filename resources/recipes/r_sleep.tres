@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=6 format=3 uid="uid://bniimiajc3nn"]
+
+[ext_resource type="Resource" uid="uid://2tuurpun8bb2" path="res://resources/crafting_materials/m_fire.tres" id="1_b5tfp"]
+[ext_resource type="Resource" uid="uid://cqcf4rfv7im5" path="res://resources/crafting_materials/m_carrot.tres" id="1_nsxnt"]
+[ext_resource type="Resource" uid="uid://b753qjvho6rkd" path="res://resources/crafting_materials/m_earth.tres" id="2_2ouxv"]
+[ext_resource type="Resource" uid="uid://dwd60f4drqolx" path="res://resources/items/i_a_sleep.tres" id="2_v43xr"]
+[ext_resource type="Script" path="res://resources/recipes/recipe.gd" id="3_vbxyq"]
+
+[resource]
+script = ExtResource("3_vbxyq")
+id = &"sleep"
+name = ""
+result_item = ExtResource("2_v43xr")
+ingredients_list = Array[Resource]([ExtResource("1_b5tfp"), ExtResource("2_2ouxv"), ExtResource("1_nsxnt"), null, null])

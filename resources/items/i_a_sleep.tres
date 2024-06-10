@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://dwd60f4drqolx"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_kygqv"]
+[ext_resource type="Texture2D" uid="uid://dvphvh2twqhyh" path="res://assets/visuals/crafting_materials/[32]-Iconset-Starter_Pack_29.png" id="2_tukhy"]
+
+[resource]
+script = ExtResource("1_kygqv")
+id = &"sleep"
+name = ""
+is_passive = false
+texture = ExtResource("2_tukhy")

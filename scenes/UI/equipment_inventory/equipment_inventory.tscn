@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_8ue2y"]
 [ext_resource type="Script" path="res://scenes/UI/equipment_inventory/equipment_inventory.gd" id="1_fgpyp"]
-[ext_resource type="Resource" uid="uid://cbw7man7kbbi6" path="res://resources/items/active_item.tres" id="2_p78jc"]
+[ext_resource type="Resource" uid="uid://cbw7man7kbbi6" path="res://resources/items/i_a_red_potion.tres" id="2_p78jc"]
 
 [node name="EquimentInventory" type="HBoxContainer"]
 offset_right = 104.0
