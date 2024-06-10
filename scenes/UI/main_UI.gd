@@ -27,6 +27,9 @@ var inventory_menu_open : bool = false :
 		inventory_menu_open = value
 		_set_any_menu_open()
 
+func _ready() -> void:
+	pass
+
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("inventory"):
 		if not interactable_menu_open:

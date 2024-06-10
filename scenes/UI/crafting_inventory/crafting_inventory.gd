@@ -17,7 +17,9 @@ var result : Item :
 
 func _ready() -> void:
 	_initialize_children()
+	craft_button.disabled=true
 	reset_button.pressed.connect(_on_reset_pressed)
+	craft_button.pressed.connect(_on_craft_pressed)
 
 
 func _on_reset_pressed() -> void:
@@ -26,6 +28,15 @@ func _on_reset_pressed() -> void:
 		ingredient_box.reset()
 	
 	result_box.restore_original_values()
+	result_box.reset()
+
+
+func _on_craft_pressed() -> void:
+	EventBus.emit_orphan_item(result)
+	
+	for ingredient_box in ingredient_boxes:
+		ingredient_box.reset()
+	
 	result_box.reset()
 
 
@@ -41,12 +52,13 @@ func _initialize_children() -> void:
 func _on_contents_changed(ingredient:Resource, id:int) -> void:
 	ingredients[id] = ingredient
 	result = CraftingManager.get_resource(ingredients)
-	print(result)
 
 
 func _generate_preview() -> void:
 	if result == null:
+		craft_button.disabled=true
 		return
 	
+	craft_button.disabled = false
 	result_box.texture_rect.texture = result.texture
 	result_box.texture_rect.modulate.a = 0.5
