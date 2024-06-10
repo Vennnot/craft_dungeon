@@ -8,7 +8,7 @@
 [node name="ItemInventory" type="GridContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
-columns = 3
+columns = 4
 script = ExtResource("1_ljyln")
 
 [node name="ResourceBox1" parent="." instance=ExtResource("1_tkips")]
@@ -60,6 +60,24 @@ item = ExtResource("2_vgryn")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox9" parent="." instance=ExtResource("1_tkips")]
+layout_mode = 2
+in_inventory = true
+item = ExtResource("2_vgryn")
+is_exclusively_item_slot = true
+
+[node name="ResourceBox10" parent="." instance=ExtResource("1_tkips")]
+layout_mode = 2
+in_inventory = true
+item = ExtResource("2_vgryn")
+is_exclusively_item_slot = true
+
+[node name="ResourceBox11" parent="." instance=ExtResource("1_tkips")]
+layout_mode = 2
+in_inventory = true
+item = ExtResource("2_vgryn")
+is_exclusively_item_slot = true
+
+[node name="ResourceBox12" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
 item = ExtResource("2_vgryn")

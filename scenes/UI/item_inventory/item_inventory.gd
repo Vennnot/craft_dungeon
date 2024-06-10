@@ -1,13 +1,23 @@
 extends GridContainer
+class_name ItemInventory
 
-var items_array : Array[ResourceBox]
+signal inventory_item_added(item:Item)
+signal inventory_item_removed(item:Item)
 
 func _ready() -> void:
 	for resource_box in get_children():
-		items_array.append(resource_box)
+		resource_box.added_item.connect(_on_item_added)
+		resource_box.removed_item.connect(_on_item_removed)
 
 func add_item(item:Item) -> void:
 	for resource_box in get_children():
 		if resource_box.item == null:
 			resource_box.item = item
 			resource_box.quantity += 1
+			return
+
+func _on_item_added(item:Item) -> void:
+	inventory_item_added.emit(item)
+
+func _on_item_removed(item:Item) -> void:
+	inventory_item_removed.emit(item)

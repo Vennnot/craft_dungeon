@@ -2,6 +2,10 @@ extends PanelContainer
 class_name ResourceBox
 
 signal contents_changed(contents, id)
+signal removed_item(item)
+signal added_item(item)
+signal removed_crafting_material(crafting_material)
+signal added_crafting_material(crafting_material)
 
 @export var drag_preview_instance : PackedScene
 
@@ -13,11 +17,25 @@ signal contents_changed(contents, id)
 @export var is_result : bool = false
 
 @export_category("Material")
-@export var crafting_material : CraftingMaterial
+@export var crafting_material : CraftingMaterial:
+	set(value):
+		if crafting_material != null:
+			removed_crafting_material.emit(crafting_material)
+		if value != null:
+			added_crafting_material.emit(value)
+		crafting_material = value
+
 @export var is_exclusively_material_slot : bool = false
 
 @export_category("Item")
-@export var item : Item
+@export var item : Item :
+	set(value):
+		if item != null:
+			removed_item.emit(item)
+		if value != null:
+			added_item.emit(value)
+		item = value
+
 @export var is_exclusively_item_slot : bool = false
 @export var is_passive_item_slot : bool = false
 @export var is_active_item_slot : bool = false
@@ -61,7 +79,7 @@ func _update_resource():
 	if item == null and crafting_material == null and quantity != 0:
 		quantity = 0
 	
-	if is_crafting_slot:
+	if is_crafting_slot or (in_inventory and is_exclusively_item_slot):
 		contents_changed.emit(_get_resource(),id)
 
 
@@ -110,18 +128,16 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	
 	#swaps items when in inventory
 	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
-		data["origin_node"].item = item
+		data["origin_node"].set_item(item)
 		data["origin_node"].quantity += 0
 	else:
 		data["origin_node"].quantity -= 1
 	
 	#slot has material now
 	if data["origin_resource"] is CraftingMaterial:
-		item = null
 		crafting_material = data["origin_resource"]
 	# slot has item now
 	elif data["origin_resource"] is Item:
-		crafting_material = null
 		item = origin_item
 	
 	quantity += 1

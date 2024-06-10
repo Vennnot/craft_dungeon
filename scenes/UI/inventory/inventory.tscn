@@ -24,9 +24,11 @@ theme_override_constants/separation = 50
 alignment = 1
 
 [node name="MaterialInventory" parent="HBoxContainer" instance=ExtResource("1_eyyp4")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="EquipmentInventory" parent="HBoxContainer" instance=ExtResource("2_0en5r")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="ItemInventory" parent="HBoxContainer" instance=ExtResource("3_4orsx")]
@@ -34,4 +36,5 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="StatsDisplay" parent="HBoxContainer" instance=ExtResource("4_5iflj")]
+unique_name_in_owner = true
 layout_mode = 2

@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bnawb73tath4t"]
+[gd_scene load_steps=4 format=3 uid="uid://bnawb73tath4t"]
 
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_8ue2y"]
+[ext_resource type="Script" path="res://scenes/UI/equipment_inventory/equipment_inventory.gd" id="1_fgpyp"]
 [ext_resource type="Resource" uid="uid://cbw7man7kbbi6" path="res://resources/items/active_item.tres" id="2_p78jc"]
 
 [node name="EquimentInventory" type="HBoxContainer"]
@@ -8,11 +9,13 @@ offset_right = 104.0
 offset_bottom = 158.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_fgpyp")
 
 [node name="ActiveItemContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
 [node name="ResourceBox1" parent="ActiveItemContainer" instance=ExtResource("1_8ue2y")]
+unique_name_in_owner = true
 layout_mode = 2
 in_inventory = true
 item = ExtResource("2_p78jc")
@@ -23,12 +26,14 @@ is_active_item_slot = true
 layout_mode = 2
 
 [node name="ResourceBox2" parent="ActiveItemContainer/HBoxContainer" instance=ExtResource("1_8ue2y")]
+unique_name_in_owner = true
 layout_mode = 2
 in_inventory = true
 is_exclusively_item_slot = true
 is_active_item_slot = true
 
 [node name="ResourceBox3" parent="ActiveItemContainer/HBoxContainer" instance=ExtResource("1_8ue2y")]
+unique_name_in_owner = true
 layout_mode = 2
 in_inventory = true
 item = ExtResource("2_p78jc")
@@ -36,6 +41,7 @@ is_exclusively_item_slot = true
 is_active_item_slot = true
 
 [node name="ResourceBox4" parent="ActiveItemContainer" instance=ExtResource("1_8ue2y")]
+unique_name_in_owner = true
 layout_mode = 2
 in_inventory = true
 item = ExtResource("2_p78jc")
