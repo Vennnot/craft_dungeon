@@ -22,9 +22,14 @@ EventBus="*res://scenes/autoloads/event_bus/event_bus.tscn"
 CraftingManager="*res://scenes/autoloads/crafting_manager/crafting_manager.tscn"
 InventoryManager="*res://scenes/autoloads/inventory_manager/inventory_manager.tscn"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
+"res://addons/": "purple",
 "res://assets/": "red",
 "res://resources/": "teal",
 "res://scenes/": "orange"

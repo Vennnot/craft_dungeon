@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd8isc88rd8ec"]
+[gd_scene load_steps=5 format=3 uid="uid://cd8isc88rd8ec"]
 
 [ext_resource type="Script" path="res://scenes/autoloads/crafting_manager/crafting_manager.gd" id="1_kpuc8"]
+[ext_resource type="Resource" uid="uid://b58rrcqi4yj5n" path="res://resources/all_recipes.tres" id="2_4vdx5"]
+[ext_resource type="Resource" uid="uid://bde6dxgijwus8" path="res://resources/all_items.tres" id="3_yqxs2"]
+[ext_resource type="Resource" uid="uid://33y3n5me6hbo" path="res://resources/all_crafting_materials.tres" id="4_sevjc"]
 
 [node name="CraftingManager" type="Node"]
 script = ExtResource("1_kpuc8")
+all_recipes_group = ExtResource("2_4vdx5")
+all_items_group = ExtResource("3_yqxs2")
+all_crafting_materials_group = ExtResource("4_sevjc")

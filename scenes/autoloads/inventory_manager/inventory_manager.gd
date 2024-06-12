@@ -13,7 +13,7 @@ var inventory_items : Array[Item] = []
 var crafting_materials : Dictionary = {}
 
 func _ready() -> void:
-	pass
+	_initialize_crafting_materials()
 
 
 func add_item(item:Item,is_equipment:bool=false) -> void:
@@ -55,6 +55,11 @@ func switch_item_to_equipment(item:Item) -> void:
 func switch_item_to_inventory(item:Item) -> void:
 	equipped_items.erase(item)
 	inventory_items.append(item)
+
+
+func _initialize_crafting_materials() -> void:
+	for crafting_material in CraftingManager.all_crafting_materials:
+		crafting_materials[crafting_material] = 0
 
 
 signal orphan_UI_item(item:Item)

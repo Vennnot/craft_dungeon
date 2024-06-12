@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ResourceGroup" load_steps=2 format=3 uid="uid://33y3n5me6hbo"]
+
+[ext_resource type="Script" path="res://addons/godot_resource_groups/resource_group.gd" id="1_s6cql"]
+
+[resource]
+script = ExtResource("1_s6cql")
+base_folder = "res://resources/crafting_materials"
+includes = Array[String](["*.tres"])
+excludes = Array[String]([])
+paths = Array[String](["res://resources/crafting_materials/m_carrot.tres", "res://resources/crafting_materials/m_earth.tres", "res://resources/crafting_materials/m_fire.tres"])

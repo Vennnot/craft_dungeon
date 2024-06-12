@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_r1mky")
-id = &"material"
+id = &"carrot"
 name = ""
 texture = ExtResource("2_w7xgu")

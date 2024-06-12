@@ -7,6 +7,7 @@ func _ready() -> void:
 
 
 func _debug_parser(text_to_parse:String)-> void:
+	line_edit.clear()
 	var parts := text_to_parse.split("_",false)
 	
 	var add : bool

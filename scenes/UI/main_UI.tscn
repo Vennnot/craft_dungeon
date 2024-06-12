@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://sv25h34iocl7"]
+[gd_scene load_steps=5 format=3 uid="uid://sv25h34iocl7"]
 
 [ext_resource type="Script" path="res://scenes/UI/main_UI.gd" id="1_c60ak"]
 [ext_resource type="PackedScene" uid="uid://cpipmc05vewf7" path="res://scenes/UI/crafting_inventory/crafting_inventory.tscn" id="3_ke75j"]
 [ext_resource type="PackedScene" uid="uid://donmo6355gahi" path="res://scenes/UI/inventory/inventory.tscn" id="3_nxqy2"]
+[ext_resource type="PackedScene" uid="uid://dxknyiwmri3se" path="res://scenes/tools/debug_menu/debug_menu.tscn" id="4_j3sdc"]
 
 [node name="Main_UI" type="CanvasLayer" groups=["main_ui"]]
 script = ExtResource("1_c60ak")
@@ -27,3 +28,5 @@ layout_mode = 2
 [node name="Inventory" parent="VBoxContainer" instance=ExtResource("3_nxqy2")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="DebugMenu" parent="." instance=ExtResource("4_j3sdc")]

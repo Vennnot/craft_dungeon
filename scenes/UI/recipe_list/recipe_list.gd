@@ -8,7 +8,7 @@ func _ready() -> void:
 
 
 func _initialize_recipes() -> void:
-	for recipe in CraftingManager.recipes:
+	for recipe in CraftingManager.all_recipes:
 		var recipe_instance : RecipeDisplay = recipe_display.instantiate()
 		add_child(recipe_instance)
 		recipe_instance.set_recipe(recipe)
