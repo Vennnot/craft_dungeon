@@ -1,6 +1,8 @@
 extends Node
 
-var recipes : Array[Recipe] = [preload("res://resources/recipes/test_recipe.tres")]
+#TODO make it so that it searches the files or save files
+var recipes : Array[Recipe] = [preload("res://resources/recipes/r_red_potion.tres"),
+preload("res://resources/recipes/r_purple_potion.tres"), preload("res://resources/recipes/r_sleep.tres")]
 
 func get_resource(ingredients:Array[Resource]) -> Resource:
 	for recipe in recipes:

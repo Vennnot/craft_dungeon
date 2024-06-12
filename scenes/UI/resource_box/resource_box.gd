@@ -96,7 +96,7 @@ func _update_display() -> void:
 			quantity_label.visible = true
 	
 	quantity_label.text = "x"+str(quantity)
-	texture_rect.texture = _get_texture()
+	_set_texture(_get_resource_texture()) 
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
@@ -107,7 +107,7 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 		data["origin_resource"]= _get_resource()
 		
 		var drag_preview := drag_preview_instance.instantiate()
-		drag_preview.texture = _get_texture()
+		drag_preview.texture = _get_resource_texture()
 		add_child(drag_preview)
 	
 	return data
@@ -222,7 +222,7 @@ func _check_combatibility(data:Variant) -> bool:
 	return true
 
 
-func _get_texture() -> Texture:
+func _get_resource_texture() -> Texture:
 	if item != null:
 		return item.texture
 	elif crafting_material != null:
@@ -239,3 +239,22 @@ func _get_resource() -> Resource:
 	else:
 		print("Get Resource returned null")
 		return null
+
+
+func _set_texture(texture:Texture) -> void:
+	texture_rect.texture = texture
+
+
+func set_display(resource:Resource) -> void:
+	if resource is Item:
+		crafting_material = null
+		item = resource
+	elif resource is CraftingMaterial:
+		item = null
+		crafting_material = resource
+	else:
+		item = null
+		crafting_material = null
+	
+	quantity = 1
+	_set_texture(_get_resource_texture())

@@ -91,4 +91,5 @@ layout_mode = 2
 alignment = 1
 
 [node name="RecipeDisplay" parent="HBoxContainer/Recipes/ScrollContainer/RecipeList" instance=ExtResource("3_k6g8d")]
+unique_name_in_owner = true
 layout_mode = 2

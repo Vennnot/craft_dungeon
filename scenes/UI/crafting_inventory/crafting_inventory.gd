@@ -7,6 +7,7 @@ class_name CraftingInventory
 @onready var reset_button: Button = %ResetButton
 @onready var ingredient_boxes : Array[ResourceBox] = []
 @onready var result_box: ResourceBox = %ResultBox
+@onready var recipe_display: RecipeDisplay = %RecipeDisplay
 
 var ingredients : Array[Resource] = [null,null,null,null,null]
 
@@ -17,6 +18,7 @@ var result : Item :
 
 func _ready() -> void:
 	_initialize_children()
+	_initialize_recipe_display()
 	craft_button.disabled=true
 	reset_button.pressed.connect(_on_reset_pressed)
 	craft_button.pressed.connect(_on_craft_pressed)
@@ -62,3 +64,7 @@ func _generate_preview() -> void:
 	craft_button.disabled = false
 	result_box.texture_rect.texture = result.texture
 	result_box.texture_rect.modulate.a = 0.5
+
+
+func _initialize_recipe_display() -> void:
+	pass
