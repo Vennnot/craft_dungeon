@@ -16,6 +16,14 @@ func add_item(item:Item) -> void:
 			resource_box.quantity += 1
 			return
 
+func remove_item(item:Item) -> void:
+	for resource_box in get_children():
+		if resource_box.item == item:
+			#might need to set item to null here
+			resource_box.quantity -= 1
+			return
+
+
 func _on_item_added(item:Item) -> void:
 	inventory_item_added.emit(item)
 

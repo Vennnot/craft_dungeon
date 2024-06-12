@@ -4,8 +4,8 @@ signal item_added(item)
 signal item_removed(item)
 signal item_to_inventory(item)
 signal item_to_equipment(item)
-signal crafting_material_added(crafting_material)
-signal crafting_material_removed(crafting_material)
+signal crafting_material_added(crafting_material, amount)
+signal crafting_material_removed(crafting_material, amount)
 
 
 var equipped_items : Array[Item] = []
@@ -37,13 +37,13 @@ func remove_item(item:Item,is_equipment:bool) -> void:
 func add_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -> void:
 	crafting_materials[crafting_material] += amount
 	
-	crafting_material_added.emit(crafting_material)
+	crafting_material_added.emit(crafting_material,amount)
 	print("Added crafting material: %s" % crafting_material)
 
 func remove_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -> void:
 	crafting_materials[crafting_material] -= amount
 	
-	crafting_material_removed.emit(crafting_material)
+	crafting_material_removed.emit(crafting_material,amount)
 	print("Removed crafting material: %s" % crafting_material)
 
 
