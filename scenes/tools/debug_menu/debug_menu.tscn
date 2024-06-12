@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxknyiwmri3se"]
+
+[ext_resource type="Script" path="res://scenes/tools/debug_menu/debug_menu.gd" id="1_i22nn"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_i22nn")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+offset_right = 67.0625
+offset_bottom = 31.0
+placeholder_text = "debug menu..."

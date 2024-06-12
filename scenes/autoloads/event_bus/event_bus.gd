@@ -1,7 +1,5 @@
 extends Node
 
-signal orphan_item(item:Item)
-
 var _observers: Dictionary = {}
 
 func subscribe(event_name: String, callback: Callable):
@@ -23,6 +21,3 @@ func publish(event_name: String):
 	
 	for callable: Callable in _observers[event_name]:
 		callable.call()
-
-func emit_orphan_item(item:Item):
-	orphan_item.emit(item)

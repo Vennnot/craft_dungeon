@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_h37n4")
-id = &"red_potion"
+id = &"red potion"
 name = ""
 is_passive = false
 texture = ExtResource("2_7kvix")

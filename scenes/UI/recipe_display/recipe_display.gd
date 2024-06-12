@@ -1,6 +1,8 @@
 extends Button
 class_name RecipeDisplay
 
+signal recipe_selected(recipe)
+
 @onready var result_box : ResourceBox = %ResourceBox1
 
 var ingredients : Array[ResourceBox] = []
@@ -31,4 +33,8 @@ func _initialize_children() -> void:
 	ingredients.append(%ResourceBox6)
 
 func _pressed() -> void:
-	print("pressed")
+	recipe_selected.emit(recipe)
+
+
+# recipe clicked send global event with recipe?
+# removes items from inventory and adds them to crafting bench

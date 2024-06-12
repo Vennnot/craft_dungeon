@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://wc7ucutm1t88"]
+
+[ext_resource type="Script" path="res://scenes/UI/recipe_list/recipe_list.gd" id="1_xfhdc"]
+
+[node name="RecipeList" type="VBoxContainer"]
+theme_override_constants/separation = 50
+alignment = 1
+script = ExtResource("1_xfhdc")

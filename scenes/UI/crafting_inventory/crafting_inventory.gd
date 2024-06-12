@@ -7,7 +7,7 @@ class_name CraftingInventory
 @onready var reset_button: Button = %ResetButton
 @onready var ingredient_boxes : Array[ResourceBox] = []
 @onready var result_box: ResourceBox = %ResultBox
-@onready var recipe_display: RecipeDisplay = %RecipeDisplay
+@onready var recipe_list: RecipeList = %RecipeList
 
 var ingredients : Array[Resource] = [null,null,null,null,null]
 

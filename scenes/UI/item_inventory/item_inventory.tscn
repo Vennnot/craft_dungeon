@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbxnnec35jwhk"]
+[gd_scene load_steps=3 format=3 uid="uid://bbxnnec35jwhk"]
 
 [ext_resource type="Script" path="res://scenes/UI/item_inventory/item_inventory.gd" id="1_ljyln"]
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_tkips"]
-[ext_resource type="Resource" uid="uid://cbw7man7kbbi6" path="res://resources/items/i_a_red_potion.tres" id="3_8yetv"]
-[ext_resource type="Resource" uid="uid://b7bsel4xewulb" path="res://resources/items/i_p_purple_potion.tres" id="3_catgd"]
 
 [node name="ItemInventory" type="GridContainer"]
 offset_right = 40.0
@@ -14,31 +12,26 @@ script = ExtResource("1_ljyln")
 [node name="ResourceBox1" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("3_8yetv")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox2" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("3_8yetv")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox3" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("3_8yetv")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox4" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("3_8yetv")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox5" parent="." instance=ExtResource("1_tkips")]
 layout_mode = 2
 in_inventory = true
-item = ExtResource("3_catgd")
 is_exclusively_item_slot = true
 
 [node name="ResourceBox6" parent="." instance=ExtResource("1_tkips")]

@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cykrfveafif46"]
+[gd_scene load_steps=2 format=3 uid="uid://cykrfveafif46"]
 
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_ie5mp"]
-[ext_resource type="Resource" uid="uid://cqcf4rfv7im5" path="res://resources/crafting_materials/m_carrot.tres" id="2_jhxyv"]
 
 [node name="MaterialInventory" type="GridContainer"]
 anchors_preset = 15
@@ -14,7 +13,6 @@ columns = 4
 [node name="ResourceBox1" parent="." instance=ExtResource("1_ie5mp")]
 layout_mode = 2
 in_inventory = true
-crafting_material = ExtResource("2_jhxyv")
 is_exclusively_material_slot = true
 
 [node name="ResourceBox2" parent="." instance=ExtResource("1_ie5mp")]

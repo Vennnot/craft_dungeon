@@ -237,7 +237,6 @@ func _get_resource() -> Resource:
 	elif crafting_material != null:
 		return crafting_material
 	else:
-		print("Get Resource returned null")
 		return null
 
 
