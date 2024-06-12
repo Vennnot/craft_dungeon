@@ -39,5 +39,5 @@ func _debug_parser(text_to_parse:String)-> void:
 	elif not add and item:
 		InventoryManager.remove_item(CraftingManager.get_item_by_id(parts[1]),false)
 	elif not add and not item:
-		InventoryManager.add_crafting_material(CraftingManager.get_crafting_material_by_id((parts[1])))
+		InventoryManager.remove_crafting_material(CraftingManager.get_crafting_material_by_id((parts[1])),amount)
 

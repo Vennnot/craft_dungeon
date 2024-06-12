@@ -44,6 +44,9 @@ func remove_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -
 	crafting_materials[crafting_material] -= amount
 	
 	crafting_material_removed.emit(crafting_material,amount)
+	
+	if crafting_materials[crafting_material] < 0:
+		crafting_materials[crafting_material] = 0
 	print("Removed crafting material: %s" % crafting_material)
 
 
