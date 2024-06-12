@@ -240,8 +240,10 @@ func _get_resource() -> Resource:
 		return null
 
 
-func _set_texture(texture:Texture) -> void:
+func _set_texture(texture:Texture, opaque:bool=false) -> void:
 	texture_rect.texture = texture
+	if opaque:
+		texture_rect.modulate.a = 0.5
 
 
 func set_display(resource:Resource) -> void:
@@ -257,3 +259,6 @@ func set_display(resource:Resource) -> void:
 	
 	quantity = 1
 	_set_texture(_get_resource_texture())
+
+
+#TODO add resource and remove resource methods
