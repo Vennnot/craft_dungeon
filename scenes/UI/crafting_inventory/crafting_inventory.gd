@@ -33,7 +33,6 @@ func _initialize_children() -> void:
 		ingredient_box.dropped_data.connect(_reset_box_visuals)
 
 
-
 func _on_reset_pressed() -> void:
 	_reset_box_visuals()
 

@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://uqneua6qhljr"]
+
+[ext_resource type="Script" path="res://scenes/enemies/base_enemy/base_enemy.gd" id="1_u4l4n"]
+[ext_resource type="Texture2D" uid="uid://ci771xnwcdn3f" path="res://assets/enemies/tile_0123.png" id="2_2pl80"]
+[ext_resource type="PackedScene" uid="uid://e0i34g7k6of6" path="res://scenes/components/hurtbox_component/hurtbox_component.tscn" id="2_a64e0"]
+[ext_resource type="PackedScene" uid="uid://cysap1bawnryo" path="res://scenes/components/hitbox_component/hitbox_component.tscn" id="4_vsh6b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4xkg2"]
+radius = 22.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_omfyq"]
+radius = 25.0799
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dmqpo"]
+radius = 20.2237
+
+[node name="BaseEnemy" type="CharacterBody2D"]
+script = ExtResource("1_u4l4n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visibility_layer = 5
+shape = SubResource("CircleShape2D_4xkg2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(3, 3)
+texture = ExtResource("2_2pl80")
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("2_a64e0")]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_omfyq")
+debug_color = Color(0.913725, 0.827451, 0.25098, 0.203922)
+
+[node name="HitboxComponent" parent="." instance=ExtResource("4_vsh6b")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("CircleShape2D_dmqpo")
+debug_color = Color(0.827451, 0.270588, 0.188235, 0.329412)

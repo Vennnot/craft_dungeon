@@ -7,6 +7,7 @@ signal item_to_equipment(item)
 signal crafting_material_added(crafting_material, amount)
 signal crafting_material_removed(crafting_material, amount)
 signal recipe_selected(recipe)
+signal equipment_slot_updated(equipment,id)
 
 
 var equipped_items : Array[Item] = [null,null,null,null]
@@ -59,17 +60,7 @@ func remove_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -
 
 func update_equipment_slot(new_item:Item,slot_number:int):
 	equipped_items[slot_number] = new_item
-
-
-func switch_item_to_equipment(item:Item) -> void:
-	items.erase(item)
-	equipped_items.append(item)
-
-
-func switch_item_to_inventory(item:Item) -> void:
-	equipped_items.erase(item)
-	items.append(item)
-
+	equipment_slot_updated.emit(new_item,slot_number)
 
 func _initialize_crafting_materials() -> void:
 	for crafting_material in CraftingManager.all_crafting_materials:

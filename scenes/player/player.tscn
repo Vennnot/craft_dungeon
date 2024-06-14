@@ -1,10 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://deoakpedccwm"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ln4af"]
-[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="2_1blyx"]
+[ext_resource type="Texture2D" uid="uid://0xuvva5cp2bt" path="res://assets/visuals/player/tile_0085.png" id="2_n72ov"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_wakbd"]
-radius = 83.0542
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1ptf"]
+radius = 20.0
+height = 54.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_237jw"]
 radius = 85.0059
@@ -13,11 +14,11 @@ radius = 85.0059
 script = ExtResource("1_ln4af")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_1blyx")
+scale = Vector2(4, 4)
+texture = ExtResource("2_n72ov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("CircleShape2D_wakbd")
+shape = SubResource("CapsuleShape2D_q1ptf")
 debug_color = Color(0.790601, 0.406313, 0.373983, 0.42)
 
 [node name="InteractionArea" type="Area2D" parent="."]

@@ -23,10 +23,12 @@ grow_vertical = 2
 
 [node name="CraftingInventory" parent="VBoxContainer" instance=ExtResource("3_ke75j")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="Inventory" parent="VBoxContainer" instance=ExtResource("3_nxqy2")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="DebugMenu" parent="." instance=ExtResource("4_j3sdc")]
