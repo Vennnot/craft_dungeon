@@ -1,17 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://deoakpedccwm"]
+[gd_scene load_steps=8 format=3 uid="uid://deoakpedccwm"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ln4af"]
 [ext_resource type="Texture2D" uid="uid://0xuvva5cp2bt" path="res://assets/visuals/player/tile_0085.png" id="2_n72ov"]
+[ext_resource type="Script" path="res://scenes/components/health_component/health_component.gd" id="2_t331f"]
+[ext_resource type="Script" path="res://scenes/components/hurtbox_component/hurtbox_component.gd" id="4_8qurw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1ptf"]
-radius = 20.0
-height = 54.0
+radius = 16.0
+height = 36.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_237jw"]
 radius = 85.0059
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0x7od"]
+radius = 48.8365
+
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_ln4af")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_t331f")
+max_health = 10
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(4, 4)
@@ -26,3 +35,11 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_237jw")
+
+[node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("health_component")]
+collision_mask = 4
+script = ExtResource("4_8qurw")
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+shape = SubResource("CircleShape2D_0x7od")
