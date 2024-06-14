@@ -1,37 +1,32 @@
 extends HBoxContainer
 class_name EquipmentInventory
 
-signal equipment_inventory_item_added(item:Item)
-signal equipment_inventory_item_removed(item:Item)
-
-var equipment_slots : Array[ResourceBox] = []
+var equipment_resource_boxes : Array[ResourceBox] = []
 
 func _ready() -> void:
-	_initialize_equipment_slots()
+	_initialize_equipment_resource_boxes()
 
-func _on_item_added(item:Item) -> void:
-	equipment_inventory_item_added.emit(item)
 
-func _on_item_removed(item:Item) -> void:
-	equipment_inventory_item_removed.emit(item)
-
-func _initialize_equipment_slots() -> void:
+func _initialize_equipment_resource_boxes() -> void:
 	var children : Array[ResourceBox] = [%ResourceBox1, %ResourceBox2, %ResourceBox3, %ResourceBox4]
 	for resource_box in children:
+		equipment_resource_boxes.append(resource_box)
 		resource_box.added_item.connect(_on_item_added)
-		resource_box.removed_item.connect(_on_item_removed)
 
 
 func add_item(item:Item) -> void:
-	for resource_box in get_children():
+	for resource_box in equipment_resource_boxes:
 		if resource_box.item == null:
-			resource_box.item = item
-			resource_box.quantity += 1
+			resource_box.set_resource(item)
+			resource_box.set_quantity(1)
 			return
 
 func remove_item(item:Item) -> void:
 	for resource_box in get_children():
 		if resource_box.item == item:
-			#might need to set item to null here
-			resource_box.quantity -= 1
+			resource_box.set_quantity(-1,true)
 			return
+
+
+func _on_item_added(item:Item,id:int):
+	InventoryManager.update_equipment_slot(item,id)

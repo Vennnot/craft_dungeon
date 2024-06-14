@@ -2,10 +2,8 @@ extends PanelContainer
 class_name ResourceBox
 
 signal contents_changed(contents, id)
-signal removed_item(item)
-signal added_item(item)
-signal removed_crafting_material(crafting_material)
-signal added_crafting_material(crafting_material)
+signal added_item(item,id)
+signal dropped_data
 
 @export var drag_preview_instance : PackedScene
 
@@ -17,25 +15,12 @@ signal added_crafting_material(crafting_material)
 @export var is_result : bool = false
 
 @export_category("Material")
-@export var crafting_material : CraftingMaterial:
-	set(value):
-		if crafting_material != null:
-			removed_crafting_material.emit(crafting_material)
-		if value != null:
-			added_crafting_material.emit(value)
-		crafting_material = value
+@export var crafting_material : CraftingMaterial
 
 @export var is_exclusively_material_slot : bool = false
 
 @export_category("Item")
-@export var item : Item :
-	set(value):
-		if item != null:
-			removed_item.emit(item)
-		if value != null:
-			added_item.emit(value)
-		item = value
-
+@export var item : Item
 @export var is_exclusively_item_slot : bool = false
 @export var is_passive_item_slot : bool = false
 @export var is_active_item_slot : bool = false
@@ -44,65 +29,36 @@ signal added_crafting_material(crafting_material)
 @export var is_crafting_slot : bool = false
 @export var id : int = 0
 
-var quantity : int :
+var quantity : int = 0 :
 	set(value):
 		if value < 0:
 			value = 0
-		if item == null and crafting_material == null:
-			value = 0
-		if item != null and value > 1:
-			value = 1
 		quantity = value
-		_update_resource()
-		_update_display()
 
 var original_owner : ResourceBox = null
 
 func _ready() -> void:
-	quantity = 1
-
-
-func _update_resource():
-	if in_inventory:
-		if quantity == 0:
-			if crafting_material != null:
-				pass
-			else:
-				item = null
-	else:
-		if quantity == 0:
-			if crafting_material != null:
-				crafting_material = null
-			else:
-				item = null
+	update_texture()
+	set_quantity(1,true)
 	
-	if item == null and crafting_material == null and quantity != 0:
-		quantity = 0
-	
-	if is_crafting_slot or (in_inventory and is_exclusively_item_slot):
-		contents_changed.emit(_get_resource(),id)
+	if is_exclusively_material_slot:
+		quantity_label.visible=true
 
 
-func _update_display() -> void:
-	if not crafting_material != null:
-		quantity_label.visible = false
-	elif quantity == 0:
-		texture_rect.modulate.a = 0.5
-		if item == null and not is_exclusively_material_slot:
-			quantity_label.visible = false
+
+func _update_label() -> void:
+	if quantity == 0:
+		toggle_texture_opaqueness(true)
 	elif quantity > 0:
-		texture_rect.modulate.a = 1
-		if in_inventory:
-			quantity_label.visible = true
+		toggle_texture_opaqueness(false)
 	
 	quantity_label.text = "x"+str(quantity)
-	_set_texture(_get_resource_texture()) 
 
 
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	var data = {}
 	
-	if item != null or (crafting_material != null and quantity > 0):
+	if not is_result and (item != null or (crafting_material != null and quantity > 0)):
 		data["origin_node"] = self
 		data["origin_resource"]= _get_resource()
 		
@@ -118,6 +74,9 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 
 
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if is_crafting_slot:
+		dropped_data.emit()
+	
 	#restores values if replaced outside from within or outside by outside
 	if not (data["origin_node"].in_inventory and data["target_node"].in_inventory):
 		restore_original_values()
@@ -128,35 +87,46 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	
 	#swaps items when in inventory
 	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
-		data["origin_node"].set_item(item)
-		data["origin_node"].quantity += 0
+		data["origin_node"].set_resource(item)
 	else:
-		data["origin_node"].quantity -= 1
+		data["origin_node"].set_quantity(-1,true)
 	
 	#slot has material now
 	if data["origin_resource"] is CraftingMaterial:
-		crafting_material = data["origin_resource"]
+		set_resource(data["origin_resource"]) 
+		set_quantity(1)
 	# slot has item now
 	elif data["origin_resource"] is Item:
-		item = origin_item
-	
-	quantity += 1
+		set_resource(origin_item)
+		set_quantity(1)
 
 
 func restore_original_values() -> void:
-	if original_owner != null and (item != null or crafting_material != null):
-		if original_owner.item != null:
-			EventBus.emit_orphan_item(item)
+	if original_owner != null:
+		if item != null:
+			if original_owner.item != null:
+				InventoryManager.emit_orphan_UI_item(item)
+			else:
+				original_owner.set_resource(item)
+				original_owner.set_quantity(1)
+		elif crafting_material != null:
+			if original_owner.crafting_material != null:
+				original_owner.set_quantity(1, true)
 		else:
-			original_owner.item = item
-			original_owner.crafting_material = crafting_material
-			original_owner.quantity += 1
-		original_owner = null
+			original_owner.set_quantity(0)
+	else:
+		if item != null:
+			InventoryManager.emit_orphan_UI_item(item)
+		elif crafting_material != null:
+			InventoryManager.emit_orphan_UI_crafting_material(crafting_material)
+
+	original_owner = null
 
 
 func reset() -> void:
-	quantity = 0
+	set_resource(null)
 	original_owner = null
+
 
 
 func _set_original_owner(data:Variant) -> void:
@@ -197,7 +167,7 @@ func _check_combatibility(data:Variant) -> bool:
 	#from outside to inventory
 	if not data["origin_node"].in_inventory and data["target_node"].in_inventory:
 		if data["target_node"].is_exclusively_material_slot:
-			return data["origin_node"].crafting_material != null
+			return data["origin_node"].crafting_material != null and data["origin_node"].crafting_material == data["target_node"].crafting_material
 		elif data["target_node"].is_exclusively_item_slot:
 			if data["origin_node"].item == null:
 				return false
@@ -240,25 +210,61 @@ func _get_resource() -> Resource:
 		return null
 
 
-func _set_texture(texture:Texture, opaque:bool=false) -> void:
+func set_texture(texture:Texture) -> void:
 	texture_rect.texture = texture
+
+func toggle_texture_opaqueness(opaque:bool=false) -> void:
 	if opaque:
 		texture_rect.modulate.a = 0.5
+	else:
+		texture_rect.modulate.a = 1
 
 
-func set_display(resource:Resource) -> void:
-	if resource is Item:
-		crafting_material = null
-		item = resource
-	elif resource is CraftingMaterial:
+func update_texture() -> void:
+	set_texture(_get_resource_texture())
+
+
+func set_resource(resource:Resource) -> void:
+	
+	if resource is CraftingMaterial:
 		item = null
 		crafting_material = resource
-	else:
-		item = null
+	elif resource is Item:
 		crafting_material = null
+		item =resource
+	elif resource == null:
+		crafting_material = null
+		item = null
 	
-	quantity = 1
-	_set_texture(_get_resource_texture())
+	if is_active_item_slot:
+		added_item.emit(resource,id)
+	
+	update_texture()
+	
+	if is_crafting_slot:
+		contents_changed.emit(_get_resource(),id)
 
 
-#TODO add resource and remove resource methods
+func set_quantity(amount:int,add:bool=false) -> void:
+	if item == null and crafting_material == null:
+		_update_label()
+		return
+	
+	if add:
+		quantity += amount
+		if item != null and quantity > 1:
+			quantity = 1
+	else:
+		quantity = amount
+	
+	_quantity_check()
+	_update_label()
+
+
+func _quantity_check():
+	if quantity == 0:
+		if in_inventory:
+			if item != null and crafting_material == null:
+				set_resource(null)
+		else:
+			set_resource(null)

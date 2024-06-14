@@ -13,10 +13,11 @@ func _ready() -> void:
 
 func set_recipe(new_recipe:Recipe) -> void:
 	recipe = new_recipe
-	result_box.set_display(new_recipe.result_item)
+	result_box.set_texture(new_recipe.result_item.texture)
 	
 	for i in recipe.ingredients_list.size():
-		ingredients[i-1].set_display(recipe.ingredients_list[i-1])
+		if recipe.ingredients_list[i-1]:
+			ingredients[i-1].set_texture(recipe.ingredients_list[i-1].texture)
 
 
 func get_recipe() -> Recipe:

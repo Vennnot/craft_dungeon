@@ -9,8 +9,9 @@ signal crafting_material_removed(crafting_material, amount)
 signal recipe_selected(recipe)
 
 
-var equipped_items : Array[Item] = []
-var inventory_items : Array[Item] = []
+var equipped_items : Array[Item] = [null,null,null,null]
+
+var items : Array[Item] = []
 var crafting_materials : Dictionary = {}
 
 func _ready() -> void:
@@ -18,18 +19,15 @@ func _ready() -> void:
 
 
 func has_item(item:Item) -> bool:
-	return equipped_items.has(item) or inventory_items.has(item)
+	return equipped_items.has(item) or items.has(item)
 
 
 func has_crafting_material(crafting_material:CraftingMaterial) -> bool:
-	return crafting_materials.has(crafting_material)
+	return crafting_materials[crafting_material] > 0
 
 
-func add_item(item:Item,is_equipment:bool=false) -> void:
-	if is_equipment:
-		equipped_items.append(item)
-	else:
-		inventory_items.append(item)
+func add_item(item:Item) -> void:
+	items.append(item)
 	
 	item_added.emit(item)
 	print("Added item: %s" % item)
@@ -38,7 +36,7 @@ func remove_item(item:Item,is_equipment:bool) -> void:
 	if is_equipment:
 		equipped_items.erase(item)
 	else:
-		inventory_items.erase(item)
+		items.erase(item)
 	
 	item_removed.emit(item)
 	print("Removed item: %s" % item)
@@ -59,14 +57,18 @@ func remove_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -
 	print("Removed crafting material: %s" % crafting_material)
 
 
+func update_equipment_slot(new_item:Item,slot_number:int):
+	equipped_items[slot_number] = new_item
+
+
 func switch_item_to_equipment(item:Item) -> void:
-	inventory_items.erase(item)
+	items.erase(item)
 	equipped_items.append(item)
 
 
 func switch_item_to_inventory(item:Item) -> void:
 	equipped_items.erase(item)
-	inventory_items.append(item)
+	items.append(item)
 
 
 func _initialize_crafting_materials() -> void:
@@ -82,3 +84,8 @@ signal orphan_UI_item(item:Item)
 
 func emit_orphan_UI_item(item:Item):
 	orphan_UI_item.emit(item)
+
+signal orphan_UI_crafting_material(crafting_material:CraftingMaterial)
+
+func emit_orphan_UI_crafting_material(crafting_material:CraftingMaterial):
+	orphan_UI_crafting_material.emit(crafting_material)

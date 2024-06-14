@@ -18,6 +18,7 @@ texture = ExtResource("4_j0m2r")
 stretch_mode = 5
 
 [node name="QuantityLabel" type="Label" parent="."]
+visible = false
 layout_mode = 2
 size_flags_vertical = 8
 text = "x1"
