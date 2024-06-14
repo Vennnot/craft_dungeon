@@ -80,3 +80,10 @@ signal orphan_UI_crafting_material(crafting_material:CraftingMaterial)
 
 func emit_orphan_UI_crafting_material(crafting_material:CraftingMaterial):
 	orphan_UI_crafting_material.emit(crafting_material)
+
+
+func add_resource(resource:Resource)-> void:
+	if resource is Item:
+		add_item(resource)
+	elif resource is CraftingMaterial:
+		add_crafting_material(resource)
