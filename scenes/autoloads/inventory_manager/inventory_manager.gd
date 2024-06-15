@@ -57,6 +57,7 @@ func remove_crafting_material(crafting_material:CraftingMaterial,amount:int=1) -
 
 
 func update_equipment_slot(new_item:Item,slot_number:int):
+	print("Updated equipment slots")
 	equipped_items[slot_number] = new_item
 	equipment_slot_updated.emit(new_item,slot_number)
 

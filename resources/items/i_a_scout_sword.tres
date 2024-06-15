@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://fwf4rwx5dulv"]
+
+[ext_resource type="PackedScene" uid="uid://ddyuqk7wxh2av" path="res://scenes/items/scout_sword/scout_sword_controller.tscn" id="1_h211x"]
+[ext_resource type="Script" path="res://resources/items/item.gd" id="2_de1pa"]
+[ext_resource type="Texture2D" uid="uid://clqd31mk6ljsa" path="res://assets/visuals/items/scout_sword.png" id="3_evd33"]
+
+[resource]
+script = ExtResource("2_de1pa")
+id = &"scout sword"
+name = ""
+controller_scene = ExtResource("1_h211x")
+is_passive = false
+texture = ExtResource("3_evd33")

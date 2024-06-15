@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bfmdxmiwg82fk"]
 
 [ext_resource type="Script" path="res://scenes/interactables/crafting_table/crafting_table.gd" id="1_14p1s"]
-[ext_resource type="Texture2D" uid="uid://bvpwnwbh6bypa" path="res://assets/interactables/tile_0090.png" id="2_c60jl"]
+[ext_resource type="Texture2D" uid="uid://bvpwnwbh6bypa" path="res://assets/visuals/interactables/tile_0090.png" id="2_c60jl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ltr3e"]
 radius = 63.0714

@@ -22,6 +22,7 @@ radius = 48.8365
 script = ExtResource("1_ln4af")
 
 [node name="ItemManager" parent="." instance=ExtResource("2_286n8")]
+unique_name_in_owner = true
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_6urkf")]
 max_health = 10

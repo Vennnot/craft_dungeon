@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddyuqk7wxh2av"]
+
+[ext_resource type="Script" path="res://scenes/items/scout_sword/scout_sword_controller.gd" id="1_vpkph"]
+[ext_resource type="PackedScene" uid="uid://ukupfqd6poyb" path="res://scenes/items/scout_sword/scout_sword.tscn" id="2_6bw4v"]
+
+[node name="ScoutSwordController" type="Node"]
+script = ExtResource("1_vpkph")
+item_scene = ExtResource("2_6bw4v")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true

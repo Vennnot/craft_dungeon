@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b265h254qo6mu"]
+
+[ext_resource type="Script" path="res://scenes/items/base_item_controller.gd" id="1_j44vv"]
+
+[node name="BaseItemController" type="Node"]
+script = ExtResource("1_j44vv")
