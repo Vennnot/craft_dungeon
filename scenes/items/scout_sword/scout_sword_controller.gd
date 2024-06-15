@@ -18,7 +18,6 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_timer_timeout() -> void:
-	print("spawn scene")
 	cooldown_timer.start()
 
 func spawn_item() -> void:
@@ -31,6 +30,4 @@ func spawn_item() -> void:
 	scout_sword_instance.set_damage(damage)
 	scout_sword_instance.global_position = player.global_position
 	scout_sword_instance.global_position += get_parent().get_look_direction()*25
-	print(deg_to_rad(get_parent().get_look_direction().angle()))
-	print(get_parent().get_look_direction())
 	scout_sword_instance.rotation = rad_to_deg(get_parent().get_look_direction().angle())
