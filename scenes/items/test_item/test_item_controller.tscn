@@ -1,11 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://etbwd43rgtdi"]
+[gd_scene load_steps=2 format=3 uid="uid://etbwd43rgtdi"]
 
 [ext_resource type="Script" path="res://scenes/items/test_item/test_item_controller.gd" id="1_m4pea"]
-[ext_resource type="PackedScene" uid="uid://cbejduorveb1c" path="res://scenes/items/test_item/test_item.tscn" id="2_ja4ah"]
 
 [node name="TestItemController" type="Node"]
 script = ExtResource("1_m4pea")
-test_item = ExtResource("2_ja4ah")
+item_id = &"red potion"
 
 [node name="Timer" type="Timer" parent="."]
 unique_name_in_owner = true

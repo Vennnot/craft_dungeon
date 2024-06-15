@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://cbw7man7kbbi6"]
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://cbw7man7kbbi6"]
 
 [ext_resource type="Script" path="res://resources/items/item.gd" id="1_h37n4"]
+[ext_resource type="PackedScene" uid="uid://etbwd43rgtdi" path="res://scenes/items/test_item/test_item_controller.tscn" id="1_wj2jn"]
 [ext_resource type="Texture2D" uid="uid://dbgp2oxcw8pxn" path="res://assets/visuals/items/potion.png" id="2_7kvix"]
 
 [resource]
 script = ExtResource("1_h37n4")
 id = &"red potion"
 name = ""
+controller_scene = ExtResource("1_wj2jn")
 is_passive = false
 texture = ExtResource("2_7kvix")

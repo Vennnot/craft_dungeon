@@ -14,7 +14,7 @@ func add_item(item:Item) -> void:
 			resource_box.set_quantity(1)
 			return
 
-func remove_item(item:Item) -> void:
+func remove(item:Item) -> void:
 	for resource_box in item_boxes:
 		if resource_box.item == item:
 			resource_box.set_quantity(-1,true)

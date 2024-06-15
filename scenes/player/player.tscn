@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://deoakpedccwm"]
+[gd_scene load_steps=11 format=3 uid="uid://deoakpedccwm"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ln4af"]
 [ext_resource type="PackedScene" uid="uid://iaorbirelkn7" path="res://scenes/components/health_component/health_component.tscn" id="2_6urkf"]
+[ext_resource type="PackedScene" uid="uid://blchwhuln6e6h" path="res://scenes/managers/item_manager/item_manager.tscn" id="2_286n8"]
 [ext_resource type="Texture2D" uid="uid://0xuvva5cp2bt" path="res://assets/visuals/player/tile_0085.png" id="2_n72ov"]
 [ext_resource type="Resource" uid="uid://b753qjvho6rkd" path="res://resources/crafting_materials/m_earth.tres" id="3_bg8yn"]
 [ext_resource type="PackedScene" uid="uid://cwcyjeim5vg1t" path="res://scenes/components/item_drop_component/item_drop_component.tscn" id="3_lsxls"]
@@ -19,6 +20,8 @@ radius = 48.8365
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_ln4af")
+
+[node name="ItemManager" parent="." instance=ExtResource("2_286n8")]
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_6urkf")]
 max_health = 10

@@ -2,8 +2,6 @@ extends Node
 
 signal item_added(item)
 signal item_removed(item)
-signal item_to_inventory(item)
-signal item_to_equipment(item)
 signal crafting_material_added(crafting_material, amount)
 signal crafting_material_removed(crafting_material, amount)
 signal recipe_selected(recipe)
@@ -36,8 +34,8 @@ func add_item(item:Item) -> void:
 func remove_item(item:Item,is_equipment:bool) -> void:
 	if is_equipment:
 		equipped_items.erase(item)
-	else:
-		items.erase(item)
+
+	items.erase(item)
 	
 	item_removed.emit(item)
 	print("Removed item: %s" % item)
