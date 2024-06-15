@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://deoakpedccwm"]
+[gd_scene load_steps=10 format=3 uid="uid://deoakpedccwm"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_ln4af"]
+[ext_resource type="PackedScene" uid="uid://iaorbirelkn7" path="res://scenes/components/health_component/health_component.tscn" id="2_6urkf"]
 [ext_resource type="Texture2D" uid="uid://0xuvva5cp2bt" path="res://assets/visuals/player/tile_0085.png" id="2_n72ov"]
-[ext_resource type="Script" path="res://scenes/components/health_component/health_component.gd" id="2_t331f"]
+[ext_resource type="Resource" uid="uid://b753qjvho6rkd" path="res://resources/crafting_materials/m_earth.tres" id="3_bg8yn"]
+[ext_resource type="PackedScene" uid="uid://cwcyjeim5vg1t" path="res://scenes/components/item_drop_component/item_drop_component.tscn" id="3_lsxls"]
 [ext_resource type="Script" path="res://scenes/components/hurtbox_component/hurtbox_component.gd" id="4_8qurw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1ptf"]
@@ -18,9 +20,12 @@ radius = 48.8365
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_ln4af")
 
-[node name="HealthComponent" type="Node" parent="."]
-script = ExtResource("2_t331f")
+[node name="HealthComponent" parent="." instance=ExtResource("2_6urkf")]
 max_health = 10
+
+[node name="ItemDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_lsxls")]
+crafting_material = ExtResource("3_bg8yn")
+health_component = NodePath("../HealthComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(4, 4)

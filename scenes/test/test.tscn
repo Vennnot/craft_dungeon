@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3goywx2ex3q"]
+[gd_scene load_steps=6 format=3 uid="uid://c3goywx2ex3q"]
 
 [ext_resource type="PackedScene" uid="uid://eejmgmli0ap6" path="res://scenes/managers/game_manager.tscn" id="1_dkhun"]
 [ext_resource type="PackedScene" uid="uid://deoakpedccwm" path="res://scenes/player/player.tscn" id="1_hvcfw"]
 [ext_resource type="PackedScene" uid="uid://sv25h34iocl7" path="res://scenes/UI/main_UI.tscn" id="2_4a8o8"]
 [ext_resource type="PackedScene" uid="uid://bfmdxmiwg82fk" path="res://scenes/interactables/crafting_table/crafting_table.tscn" id="3_ft462"]
 [ext_resource type="PackedScene" uid="uid://uqneua6qhljr" path="res://scenes/enemies/base_enemy/base_enemy.tscn" id="5_phrao"]
-[ext_resource type="PackedScene" uid="uid://bu0udcvicm6oq" path="res://scenes/interactables/ingredient_drop/ingredient_drop.tscn" id="6_bmjj0"]
-[ext_resource type="Resource" uid="uid://dwd60f4drqolx" path="res://resources/items/i_a_sleep.tres" id="7_4kcdx"]
 
 [node name="Test" type="Node2D"]
 
@@ -17,11 +15,9 @@ position = Vector2(315, 228)
 
 [node name="Main_UI" parent="GameManager" instance=ExtResource("2_4a8o8")]
 
-[node name="CraftingTable" parent="GameManager" instance=ExtResource("3_ft462")]
-position = Vector2(572, 229)
-
 [node name="BaseEnemy" parent="GameManager" instance=ExtResource("5_phrao")]
 
-[node name="ItemDrop" parent="." instance=ExtResource("6_bmjj0")]
-position = Vector2(333, 391)
-ingredient = ExtResource("7_4kcdx")
+[node name="Interactables" type="Node" parent="GameManager" groups=["interactables"]]
+
+[node name="CraftingTable" parent="GameManager/Interactables" instance=ExtResource("3_ft462")]
+position = Vector2(572, 229)

@@ -9,9 +9,6 @@ var current_health :
 		if value < 0:
 			value = 0
 		current_health = value
-		if current_health == 0:
-			died.emit()
-			owner.queue_free()
 
 func _ready() -> void:
 	current_health = max_health
@@ -19,4 +16,11 @@ func _ready() -> void:
 
 func get_damaged(damage:int):
 	current_health -= damage
+	if current_health == 0:
+		die()
 	print("Got damaged for %s" % damage)
+
+
+func die() -> void:
+	died.emit()
+	owner.call_deferred("queue_free")
