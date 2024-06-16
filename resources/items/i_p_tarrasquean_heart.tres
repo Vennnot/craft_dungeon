@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://c6fsmmcouk2ao"]
+
+[ext_resource type="Script" path="res://resources/items/item.gd" id="1_ac7n0"]
+[ext_resource type="PackedScene" uid="uid://bpem2qx1d6764" path="res://scenes/items/tarrasquean_heart/tarrasquean_heart_controller.tscn" id="1_u5xks"]
+[ext_resource type="Texture2D" uid="uid://d8j0y55stypu" path="res://assets/visuals/items/tarrasquean_heart.png" id="2_674fv"]
+
+[resource]
+script = ExtResource("1_ac7n0")
+id = &"tarrasquean heart"
+name = ""
+controller_scene = ExtResource("1_u5xks")
+is_passive = true
+texture = ExtResource("2_674fv")
+cooldown = 0.0

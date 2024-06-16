@@ -7,6 +7,7 @@ class_name Player
 
 @onready var interaction_area: Area2D = $InteractionArea
 @onready var item_manager: ItemManager = %ItemManager
+@onready var health_component: HealthComponent = %HealthComponent
 
 var input_disabled : bool = false
 var interaction_nodes : Array[Node] = []

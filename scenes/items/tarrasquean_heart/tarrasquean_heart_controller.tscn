@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpem2qx1d6764"]
+
+[ext_resource type="Script" path="res://scenes/items/tarrasquean_heart/tarrasquean_heart_controller.gd" id="1_phfdn"]
+
+[node name="TarrasqueanHeartController" type="Node"]
+script = ExtResource("1_phfdn")
+cooldown = null
+item_id = null
+
+[node name="CooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true

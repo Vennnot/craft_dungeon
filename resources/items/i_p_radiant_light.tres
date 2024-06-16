@@ -1,6 +1,5 @@
-[gd_resource type="Resource" script_class="Item" load_steps=4 format=3 uid="uid://bhnk3scqt6166"]
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://bhnk3scqt6166"]
 
-[ext_resource type="PackedScene" uid="uid://dx5bmimy0513h" path="res://scenes/items/radiant_light/radiant_light_controller.tscn" id="1_ji8ja"]
 [ext_resource type="Script" path="res://resources/items/item.gd" id="1_ww0aj"]
 [ext_resource type="Texture2D" uid="uid://cyxbskmjd8cts" path="res://assets/visuals/items/radiant_light.png" id="2_kbokv"]
 
@@ -8,7 +7,6 @@
 script = ExtResource("1_ww0aj")
 id = &"radiant light"
 name = ""
-controller_scene = ExtResource("1_ji8ja")
 is_passive = true
 texture = ExtResource("2_kbokv")
 cooldown = 0.0

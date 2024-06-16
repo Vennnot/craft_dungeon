@@ -14,11 +14,17 @@ func _ready() -> void:
 	current_health = max_health
 
 
-func get_damaged(damage:int):
-	current_health -= damage
+func damage(damage_amount:int):
+	current_health -= damage_amount
 	if current_health == 0:
 		die()
-	print("Got damaged for %s" % damage)
+	print("Got damaged for %s" % damage_amount)
+
+
+func heal(heal_amount:int):
+	current_health += heal_amount
+	current_health = min(current_health,max_health)
+	print("Healed for %s" % heal_amount)
 
 
 func die() -> void:
