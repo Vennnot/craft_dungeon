@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bogtq7w2kcn5j"]
+
+[ext_resource type="Script" path="res://scenes/UI/tooltip/tooltip.gd" id="1_x5rqw"]
+
+[node name="Tooltip" type="PopupPanel"]
+size = Vector2i(107, 100)
+visible = true
+script = ExtResource("1_x5rqw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 103.0
+offset_bottom = 96.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "bruuuuuuuh"

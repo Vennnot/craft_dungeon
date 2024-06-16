@@ -6,6 +6,8 @@ signal menu_closed
 
 @onready var inventory: PanelContainer = %Inventory
 @onready var crafting_inventory: CraftingInventory = %CraftingInventory
+@onready var tooltip: PopupPanel = %Tooltip
+@onready var tooltip_timer: Timer = %TooltipTimer
 
 var any_menu_open : bool = false :
 	set(value):
@@ -28,7 +30,33 @@ var inventory_menu_open : bool = false :
 		_set_any_menu_open()
 
 func _ready() -> void:
+	EventBus.item_mouse_entered.connect(_tooltip_timer_start)
+	EventBus.item_mouse_exited.connect(hide_item_popup)
+	tooltip_timer.timeout.connect(_on_tooltip_timer_timeout)
+
+
+func _tooltip_timer_start(item:Item) -> void:
+	_update_tooltip(item)
+	tooltip_timer.start()
+
+
+func _update_tooltip(item:Item) -> void:
 	pass
+
+func _on_tooltip_timer_timeout() -> void:
+	show_item_popup()
+
+
+func show_item_popup() -> void:
+	var popup_position : Vector2 = get_viewport().get_mouse_position()
+	popup_position += Vector2(20,-tooltip.size.y/3)
+	tooltip.popup(Rect2i(popup_position,tooltip.size))
+
+
+func hide_item_popup() -> void:
+	tooltip.hide()
+
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("inventory"):

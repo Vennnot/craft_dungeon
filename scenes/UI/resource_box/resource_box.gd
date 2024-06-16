@@ -42,10 +42,22 @@ func _ready() -> void:
 	update_texture()
 	set_quantity(1,true)
 	
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
+	
 	if is_exclusively_material_slot:
 		quantity_label.visible=true
 
 
+func _on_mouse_entered()-> void:
+	if item == null:
+		return
+	
+	EventBus.item_mouse_entered.emit(item)
+
+
+func _on_mouse_exited()-> void:
+	EventBus.item_mouse_exited.emit()
 
 func _update_label() -> void:
 	if quantity == 0:
