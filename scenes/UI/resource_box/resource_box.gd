@@ -8,7 +8,7 @@ signal dropped_data
 @export var drag_preview_instance : PackedScene
 
 @onready var quantity_label: Label = $QuantityLabel
-@onready var texture_rect: TextureRect = $TextureRect
+@onready var texture_rect: TextureProgressBar = $TextureRect
 
 
 @export var in_inventory : bool = false
@@ -38,6 +38,7 @@ var quantity : int = 0 :
 var original_owner : ResourceBox = null
 
 func _ready() -> void:
+	item_cooldown_changed()
 	update_texture()
 	set_quantity(1,true)
 	
@@ -73,6 +74,8 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	return _check_combatibility(data)
 
 
+#FIXME currently not duplicating resources between slots
+
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if is_crafting_slot:
 		dropped_data.emit()
@@ -82,9 +85,8 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		restore_original_values()
 	_set_original_owner(data)
 	
-	
-	var origin_item : Resource = data["origin_resource"].duplicate()
-	
+	var origin_item : Resource = InventoryManager.get_item(data["origin_resource"])
+	print("Origin item %s" % origin_item)
 	#swaps items when in inventory
 	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
 		data["origin_node"].set_resource(item)
@@ -211,7 +213,8 @@ func _get_resource() -> Resource:
 
 
 func set_texture(texture:Texture) -> void:
-	texture_rect.texture = texture
+	texture_rect.texture_under = texture
+	texture_rect.texture_progress = texture
 
 func toggle_texture_opaqueness(opaque:bool=false) -> void:
 	if opaque:
@@ -225,14 +228,24 @@ func update_texture() -> void:
 
 
 func set_resource(resource:Resource) -> void:
+	if item != null:
+		if item.cooldown_changed.is_connected(item_cooldown_changed):
+			item.cooldown_changed.disconnect(item_cooldown_changed)
+	
 	
 	if resource is CraftingMaterial:
+		item_cooldown_changed()
 		item = null
 		crafting_material = resource
 	elif resource is Item:
 		crafting_material = null
-		item =resource
+		item = resource
+		texture_rect.value = 1-item.current_cooldown_percent
+		print("New Item: %s" % item)
+		if not item.cooldown_changed.is_connected(item_cooldown_changed):
+			item.cooldown_changed.connect(item_cooldown_changed)
 	elif resource == null:
+		item_cooldown_changed()
 		crafting_material = null
 		item = null
 	
@@ -243,6 +256,12 @@ func set_resource(resource:Resource) -> void:
 	
 	if is_crafting_slot:
 		contents_changed.emit(_get_resource(),id)
+
+
+func item_cooldown_changed(value:float=0)->void:
+	#print("Box: %s, Current cooldown percent: %s" % [self,(1-value)])
+	texture_rect.value = 1-value
+
 
 
 func set_quantity(amount:int,add:bool=false) -> void:

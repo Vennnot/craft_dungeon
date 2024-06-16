@@ -20,8 +20,7 @@ func use_item(slot_number:int) -> void:
 
 
 func _on_equipment_slot_updated(item:Item,slot_number:int) -> void:
-	print("Updated equipment slots from item manager")
-	var new_controller : Node = _add_item(item)
+	var new_controller : Node = _get_controller_from_item(item)
 	_replace_active_item_controller(new_controller,slot_number)
 
 
@@ -30,6 +29,7 @@ func _add_item(item:Item) -> Node:
 		return null
 	
 	if _get_controller_from_item(item) != null:
+		print("Item controller already exists!")
 		return null
 	
 	var controller_scene := item.controller_scene.instantiate()
@@ -42,6 +42,7 @@ func _remove_item(item:Item) -> void:
 	if item == null:
 		return
 	
+	#TODO disable instead of deleting
 	var controller_to_remove := _get_controller_from_item(item)
 	if controller_to_remove == null:
 		print("Could not find item controller")
