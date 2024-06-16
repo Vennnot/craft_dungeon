@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx5bmimy0513h"]
+
+[ext_resource type="Script" path="res://scenes/items/radiant_light/radiant_light_controller.gd" id="1_h1l07"]
+[ext_resource type="PackedScene" uid="uid://c2xmp4rr3x7q5" path="res://scenes/items/radiant_light/radiant_light.tscn" id="2_rni3r"]
+
+[node name="RadiantLightController" type="Node"]
+script = ExtResource("1_h1l07")
+item_scene = ExtResource("2_rni3r")
+item_id = &"radiant light"
+
+[node name="CooldownTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true

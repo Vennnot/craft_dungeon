@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2xmp4rr3x7q5"]
+
+[ext_resource type="Script" path="res://scenes/items/radiant_light/radiant_light.gd" id="1_lew4d"]
+[ext_resource type="Script" path="res://scenes/components/hitbox_component/hitbox_component.gd" id="3_6saef"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_afyqs"]
+radius = 30.0
+
+[node name="RadiantLight" type="Node2D"]
+scale = Vector2(-2, 2)
+script = ExtResource("1_lew4d")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 4
+script = ExtResource("3_6saef")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+unique_name_in_owner = true
+shape = SubResource("CircleShape2D_afyqs")
+disabled = true
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true

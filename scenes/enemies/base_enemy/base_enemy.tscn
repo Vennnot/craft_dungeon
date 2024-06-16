@@ -17,6 +17,7 @@ script = ExtResource("1_u4l4n")
 
 [node name="HealthComponent" parent="." instance=ExtResource("2_kd5k8")]
 unique_name_in_owner = true
+max_health = 6
 
 [node name="ItemDropComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_o2xm3")]
 health_component = NodePath("../HealthComponent")

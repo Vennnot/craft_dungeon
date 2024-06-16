@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbejduorveb1c"]
 
 [ext_resource type="Script" path="res://scenes/items/test_item/test_item.gd" id="1_5tubt"]
-[ext_resource type="Texture2D" uid="uid://cyxbskmjd8cts" path="res://assets/visuals/crafting_materials/[32]-Iconset-Starter_Pack_48.png" id="2_ltus4"]
+[ext_resource type="Texture2D" uid="uid://cyxbskmjd8cts" path="res://assets/visuals/items/radiant_light.png" id="2_ltus4"]
 
 [node name="TestItem" type="Node2D"]
 script = ExtResource("1_5tubt")

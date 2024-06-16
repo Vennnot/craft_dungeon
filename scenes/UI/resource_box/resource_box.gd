@@ -86,7 +86,6 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	_set_original_owner(data)
 	
 	var origin_item : Resource = InventoryManager.get_item(data["origin_resource"])
-	print("Origin item %s" % origin_item)
 	#swaps items when in inventory
 	if data["origin_node"].in_inventory and data["target_node"].in_inventory and (data["origin_node"].item != null and data["target_node"].item != null):
 		data["origin_node"].set_resource(item)
@@ -137,6 +136,103 @@ func _set_original_owner(data:Variant) -> void:
 	else:
 		original_owner = data["origin_node"].original_owner
 		data["origin_node"].original_owner = null
+
+
+
+
+
+func _get_resource_texture() -> Texture:
+	if item != null:
+		return item.texture
+	elif crafting_material != null:
+		return crafting_material.texture
+	else:
+		return null
+
+
+func _get_resource() -> Resource:
+	if item != null:
+		return item
+	elif crafting_material != null:
+		return crafting_material
+	else:
+		return null
+
+
+func set_texture(texture:Texture) -> void:
+	texture_rect.texture_under = texture
+	texture_rect.texture_progress = texture
+
+func toggle_texture_opaqueness(opaque:bool=false) -> void:
+	if opaque:
+		texture_rect.modulate.a = 0.5
+	else:
+		texture_rect.modulate.a = 1
+
+
+func update_texture() -> void:
+	set_texture(_get_resource_texture())
+
+
+func set_resource(resource:Resource) -> void:
+	if item != null:
+		if item.cooldown_changed.is_connected(item_cooldown_changed):
+			item.cooldown_changed.disconnect(item_cooldown_changed)
+	
+	
+	if resource is CraftingMaterial:
+		item_cooldown_changed()
+		item = null
+		crafting_material = resource
+	elif resource is Item:
+		crafting_material = null
+		item = resource
+		texture_rect.value = 1-item.current_cooldown_percent
+		if not item.cooldown_changed.is_connected(item_cooldown_changed):
+			item.cooldown_changed.connect(item_cooldown_changed)
+	elif resource == null:
+		item_cooldown_changed()
+		crafting_material = null
+		item = null
+	
+	if is_active_item_slot:
+		added_item.emit(resource,id)
+	
+	update_texture()
+	
+	if is_crafting_slot:
+		contents_changed.emit(_get_resource(),id)
+
+
+func item_cooldown_changed(value:float=0)->void:
+	#print("Box: %s, Current cooldown percent: %s" % [self,(1-value)])
+	texture_rect.value = 1-value
+
+
+
+func set_quantity(amount:int,add:bool=false) -> void:
+	if item == null and crafting_material == null:
+		_update_label()
+		return
+	
+	if add:
+		quantity += amount
+		if item != null and quantity > 1:
+			quantity = 1
+	else:
+		quantity = amount
+	
+	_quantity_check()
+	_update_label()
+
+
+func _quantity_check():
+	if quantity == 0:
+		if in_inventory:
+			if item != null and crafting_material == null:
+				set_resource(null)
+		else:
+			set_resource(null)
 
 
 func _check_combatibility(data:Variant) -> bool:
@@ -192,98 +288,3 @@ func _check_combatibility(data:Variant) -> bool:
 	if data["origin_node"].is_active_item_slot and item != null:
 		return not item.is_passive
 	return true
-
-
-func _get_resource_texture() -> Texture:
-	if item != null:
-		return item.texture
-	elif crafting_material != null:
-		return crafting_material.texture
-	else:
-		return null
-
-
-func _get_resource() -> Resource:
-	if item != null:
-		return item
-	elif crafting_material != null:
-		return crafting_material
-	else:
-		return null
-
-
-func set_texture(texture:Texture) -> void:
-	texture_rect.texture_under = texture
-	texture_rect.texture_progress = texture
-
-func toggle_texture_opaqueness(opaque:bool=false) -> void:
-	if opaque:
-		texture_rect.modulate.a = 0.5
-	else:
-		texture_rect.modulate.a = 1
-
-
-func update_texture() -> void:
-	set_texture(_get_resource_texture())
-
-
-func set_resource(resource:Resource) -> void:
-	if item != null:
-		if item.cooldown_changed.is_connected(item_cooldown_changed):
-			item.cooldown_changed.disconnect(item_cooldown_changed)
-	
-	
-	if resource is CraftingMaterial:
-		item_cooldown_changed()
-		item = null
-		crafting_material = resource
-	elif resource is Item:
-		crafting_material = null
-		item = resource
-		texture_rect.value = 1-item.current_cooldown_percent
-		print("New Item: %s" % item)
-		if not item.cooldown_changed.is_connected(item_cooldown_changed):
-			item.cooldown_changed.connect(item_cooldown_changed)
-	elif resource == null:
-		item_cooldown_changed()
-		crafting_material = null
-		item = null
-	
-	if is_active_item_slot:
-		added_item.emit(resource,id)
-	
-	update_texture()
-	
-	if is_crafting_slot:
-		contents_changed.emit(_get_resource(),id)
-
-
-func item_cooldown_changed(value:float=0)->void:
-	#print("Box: %s, Current cooldown percent: %s" % [self,(1-value)])
-	texture_rect.value = 1-value
-
-
-
-func set_quantity(amount:int,add:bool=false) -> void:
-	if item == null and crafting_material == null:
-		_update_label()
-		return
-	
-	if add:
-		quantity += amount
-		if item != null and quantity > 1:
-			quantity = 1
-	else:
-		quantity = amount
-	
-	_quantity_check()
-	_update_label()
-
-
-func _quantity_check():
-	if quantity == 0:
-		if in_inventory:
-			if item != null and crafting_material == null:
-				set_resource(null)
-		else:
-			set_resource(null)

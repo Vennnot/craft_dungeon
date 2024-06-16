@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyxbskmjd8cts"
-path="res://.godot/imported/[32]-Iconset-Starter_Pack_48.png-781e431dbf9edcdad8a8941f16c2244e.ctex"
+uid="uid://d8j0y55stypu"
+path="res://.godot/imported/tarrasquean_heart.png-53ab2c5d4b777bf481f63d8cf00cf891.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/visuals/crafting_materials/[32]-Iconset-Starter_Pack_48.png"
-dest_files=["res://.godot/imported/[32]-Iconset-Starter_Pack_48.png-781e431dbf9edcdad8a8941f16c2244e.ctex"]
+source_file="res://assets/visuals/items/tarrasquean_heart.png"
+dest_files=["res://.godot/imported/tarrasquean_heart.png-53ab2c5d4b777bf481f63d8cf00cf891.ctex"]
 
 [params]
 

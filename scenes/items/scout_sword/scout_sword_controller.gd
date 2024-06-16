@@ -12,7 +12,6 @@ var cooldown_percent : float :
 
 func _ready() -> void:
 	_initialize_item()
-	print(item)
 	cooldown_timer.wait_time = cooldown
 	cooldown_timer.timeout.connect(_on_timer_timeout)
 

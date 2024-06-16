@@ -49,8 +49,7 @@ func _remove_item(item:Item) -> void:
 	if active_item_controllers.has(controller_to_remove):
 		_replace_active_item_controller(null,active_item_controllers.find(controller_to_remove))
 	
-	item_controllers.erase(controller_to_remove)
-	controller_to_remove.call_deferred("queue_free")
+	_get_controller_from_item(item).disabled = true
 
 
 func _get_controller_from_item(item:Item) -> Node:
