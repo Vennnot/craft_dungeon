@@ -41,7 +41,7 @@ func _tooltip_timer_start(item:Item) -> void:
 
 
 func _update_tooltip(item:Item) -> void:
-	pass
+	tooltip.id_label.text = item.id
 
 func _on_tooltip_timer_timeout() -> void:
 	show_item_popup()
@@ -49,7 +49,7 @@ func _on_tooltip_timer_timeout() -> void:
 
 func show_item_popup() -> void:
 	var popup_position : Vector2 = get_viewport().get_mouse_position()
-	popup_position += Vector2(20,-tooltip.size.y/3)
+	popup_position += Vector2(20.0,-tooltip.size.y/3.0)
 	tooltip.popup(Rect2i(popup_position,tooltip.size))
 
 
