@@ -51,12 +51,12 @@ func _generate_dungeon() -> void:
 func _generate_base_rooms() -> void:
 	while number_of_rooms_to_generate > 0:
 		var room := _create_and_place_room()
+		dungeon_rooms.append(room)
 		#TODO if for some reason fails, try new empty cell and new room shape
 		#TODO connect previous room to current room
 		#TODO update grid
 		#TODO track last placed room
 		number_of_rooms_to_generate -= 1
-	print(dungeon_grid)
 
 
 
@@ -95,7 +95,7 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 
 func _set_room_position(room:Room,position:Vector2) -> void:
 	room.set_dungeon_grid_position(position)
-	room.set_room_position(position*room_length)
+	room.set_room_position((position*room_length))
 
 
 func _create_and_place_room() -> Room:
@@ -109,7 +109,6 @@ func _create_and_place_room() -> Room:
 			room_shape = RoomShape.new("1")
 	
 	var room : Room = _instantiate_room(room_shape)
-	dungeon_rooms.append(room)
 	_set_room_position(room, room_location)
 	for cell in room.get_cells():
 		_occupy_dungeon_cell(cell)
@@ -145,7 +144,8 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 4 + (floor_modifier * 2) + randi_range(0,2)
+	number_of_rooms_to_generate = 2
+#4 + (floor_modifier * 2) + randi_range(0,2)
 
 
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:
@@ -163,7 +163,7 @@ func _get_all_empty_adjacent_cells() -> Array[Vector2]:
 func _get_empty_adjacent_cells_to_room(room:Room) -> Array[Vector2]:
 	var empty_adjacent_cells : Array[Vector2] = []
 	for exit in room.room_shape.exits:
-		var room_exit_location : Vector2 = Vector2(exit.x+room.dungeon_grid_location.x,exit.y+room.dungeon_grid_location.y)
+		var room_exit_location : Vector2 = Vector2(exit.x+room.dungeon_grid_position.x,exit.y+room.dungeon_grid_position.y)
 		if _is_within_dungeon_grid(room_exit_location):
 			if dungeon_grid[room_exit_location.x][room_exit_location.y] == 0:
 				empty_adjacent_cells.append(room_exit_location)
@@ -187,6 +187,9 @@ func does_room_fit(room: RoomShape, position: Vector2) -> bool:
 
 # Find a fit for the room in a randomized order, returns true if a fit was found
 func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
+	if room_shape.room_type == 0:
+		return does_room_fit(room_shape, potential_position)
+	
 	var rotations = [0.0, 90.0, 180.0, 270.0]
 	rotations.shuffle()
 
@@ -201,7 +204,6 @@ func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
 			room_shape.flip(flip)
 			
 			if does_room_fit(room_shape, potential_position):
-				print("Found valid orientation")
 				return true
 
 	print("No possible room could fit")
