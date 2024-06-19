@@ -10,7 +10,7 @@ var connected_exits : Dictionary = {}
 
 func set_room_shape(new_room_shape:RoomShape)->void:
 	room_shape = new_room_shape
-	set_rotation(room_shape.rotation)
+	set_rotation(deg_to_rad(room_shape.rotation))
 	set_flipped(room_shape.flip_h)
 
 

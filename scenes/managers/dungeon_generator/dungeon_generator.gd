@@ -56,7 +56,7 @@ func _generate_base_rooms() -> void:
 		#TODO update grid
 		#TODO track last placed room
 		number_of_rooms_to_generate -= 1
-
+	print(dungeon_grid)
 
 
 
