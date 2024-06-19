@@ -17,6 +17,7 @@ func set_room_shape(new_room_shape:RoomShape)->void:
 func set_room_position(pos:Vector2) -> void:
 	position.x = pos.x
 	position.y = pos.y
+	print(position)
 
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
