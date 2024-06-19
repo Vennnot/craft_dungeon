@@ -1,4 +1,4 @@
-class_name Room
+class_name RoomShape
 
 var shape: Array[Vector2]  # Current cells occupied by the room
 var exits: Array[Vector2]  # Exits relative to the room's position

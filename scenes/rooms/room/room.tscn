@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://baueyafi7h6nc"]
+
+[ext_resource type="Script" path="res://scenes/rooms/room/room.gd" id="1_s6n4d"]
+[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="2_s3ot8"]
+
+[node name="Room" type="Node2D"]
+script = ExtResource("1_s6n4d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_s3ot8")
