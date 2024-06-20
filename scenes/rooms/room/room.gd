@@ -7,7 +7,7 @@ var room_shape : RoomShape
 var dungeon_grid_position : Vector2
 
 # 1 means they are connected
-var connected_exits : Dictionary = {}
+var exit_connections : Dictionary = {}
 
 func set_room_shape(new_room_shape:RoomShape)->void:
 	room_shape = new_room_shape
@@ -41,6 +41,9 @@ func set_room_position(pos:Vector2) -> void:
 	position.x = pos.x
 	position.y = pos.y
 	_load_debug_shapes()
+	for exit in get_exits():
+		exit_connections[exit] = Vector2.ZERO
+	print(exit_connections)
 	print(get_cells())
 
 
@@ -55,15 +58,10 @@ func set_flipped(flip_h:bool) -> void:
 		scale.y = 1
 
 
-func get_exits(multiplier:int)-> Array[Vector2]:
-	var exits : Array[Vector2] = room_shape.exits
-	for exit in exits:
-		exit.x *= multiplier
-		exit.x += position.x
-		
-		exit.y *= multiplier
-		exit.y += position.y
-	
+func get_exits()-> Array[Vector2]:
+	var exits : Array[Vector2] = []
+	for exit in room_shape.exits:
+		exits.append(Vector2(exit.x+dungeon_grid_position.x,exit.y+dungeon_grid_position.y))
 	return exits
 
 
@@ -72,3 +70,11 @@ func get_cells() -> Array[Vector2]:
 	for cell in room_shape.shape:
 		cells.append(Vector2(cell.x+dungeon_grid_position.x,cell.y+dungeon_grid_position.y))
 	return cells
+
+
+func is_exit_connected(exit:Vector2) -> bool:
+	return exit_connections[exit] != Vector2.ZERO
+
+
+func has_cell(cell:Vector2) -> bool:
+	return get_cells().has(cell)

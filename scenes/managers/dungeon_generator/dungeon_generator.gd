@@ -15,7 +15,7 @@ var quadruple_room_chance : float
 # used to iterate over empty adjacent cells and generate new rooms
 var dungeon_grid : Array = []
 
-var floor_modifier : int = 2
+var floor_modifier : int = 1
 var number_of_rooms_to_generate : int
 
 var spawn_room : Room
@@ -48,20 +48,50 @@ func _generate_dungeon() -> void:
 	_generate_spawn_room()
 	_generate_base_rooms()
 
+
 func _generate_base_rooms() -> void:
 	while number_of_rooms_to_generate > 0:
 		var room := _create_and_place_room()
 		dungeon_rooms.append(room)
-		#TODO if for some reason fails, try new empty cell and new room shape
 		#TODO connect previous room to current room
-		#TODO update grid
-		#TODO track last placed room
 		number_of_rooms_to_generate -= 1
 
 
+func _get_room_from_cell(c:Vector2) -> Room:
+	for room in dungeon_rooms:
+		for cell in room.get_cells():
+			if c == cell:
+				return room
+	print("No matching room was found")
+	return null
+
+
+func _connect_with_random_room(room:Room) -> Room:
+	var neighbors : Array[Room] = _get_neighbors(room)
+	neighbors.shuffle()
+	for random in neighbors:
+		for exit in room.exit_connections:
+			if random.has_cell(exit):
+				print("Rooms share a connection already")
+		
+	#TODO check if they already share an exit
+	#TODO if they do search for a common exit that is not connected
+	#TODO if all exits shared already connected print error message
+	var common_exit
+	return null
+
+
+func _get_neighbors(room:Room)-> Array[Room]:
+	var neighbors : Array[Room] = []
+	for exit in room.get_exits():
+		var current_room := _get_room_from_cell(exit)
+		if current_room != null:
+			if not neighbors.has(current_room):
+				neighbors.append(current_room)
+	return neighbors
 
 func _initialize_grid() -> void:
-	var modifier := floor_modifier*5
+	var modifier := floor_modifier*5*2
 	for i in modifier:
 		var row := []
 		for j in modifier:
@@ -144,7 +174,8 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 4 + (floor_modifier * 2) + randi_range(0,2)
+	number_of_rooms_to_generate = 2
+	#4 + (floor_modifier * 2) + randi_range(0,2)
 
 
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:
@@ -208,12 +239,10 @@ func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
 	print("No possible room could fit")
 	return false
 
-# generate rooms on a grid
-# 1. Can choose from multiple rooms, repetition and frequency depends on floor difficulty
 # 2. Connects room as they are placed. Connections are chosen at random.
 # 2.5 All rooms that have more than one neighbor should have two connections each
 # 3. Once complete place special rooms. They only have one entrance to a non-special room.
 # 3.5 boss room should be at least two spaces away from entrance
-#4. RoomShapes select their layout randomly, based on doors and type of room
+# 4. RoomShapes select their layout randomly, based on doors and type of room
 # 5. generate mini-map from this?
 # 6. spawn player
