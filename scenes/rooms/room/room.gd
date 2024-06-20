@@ -22,30 +22,26 @@ func _load_debug_shapes() -> void:
 		0:
 			color = Color.RED
 		1:
-			color = Color.BLUE
+			color = Color.YELLOW
 		2:
 			color = Color.PURPLE
 		3:
 			color = Color.GREEN
 	
-	print("---")
-	print(dungeon_grid_position)
-	print(room_shape.shape)
-	print("---")
 	
 	for cell in room_shape.shape:
 		var sprite := Sprite2D.new()
 		add_child(sprite)
-		sprite.position = cell*32
+		sprite.global_position = position + cell*32
 		sprite.texture = load("res://icon.svg")
 		sprite.scale = Vector2(0.25,0.25)
 		sprite.self_modulate = color
-
 
 func set_room_position(pos:Vector2) -> void:
 	position.x = pos.x
 	position.y = pos.y
 	_load_debug_shapes()
+	print(get_cells())
 
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
