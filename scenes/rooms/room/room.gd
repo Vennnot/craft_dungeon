@@ -28,7 +28,7 @@ func _load_debug_shapes() -> void:
 		3:
 			color = Color.GREEN
 	
-	
+	#TODO exit visuals
 	for cell in room_shape.shape:
 		var sprite := Sprite2D.new()
 		add_child(sprite)

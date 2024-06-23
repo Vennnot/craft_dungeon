@@ -78,3 +78,7 @@ func _on_interaction_area_entered(other_area:Area2D) -> void:
 
 func _on_interaction_area_exited(other_area:Area2D) -> void:
 	interaction_nodes.erase(other_area.get_parent())
+
+
+func teleport(teleport_position:Vector2) -> void:
+	global_position = teleport_position

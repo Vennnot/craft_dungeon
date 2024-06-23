@@ -24,10 +24,6 @@ var dungeon_rooms : Array[Room]
 func _ready() -> void:
 	_generate_dungeon()
 	$Button.pressed.connect(_generate_dungeon)
-	
-	#TODO if no room fits, regenerate a room
-	#TODO if room failed to generate try different exit and different room
-	#generate next room by iterating over empty exits
 	#TODO connect the rooms and their exits
 	#TODO fetch room from vector2D
 	#then continue until all rooms are generated
@@ -77,7 +73,7 @@ func _connect_with_random_room(room:Room) -> Room:
 	#TODO check if they already share an exit
 	#TODO if they do search for a common exit that is not connected
 	#TODO if all exits shared already connected print error message
-	var common_exit
+	var common_exit #here
 	return null
 
 
