@@ -17,6 +17,7 @@ var look_direction : Vector2 = Vector2.RIGHT
 func _ready() -> void:
 	interaction_area.area_entered.connect(_on_interaction_area_entered)
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
+	Camera.set_follow_target(self)
 
 
 func _process(_delta) -> void:

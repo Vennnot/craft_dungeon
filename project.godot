@@ -21,10 +21,12 @@ GlobalHelper="*res://scenes/autoloads/global_helper/global_helper.tscn"
 EventBus="*res://scenes/autoloads/event_bus/event_bus.tscn"
 CraftingManager="*res://scenes/autoloads/crafting_manager/crafting_manager.tscn"
 InventoryManager="*res://scenes/autoloads/inventory_manager/inventory_manager.tscn"
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+Camera="*res://scenes/autoloads/camera/camera.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_resource_groups/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [file_customization]
 

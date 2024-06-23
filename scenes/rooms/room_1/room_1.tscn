@@ -1,14 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://yke81ddpoy5e"]
 
-[ext_resource type="Texture2D" uid="uid://ddsxe883o5bjc" path="res://icon.svg" id="1_flbuh"]
+[ext_resource type="Script" path="res://scenes/rooms/room_1/room_1.gd" id="1_rt6y5"]
 [ext_resource type="PackedScene" uid="uid://lyap1tgv6rec" path="res://scenes/components/doorway_component/doorway_component.tscn" id="2_hq8nc"]
 
 [node name="Room1" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-self_modulate = Color(1, 0.286275, 1, 1)
-position = Vector2(539, 298)
-texture = ExtResource("1_flbuh")
+script = ExtResource("1_rt6y5")
 
 [node name="North" parent="." instance=ExtResource("2_hq8nc")]
 position = Vector2(542, 10)

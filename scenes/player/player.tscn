@@ -19,6 +19,7 @@ radius = 85.0059
 radius = 48.8365
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_mask = 8
 script = ExtResource("1_ln4af")
 
 [node name="ItemManager" parent="." instance=ExtResource("2_286n8")]
@@ -37,7 +38,6 @@ scale = Vector2(4, 4)
 texture = ExtResource("2_n72ov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visibility_layer = 8
 shape = SubResource("CapsuleShape2D_q1ptf")
 debug_color = Color(0.790601, 0.406313, 0.373983, 0.42)
 

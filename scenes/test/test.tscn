@@ -1,16 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3goywx2ex3q"]
+[gd_scene load_steps=8 format=3 uid="uid://c3goywx2ex3q"]
 
 [ext_resource type="PackedScene" uid="uid://eejmgmli0ap6" path="res://scenes/managers/game_manager.tscn" id="1_dkhun"]
 [ext_resource type="PackedScene" uid="uid://deoakpedccwm" path="res://scenes/player/player.tscn" id="1_hvcfw"]
 [ext_resource type="PackedScene" uid="uid://sv25h34iocl7" path="res://scenes/UI/main_UI.tscn" id="2_4a8o8"]
 [ext_resource type="PackedScene" uid="uid://bfmdxmiwg82fk" path="res://scenes/interactables/crafting_table/crafting_table.tscn" id="3_ft462"]
 [ext_resource type="PackedScene" uid="uid://uqneua6qhljr" path="res://scenes/enemies/base_enemy/base_enemy.tscn" id="5_phrao"]
-[ext_resource type="PackedScene" uid="uid://lyap1tgv6rec" path="res://scenes/components/doorway_component/doorway_component.tscn" id="6_ctrr4"]
 [ext_resource type="PackedScene" uid="uid://b2ug4uw7uaaa2" path="res://scenes/rooms/tile_maps/1/tile_map.tscn" id="6_rt7in"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5vcmh"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_87mrt"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rw0gf"]
+size = Vector2(1172, 666)
 
 [node name="Test" type="Node2D"]
 
@@ -30,24 +28,9 @@ position = Vector2(315, 228)
 [node name="CraftingTable" parent="GameManager/Interactables" instance=ExtResource("3_ft462")]
 position = Vector2(572, 229)
 
-[node name="DoorwayComponent" parent="." node_paths=PackedStringArray("teleport_marker", "other_doorway") instance=ExtResource("6_ctrr4")]
-position = Vector2(105, 234)
-teleport_marker = NodePath("Marker2D")
-other_doorway = NodePath("../DoorwayComponent2")
+[node name="CameraCollisionArea" type="Area2D" parent="GameManager"]
 
-[node name="Marker2D" type="Marker2D" parent="DoorwayComponent"]
-position = Vector2(125, -1)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorwayComponent"]
-shape = SubResource("RectangleShape2D_5vcmh")
-
-[node name="DoorwayComponent2" parent="." node_paths=PackedStringArray("teleport_marker", "other_doorway") instance=ExtResource("6_ctrr4")]
-position = Vector2(853, 239)
-teleport_marker = NodePath("Marker2D")
-other_doorway = NodePath("../DoorwayComponent")
-
-[node name="Marker2D" type="Marker2D" parent="DoorwayComponent2"]
-position = Vector2(-128, -1)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="DoorwayComponent2"]
-shape = SubResource("RectangleShape2D_87mrt")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GameManager/CameraCollisionArea"]
+position = Vector2(576, 323)
+shape = SubResource("RectangleShape2D_rw0gf")
+disabled = true

@@ -1,7 +1,6 @@
 extends Node2D
 class_name Room
 
-
 var room_shape : RoomShape
 
 var dungeon_grid_position : Vector2
