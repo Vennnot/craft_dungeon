@@ -5,8 +5,11 @@
 [ext_resource type="PackedScene" uid="uid://wc7ucutm1t88" path="res://scenes/UI/recipe_list/recipe_list.tscn" id="3_2l2lw"]
 
 [node name="CraftingInventory" type="PanelContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_iw5q6")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

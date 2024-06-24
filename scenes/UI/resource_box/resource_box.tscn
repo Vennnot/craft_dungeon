@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://cucmglk7nin4i" path="res://assets/visuals/items/purplepotion.png" id="3_n6ek6"]
 
 [node name="ResourceBox" type="PanelContainer"]
-custom_minimum_size = Vector2(50, 50)
-offset_right = 32.0
-offset_bottom = 32.0
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
 size_flags_horizontal = 4
 script = ExtResource("1_nvlgj")
 drag_preview_instance = ExtResource("2_8owgi")

@@ -10,8 +10,6 @@
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -374.0
-offset_bottom = -436.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -20,7 +18,7 @@ script = ExtResource("1_1xfhu")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="MaterialInventory" parent="HBoxContainer" instance=ExtResource("1_eyyp4")]

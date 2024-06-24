@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://brjwhjf4tox5o" path="res://scenes/UI/resource_box/resource_box.tscn" id="1_yxdwc"]
 
 [node name="RecipeDisplay" type="Button"]
-offset_right = 387.0
-offset_bottom = 50.0
+offset_right = 200.0
+offset_bottom = 20.0
 script = ExtResource("1_3e50g")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -17,6 +17,7 @@ mouse_filter = 2
 [node name="ResourceBox1" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true
 
@@ -29,29 +30,34 @@ mouse_filter = 2
 [node name="ResourceBox2" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true
 
 [node name="ResourceBox3" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true
 
 [node name="ResourceBox4" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true
 
 [node name="ResourceBox5" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true
 
 [node name="ResourceBox6" parent="HBoxContainer" instance=ExtResource("1_yxdwc")]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_vertical = 0
 mouse_filter = 2
 is_result = true

@@ -15,7 +15,6 @@ ease = 2
 script = ExtResource("1_o380l")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(566, 314)
 process_callback = 0
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -23,11 +22,11 @@ script = ExtResource("1_ce1v6")
 
 [node name="PhantomCamera2D" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(566, 314)
 script = ExtResource("2_rjt8u")
 follow_mode = 5
 snap_to_pixel = true
 tween_resource = SubResource("Resource_slidj")
 tween_on_load = false
+inactive_update_mode = 1
 follow_damping = true
 follow_damping_value = Vector2(0.25, 0.25)
