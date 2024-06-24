@@ -1,19 +1,70 @@
-[gd_scene load_steps=3 format=3 uid="uid://yke81ddpoy5e"]
+[gd_scene load_steps=6 format=3 uid="uid://yke81ddpoy5e"]
 
-[ext_resource type="Script" path="res://scenes/rooms/room_1/room_1.gd" id="1_rt6y5"]
+[ext_resource type="Script" path="res://scenes/rooms/room/room.gd" id="1_luh5j"]
 [ext_resource type="PackedScene" uid="uid://lyap1tgv6rec" path="res://scenes/components/doorway_component/doorway_component.tscn" id="2_hq8nc"]
+[ext_resource type="PackedScene" uid="uid://b2ug4uw7uaaa2" path="res://scenes/rooms/tile_maps/1/tile_map_1_0.tscn" id="3_kg2dc"]
+[ext_resource type="PackedScene" uid="uid://ca4o15qx73top" path="res://scenes/components/camera_collision_area_component/camera_collision_area_component.tscn" id="4_7aubj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0k0cw"]
+size = Vector2(272, 176)
 
 [node name="Room1" type="Node2D"]
-script = ExtResource("1_rt6y5")
+script = ExtResource("1_luh5j")
 
-[node name="North" parent="." instance=ExtResource("2_hq8nc")]
-position = Vector2(542, 10)
+[node name="TileMap" parent="." instance=ExtResource("3_kg2dc")]
+unique_name_in_owner = true
 
-[node name="Marker2D" type="Marker2D" parent="North"]
-position = Vector2(0, 104)
+[node name="CameraCollisionAreaComponent" parent="." instance=ExtResource("4_7aubj")]
 
-[node name="North2" parent="." instance=ExtResource("2_hq8nc")]
-position = Vector2(539, 624)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraCollisionAreaComponent"]
+position = Vector2(136, 88)
+shape = SubResource("RectangleShape2D_0k0cw")
+disabled = true
 
-[node name="Marker2D" type="Marker2D" parent="North2"]
-position = Vector2(0, 104)
+[node name="Doorways" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="North" parent="Doorways" instance=ExtResource("2_hq8nc")]
+position = Vector2(128, 0)
+doorway_room_vector = Vector2(0, -1)
+
+[node name="CollisionShape2D" parent="Doorways/North" index="0"]
+position = Vector2(8, 8)
+
+[node name="Marker2D" parent="Doorways/North" index="1"]
+position = Vector2(8, 32)
+
+[node name="South" parent="Doorways" instance=ExtResource("2_hq8nc")]
+position = Vector2(128, 160)
+doorway_room_vector = Vector2(0, 1)
+
+[node name="CollisionShape2D" parent="Doorways/South" index="0"]
+position = Vector2(8, 8)
+
+[node name="Marker2D" parent="Doorways/South" index="1"]
+position = Vector2(8, -16)
+
+[node name="West" parent="Doorways" instance=ExtResource("2_hq8nc")]
+position = Vector2(0, 80)
+doorway_room_vector = Vector2(-1, 0)
+
+[node name="CollisionShape2D" parent="Doorways/West" index="0"]
+position = Vector2(8, 8)
+
+[node name="Marker2D" parent="Doorways/West" index="1"]
+position = Vector2(32, 8)
+
+[node name="East" parent="Doorways" instance=ExtResource("2_hq8nc")]
+position = Vector2(256, 80)
+doorway_room_vector = Vector2(1, 0)
+
+[node name="CollisionShape2D" parent="Doorways/East" index="0"]
+position = Vector2(8, 8)
+
+[node name="Marker2D" parent="Doorways/East" index="1"]
+position = Vector2(-16, 8)
+
+[editable path="Doorways/North"]
+[editable path="Doorways/South"]
+[editable path="Doorways/West"]
+[editable path="Doorways/East"]

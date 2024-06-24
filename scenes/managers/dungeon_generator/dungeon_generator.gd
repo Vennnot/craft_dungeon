@@ -1,7 +1,5 @@
 extends Node
 
-@export var room_template : PackedScene = preload("res://scenes/rooms/room/room.tscn")
-
 const base_point : Vector2 = Vector2(500,300)
 const room_length : float = 32
 const base_double_room_chance : float = 0.4

@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ca4o15qx73top"]
+
+[node name="CameraCollisionAreaComponent" type="Area2D"]

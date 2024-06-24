@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 @export_group("Movement","movement")
-@export var movement_speed : float = 500
+@export var movement_speed : float = 100
 @export var movement_friction : float = 0.18
 
 @onready var interaction_area: Area2D = $InteractionArea
@@ -20,7 +20,7 @@ func _ready() -> void:
 	Camera.set_follow_target(self)
 
 
-func _process(_delta) -> void:
+func _physics_process(_delta) -> void:
 	movement_direction = _get_movement_direction()
 	look_direction = _get_look_direction()
 	

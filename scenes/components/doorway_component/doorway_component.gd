@@ -3,19 +3,28 @@ class_name DoorwayComponent
 
 signal active_room(room:Room)
 
-@export var teleport_marker : Marker2D
+@onready var teleport_marker : Marker2D = %Marker2D
 
 @export var other_doorway : DoorwayComponent
+@export var doorway_room_vector : Vector2 =  Vector2.ZERO
 
 var is_locked : bool = false
+var is_disabled : bool = false
 
 
 func _ready() -> void:
-	assert(teleport_marker!=null,"Doorway teleport_marker is empty!")
 	area_entered.connect(_on_area_entered)
 
 
+func enable() -> void:
+	is_disabled = false
+
+
+
 func _on_area_entered(other_area:Area2D) -> void:
+	if is_disabled:
+		return
+	
 	if other_doorway == null:
 		return
 	

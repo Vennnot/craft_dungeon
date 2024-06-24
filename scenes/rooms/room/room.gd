@@ -5,8 +5,37 @@ var room_shape : RoomShape
 
 var dungeon_grid_position : Vector2
 
+var doorways_array : Array[DoorwayComponent]
 # 1 means they are connected
 var exit_connections : Dictionary = {}
+
+
+@onready var camera_collision: Area2D = $CameraCollisionAreaComponent
+@onready var tile_map: TileMap = %TileMap
+@onready var doorways: Node2D = %Doorways
+
+
+var doorway_tile_layer : int = 0
+
+func _ready() -> void:
+	#_doorway_tile_setup()
+	pass
+
+func _doorway_tile_setup() -> void:
+	for doorway in doorways.get_children():
+		if doorway.is_disabled:
+			continue
+		
+		_doorway_tile_lock(doorway)
+
+func _doorway_tile_lock(doorway:DoorwayComponent) -> void:
+	tile_map.set_cell(doorway_tile_layer,doorway.doorway_tile_location,1,Vector2(9,3))
+
+
+func _doorway_tile_unlock(doorway:DoorwayComponent) -> void:
+	tile_map.set_cell(doorway_tile_layer,doorway.doorway_tile_location,1,Vector2(9,0))
+
+
 
 func set_room_shape(new_room_shape:RoomShape)->void:
 	room_shape = new_room_shape

@@ -9,14 +9,14 @@
 [ext_resource type="Script" path="res://scenes/components/hurtbox_component/hurtbox_component.gd" id="4_8qurw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1ptf"]
-radius = 16.0
-height = 36.0
+radius = 5.0
+height = 16.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_237jw"]
-radius = 85.0059
+radius = 29.1548
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0x7od"]
-radius = 48.8365
+radius = 7.28011
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_mask = 8
@@ -34,7 +34,6 @@ crafting_material = ExtResource("3_bg8yn")
 health_component = NodePath("../HealthComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
 texture = ExtResource("2_n72ov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

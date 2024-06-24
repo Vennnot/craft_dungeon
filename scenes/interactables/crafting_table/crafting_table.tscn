@@ -4,13 +4,12 @@
 [ext_resource type="Texture2D" uid="uid://bvpwnwbh6bypa" path="res://assets/visuals/interactables/tile_0090.png" id="2_c60jl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ltr3e"]
-radius = 63.0714
+radius = 13.3417
 
 [node name="CraftingTable" type="Node2D" groups=["crafting_tables", "interactable_menus"]]
 script = ExtResource("1_14p1s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
 texture = ExtResource("2_c60jl")
 
 [node name="InteractableArea" type="Area2D" parent="."]
