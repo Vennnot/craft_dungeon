@@ -2,16 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://eejmgmli0ap6" path="res://scenes/managers/game_manager.tscn" id="1_dkhun"]
 [ext_resource type="PackedScene" uid="uid://deoakpedccwm" path="res://scenes/player/player.tscn" id="1_hvcfw"]
+[ext_resource type="PackedScene" uid="uid://qktg011gxdxv" path="res://scenes/rooms/room_4/room_4.tscn" id="1_p7a65"]
 [ext_resource type="PackedScene" uid="uid://sv25h34iocl7" path="res://scenes/UI/main_UI.tscn" id="2_4a8o8"]
-[ext_resource type="PackedScene" uid="uid://yke81ddpoy5e" path="res://scenes/rooms/room_1/room_1.tscn" id="2_flxue"]
 [ext_resource type="PackedScene" uid="uid://bfmdxmiwg82fk" path="res://scenes/interactables/crafting_table/crafting_table.tscn" id="3_ft462"]
 [ext_resource type="PackedScene" uid="uid://uqneua6qhljr" path="res://scenes/enemies/base_enemy/base_enemy.tscn" id="5_phrao"]
 
 [node name="Test" type="Node2D"]
 
-[node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
+[node name="Room4" parent="." instance=ExtResource("1_p7a65")]
 
-[node name="Room1" parent="." instance=ExtResource("2_flxue")]
+[node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
 
 [node name="Player" parent="." instance=ExtResource("1_hvcfw")]
 position = Vector2(88, 97)

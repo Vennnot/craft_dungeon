@@ -1,5 +1,10 @@
 extends Node
 
+const ROOM_1 = preload("res://scenes/rooms/room_1/room_1.tscn")
+const ROOM_2 = preload("res://scenes/rooms/room_2/room_2.tscn")
+const ROOM_3 = preload("res://scenes/rooms/room_3/room_3.tscn")
+const ROOM_4 = preload("res://scenes/rooms/room_4/room_4.tscn")
+
 const base_point : Vector2 = Vector2(500,300)
 const room_length : float = 32
 const base_double_room_chance : float = 0.4
@@ -111,7 +116,18 @@ func _occupy_dungeon_cell(cell:Vector2) -> void:
 
 
 func _instantiate_room(room_shape:RoomShape) -> Room:
-	var room : Room = room_template.instantiate()
+	print(room_shape)
+	var room : Room
+	match room_shape.room_type:
+		1:
+			room = ROOM_1.instantiate()
+		2:
+			room = ROOM_2.instantiate()
+		3:
+			room = ROOM_3.instantiate()
+		4:
+			room = ROOM_4.instantiate()
+	
 	add_child(room)
 	room.set_room_shape(room_shape)
 	return room

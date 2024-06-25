@@ -20,7 +20,7 @@ func _ready() -> void:
 	Camera.set_follow_target(self)
 
 
-func _physics_process(_delta) -> void:
+func _process(_delta) -> void:
 	movement_direction = _get_movement_direction()
 	look_direction = _get_look_direction()
 	

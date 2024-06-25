@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://scenes/components/hurtbox_component/hurtbox_component.gd" id="4_8qurw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q1ptf"]
-radius = 5.0
-height = 16.0
+radius = 4.0
+height = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_237jw"]
 radius = 29.1548

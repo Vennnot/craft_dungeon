@@ -5,7 +5,7 @@ var exits: Array[Vector2]  # Exits relative to the room's position
 var rotation: float = 0 # Current rotation angle
 var flip_h: bool = false # Flipped on the H axis
 var room_type : ROOM_TYPE
-enum ROOM_TYPE {ONE,TWO,THREE,FOUR}
+enum ROOM_TYPE {ONE=1,TWO=2,THREE=3,FOUR=4}
 
 func _init(type:String)-> void:
 	match type:

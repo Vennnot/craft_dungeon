@@ -1,12 +1,11 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://na3ea5l23jt7"]
 
-[ext_resource type="Texture2D" uid="uid://cpoguplm4rq3s" path="res://assets/visuals/environment/tilemap.png" id="1_r1n3r"]
+[ext_resource type="Texture2D" uid="uid://cpoguplm4rq3s" path="res://assets/visuals/environment/tilemap.png" id="1_abrq8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vfx4m"]
-texture = ExtResource("1_r1n3r")
+texture = ExtResource("1_abrq8")
 separation = Vector2i(1, 1)
 0:0/0 = 0
-0:0/0/terrain_set = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -145,7 +144,6 @@ separation = Vector2i(1, 1)
 9:3/0 = 0
 9:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:3/0/physics_layer_0/angular_velocity = 0.0
-9:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 10:3/0 = 0
 10:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 10:3/0/physics_layer_0/angular_velocity = 0.0
@@ -153,15 +151,9 @@ separation = Vector2i(1, 1)
 11:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:3/0/physics_layer_0/angular_velocity = 0.0
 0:4/0 = 0
-0:4/0/terrain_set = 0
-0:4/0/terrain = 0
-0:4/0/probability = 0.7
 0:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:4/0/physics_layer_0/angular_velocity = 0.0
 1:4/0 = 0
-1:4/0/terrain_set = 0
-1:4/0/terrain = 0
-1:4/0/probability = 0.3
 1:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:4/0/physics_layer_0/angular_velocity = 0.0
 2:4/0 = 0
