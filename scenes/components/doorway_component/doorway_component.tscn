@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://scenes/components/doorway_component/doorway_component.gd" id="1_vbtrl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftpfd"]
-size = Vector2(16, 16)
+size = Vector2(4, 4)
 
 [node name="DoorwayComponent" type="Area2D"]
+collision_layer = 16
 script = ExtResource("1_vbtrl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

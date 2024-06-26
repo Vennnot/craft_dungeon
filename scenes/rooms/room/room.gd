@@ -18,23 +18,23 @@ var exit_connections : Dictionary = {}
 var doorway_tile_layer : int = 0
 
 func _ready() -> void:
-	#_doorway_tile_setup()
-	pass
+	_initialize_doorways()
 
-func _doorway_tile_setup() -> void:
+
+func _initialize_doorways() -> void:
 	for doorway in doorways.get_children():
-		if doorway.is_disabled:
-			continue
-		
-		_doorway_tile_lock(doorway)
-
-func _doorway_tile_lock(doorway:DoorwayComponent) -> void:
-	tile_map.set_cell(doorway_tile_layer,doorway.doorway_tile_location,1,Vector2(9,3))
+		doorways_array.append(doorway)
+		doorway.body_entered.connect(_on_doorway_entered.bind(doorway))
 
 
-func _doorway_tile_unlock(doorway:DoorwayComponent) -> void:
-	tile_map.set_cell(doorway_tile_layer,doorway.doorway_tile_location,1,Vector2(9,0))
-
+func _on_doorway_entered(body:Node2D, doorway:DoorwayComponent) -> void:
+	if not body is Player:
+		return
+	
+	var new_room : Room = doorway.get_parent().get_parent()
+	var room_path : String = Camera.get_path_to(new_room.camera_collision.get_child(0))
+	var final_path := "../"+room_path
+	Camera.set_limit_target(final_path)
 
 
 func set_room_shape(new_room_shape:RoomShape)->void:

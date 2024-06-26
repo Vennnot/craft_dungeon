@@ -6,7 +6,6 @@ var ui : MainUI = null
 func _ready() -> void:
 	_get_player()
 	_get_ui()
-	Camera.set_limit_target("../../Test/Room4/CameraCollisionAreaComponent/CollisionShape2D")
 	ui.menu_opened.connect(_ui_menu_opened)
 	ui.menu_closed.connect(_ui_menu_closed)
 

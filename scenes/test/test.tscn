@@ -14,7 +14,7 @@
 [node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
 
 [node name="Player" parent="." instance=ExtResource("1_hvcfw")]
-position = Vector2(88, 97)
+position = Vector2(-70, 63)
 
 [node name="Main_UI" parent="." instance=ExtResource("2_4a8o8")]
 
