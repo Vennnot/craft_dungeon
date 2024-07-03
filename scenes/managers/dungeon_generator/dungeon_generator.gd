@@ -6,7 +6,7 @@ const ROOM_3 = preload("res://scenes/rooms/room_3/room_3.tscn")
 const ROOM_4 = preload("res://scenes/rooms/room_4/room_4.tscn")
 
 const base_point : Vector2 = Vector2(500,300)
-const room_length : float = 32
+const cell_size : float = 16
 const base_double_room_chance : float = 0.4
 const base_triple_room_chance : float = 0.2
 const base_quadruple_room_chance : float = 0.1
@@ -40,6 +40,7 @@ func _generate_dungeon() -> void:
 	
 	dungeon_rooms = []
 	dungeon_grid = []
+	number_of_rooms_to_generate = 0
 	
 	_initialize_number_of_rooms()
 	_initialize_room_chance_variables()
@@ -50,10 +51,18 @@ func _generate_dungeon() -> void:
 
 func _generate_base_rooms() -> void:
 	while number_of_rooms_to_generate > 0:
-		var room := _create_and_place_room()
-		dungeon_rooms.append(room)
-		#TODO connect previous room to current room
+		var new_room := _create_and_place_room()
+		dungeon_rooms.append(new_room)
+		_connect_room(new_room)
 		number_of_rooms_to_generate -= 1
+
+
+func _validate_room_exits() -> void:
+	pass
+
+
+func _validate_minimum_room_connections(room:Room) -> bool:
+	return false
 
 
 func _get_room_from_cell(c:Vector2) -> Room:
@@ -65,19 +74,39 @@ func _get_room_from_cell(c:Vector2) -> Room:
 	return null
 
 
-func _connect_with_random_room(room:Room) -> Room:
+func _connect_room(room:Room) -> Room:
 	var neighbors : Array[Room] = _get_neighbors(room)
 	neighbors.shuffle()
-	for random in neighbors:
-		for exit in room.exit_connections:
-			if random.has_cell(exit):
-				print("Rooms share a connection already")
+	for random_room in neighbors:
+		var adjacent_cells = _get_adjacent_cells(room, random_room)
+		
 		
 	#TODO check if they already share an exit
 	#TODO if they do search for a common exit that is not connected
 	#TODO if all exits shared already connected print error message
-	var common_exit #here
 	return null
+
+
+func _get_doorways(room_1:Room,room_2:Room,adjacent_cells:Array[Vector2])->Array[DoorwayComponent]:
+	# Try simply fetching the doorway
+	# rotate doorway vectors in room if room is rotated
+	return []
+
+
+func _are_doorways_connected(doorway_1:Room,doorway_2:Room) -> bool:
+	var connected : bool = false
+	return connected
+
+
+func _get_adjacent_cells(room_1:Room,room_2:Room) -> Array[Array]:
+	var adjacent_cells : Array[Array] = []
+	for cell_1 in room_1.dungeon_grid_cells_occupied:
+		for cell_2 in room_2.dungeon_grid_cells_occupied:
+			var delta_x = abs(cell_1.x - cell_2.x)
+			var delta_y = abs(cell_1.y - cell_2.y)
+			if delta_x + delta_y == 1:
+				adjacent_cells.append([cell_1,cell_2])
+	return adjacent_cells
 
 
 func _get_neighbors(room:Room)-> Array[Room]:
@@ -135,7 +164,7 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 
 func _set_room_position(room:Room,position:Vector2) -> void:
 	room.set_dungeon_grid_position(position)
-	room.set_room_position((position*room_length))
+	room.set_room_position((position*cell_size))
 
 
 func _create_and_place_room() -> Room:

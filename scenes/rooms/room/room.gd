@@ -4,8 +4,9 @@ class_name Room
 var room_shape : RoomShape
 
 var dungeon_grid_position : Vector2
+var dungeon_grid_cells_occupied : Array[Vector2]
 
-var doorways_array : Array[DoorwayComponent]
+var doorway_array : Array[DoorwayComponent]
 # 1 means they are connected
 var exit_connections : Dictionary = {}
 
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 func _initialize_doorways() -> void:
 	for doorway in doorways.get_children():
-		doorways_array.append(doorway)
+		doorway_array.append(doorway)
 		doorway.body_entered.connect(_on_doorway_entered.bind(doorway))
 
 
@@ -77,6 +78,8 @@ func set_room_position(pos:Vector2) -> void:
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
 	dungeon_grid_position = grid_pos
+	for cell in room_shape.shape:
+		dungeon_grid_cells_occupied.append(grid_pos+cell)
 
 
 func set_flipped(flip_h:bool) -> void:
