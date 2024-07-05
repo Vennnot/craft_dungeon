@@ -57,12 +57,48 @@ func _generate_base_rooms() -> void:
 		number_of_rooms_to_generate -= 1
 
 
-func _validate_room_exits() -> void:
-	pass
+func _connect_room(room:Room) -> void:
+	var unconnected_doorways : Array[Array] = []
+	var neighbors : Array[Room] = _get_neighbors(room)
+	neighbors.shuffle()
+	for random_room in neighbors:
+		var adjacent_cells : Array[Array] = _get_adjacent_cells(room, random_room)
+		for cells in adjacent_cells:
+			unconnected_doorways = _get_unconnected_doorway_pairs(room,random_room,adjacent_cells)
+	
+	if unconnected_doorways.is_empty():
+		return
+	
+	var doorways_to_connect : Array = unconnected_doorways.pick_random()
+	_connect_doorways(doorways_to_connect[0],doorways_to_connect[1])
 
 
+func _connect_doorways(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent)->void:
+	doorway_1.other_doorway = doorway_2
+	doorway_2.other_doorway = doorway_1
+
+
+# All non-special rooms should have at least 2 connected doorways
 func _validate_minimum_room_connections(room:Room) -> bool:
 	return false
+
+
+
+func _get_unconnected_doorway_pairs(room_1:Room,room_2:Room,adjacent_cells:Array[Array])->Array[Array]:
+	var unconnected_doorway_pairs : Array[Array]
+	for cell_pair in adjacent_cells:
+		var doorway_1 : DoorwayComponent = room_1.get_doorway(cell_pair[1])
+		var doorway_2 : DoorwayComponent = room_2.get_doorway(cell_pair[0])
+		if (doorway_1 == null or doorway_2 == null) or (doorway_1.other_doorway != null and doorway_2.other_doorway):
+			continue
+		
+		unconnected_doorway_pairs.append([doorway_1,doorway_2])
+		
+	return unconnected_doorway_pairs
+
+
+func _are_doorways_connected(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent) -> bool:
+	return doorway_1.other_doorway == doorway_2 and doorway_2.other_doorway == doorway_1
 
 
 func _get_room_from_cell(c:Vector2) -> Room:
@@ -72,30 +108,6 @@ func _get_room_from_cell(c:Vector2) -> Room:
 				return room
 	print("No matching room was found")
 	return null
-
-
-func _connect_room(room:Room) -> Room:
-	var neighbors : Array[Room] = _get_neighbors(room)
-	neighbors.shuffle()
-	for random_room in neighbors:
-		var adjacent_cells = _get_adjacent_cells(room, random_room)
-		
-		
-	#TODO check if they already share an exit
-	#TODO if they do search for a common exit that is not connected
-	#TODO if all exits shared already connected print error message
-	return null
-
-
-func _get_doorways(room_1:Room,room_2:Room,adjacent_cells:Array[Vector2])->Array[DoorwayComponent]:
-	# Try simply fetching the doorway
-	
-	return []
-
-
-func _are_doorways_connected(doorway_1:Room,doorway_2:Room) -> bool:
-	var connected : bool = false
-	return connected
 
 
 func _get_adjacent_cells(room_1:Room,room_2:Room) -> Array[Array]:

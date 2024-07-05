@@ -110,3 +110,10 @@ func adjust_doorways() -> void:
 		doorway.rotate_vector(deg_to_rad(room_shape.rotation))
 		doorway.flip_vector_horizontally(room_shape.flip_h)
 		print(doorway.doorway_room_vector)
+
+
+func get_doorway(v:Vector2) -> DoorwayComponent:
+	for doorway in doorway_array:
+		if doorway.doorway_room_vector == v:
+			return doorway
+	return null 
