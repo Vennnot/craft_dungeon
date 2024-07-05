@@ -89,7 +89,7 @@ func _connect_room(room:Room) -> Room:
 
 func _get_doorways(room_1:Room,room_2:Room,adjacent_cells:Array[Vector2])->Array[DoorwayComponent]:
 	# Try simply fetching the doorway
-	# rotate doorway vectors in room if room is rotated
+	
 	return []
 
 
@@ -145,7 +145,6 @@ func _occupy_dungeon_cell(cell:Vector2) -> void:
 
 
 func _instantiate_room(room_shape:RoomShape) -> Room:
-	print(room_shape)
 	var room : Room
 	match room_shape.room_type:
 		1:
@@ -163,8 +162,9 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 
 
 func _set_room_position(room:Room,position:Vector2) -> void:
-	room.set_dungeon_grid_position(position)
 	room.set_room_position((position*cell_size))
+	room.set_dungeon_grid_position(position)
+	room.adjust_doorways()
 
 
 func _create_and_place_room() -> Room:
@@ -200,9 +200,9 @@ func _get_random_room_type() -> RoomShape:
 		#FIXME this random ass decrease needs to make more sense
 		quadruple_room_chance /= (8-float(floor_modifier))
 		room_type = "4"
-	elif random_float < quadruple_room_chance + triple_room_chance:
-		triple_room_chance /= (8-float(floor_modifier)/2)
-		room_type = "3"
+	#elif random_float < quadruple_room_chance + triple_room_chance:
+		#triple_room_chance /= (8-float(floor_modifier)/2)
+		#room_type = "3"
 	elif random_float < quadruple_room_chance + triple_room_chance + double_room_chance:
 		double_room_chance /= (8-float(floor_modifier)/4)
 		room_type = "2"

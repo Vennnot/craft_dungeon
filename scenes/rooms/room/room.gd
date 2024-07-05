@@ -7,9 +7,6 @@ var dungeon_grid_position : Vector2
 var dungeon_grid_cells_occupied : Array[Vector2]
 
 var doorway_array : Array[DoorwayComponent]
-# 1 means they are connected
-var exit_connections : Dictionary = {}
-
 
 @onready var camera_collision: Area2D = $CameraCollisionAreaComponent
 @onready var tile_map: TileMap = %TileMap
@@ -70,10 +67,6 @@ func set_room_position(pos:Vector2) -> void:
 	position.x = pos.x
 	position.y = pos.y
 	_load_debug_shapes()
-	for exit in get_exits():
-		exit_connections[exit] = Vector2.ZERO
-	print(exit_connections)
-	print(get_cells())
 
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
@@ -103,9 +96,17 @@ func get_cells() -> Array[Vector2]:
 	return cells
 
 
-func is_exit_connected(exit:Vector2) -> bool:
-	return exit_connections[exit] != Vector2.ZERO
-
-
 func has_cell(cell:Vector2) -> bool:
 	return get_cells().has(cell)
+
+
+func adjust_doorways() -> void:
+	print("Position: %s" % dungeon_grid_position)
+	print("Cells Occupied:")
+	print(dungeon_grid_cells_occupied)
+	print("Exits:")
+	for doorway in doorway_array:
+		doorway.doorway_room_vector += dungeon_grid_position
+		doorway.rotate_vector(deg_to_rad(room_shape.rotation))
+		doorway.flip_vector_horizontally(room_shape.flip_h)
+		print(doorway.doorway_room_vector)
