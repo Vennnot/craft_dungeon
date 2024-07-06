@@ -74,7 +74,6 @@ func _connect_room(room:Room) -> void:
 func _connect_doorways(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent)->void:
 	doorway_1.other_doorway = doorway_2
 	doorway_2.other_doorway = doorway_1
-	print("Conencted Doorways! %s, %s" % [doorway_1,doorway_2])
 
 
 # All non-special rooms should have at least 2 connected doorways
@@ -92,7 +91,7 @@ func _get_unconnected_doorway_pairs(room_1:Room,room_2:Room,adjacent_cells:Array
 			continue
 		
 		unconnected_doorway_pairs.append([doorway_1,doorway_2])
-		
+	
 	return unconnected_doorway_pairs
 
 
@@ -208,7 +207,7 @@ func _get_random_room_type() -> RoomShape:
 	if random_float < quadruple_room_chance:
 		#FIXME this random ass decrease needs to make more sense
 		quadruple_room_chance /= (8-float(floor_modifier))
-		room_type = "4"
+		room_type = "2"
 	#elif random_float < quadruple_room_chance + triple_room_chance:
 		#triple_room_chance /= (8-float(floor_modifier)/2)
 		#room_type = "3"
@@ -222,7 +221,8 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 4 + (floor_modifier * 2) + randi_range(0,2)
+	number_of_rooms_to_generate = 2
+	#4 + (floor_modifier * 2) + randi_range(0,2)
 
 
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:

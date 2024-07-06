@@ -75,7 +75,7 @@ func set_room_position(pos:Vector2) -> void:
 		else:
 			position.x += cell_size*8.5
 			position.y += cell_size*12
-#
+	#FIXME when L rooms are added
 	#elif is_equal_approx(room_shape.rotation, 270):
 		#position.x += cell_size*10.5*2
 
@@ -104,6 +104,13 @@ func get_exits()-> Array[Vector2]:
 		exits.append(Vector2(exit.x+dungeon_grid_position.x,exit.y+dungeon_grid_position.y))
 	return exits
 
+func get_empty_doorways() -> Array[DoorwayComponent]:
+	var empty_doorways :Array[DoorwayComponent]= []
+	for doorway in doorway_array:
+		if doorway.other_doorway == null:
+			empty_doorways.append(doorway)
+	return empty_doorways
+
 
 func get_cells() -> Array[Vector2]:
 	var cells : Array[Vector2] = []
@@ -118,9 +125,9 @@ func has_cell(cell:Vector2) -> bool:
 
 func adjust_doorways() -> void:
 	for doorway in doorway_array:
-		doorway.doorway_room_vector += dungeon_grid_position
-		doorway.rotate_vector(deg_to_rad(room_shape.rotation))
+		doorway.rotate_vector(room_shape.rotation)
 		doorway.flip_vector_horizontally(room_shape.flip_h)
+		doorway.doorway_room_vector += dungeon_grid_position
 
 func get_doorway(v:Vector2) -> DoorwayComponent:
 	for doorway in doorway_array:
