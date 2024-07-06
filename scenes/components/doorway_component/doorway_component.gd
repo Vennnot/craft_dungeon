@@ -8,12 +8,13 @@ signal active_room(room:Room)
 @onready var area: Area2D = %Area2D
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
 
+const door : Texture = preload("res://assets/visuals/environment/tile_0045.png")
 
 @export var other_doorway : DoorwayComponent :
 	set(value):
 		other_doorway = value
 		if value != null:
-			sprite.visible = true
+			sprite.texture = door
 			collision_shape.disabled = true
 
 @export var doorway_room_vector : Vector2 =  Vector2.ZERO

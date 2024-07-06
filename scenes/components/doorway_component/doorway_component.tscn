@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://lyap1tgv6rec"]
 
 [ext_resource type="Script" path="res://scenes/components/doorway_component/doorway_component.gd" id="1_vbtrl"]
-[ext_resource type="Texture2D" uid="uid://17dsf78fx3xd" path="res://assets/visuals/environment/tile_0045.png" id="2_d0adi"]
+[ext_resource type="Texture2D" uid="uid://demom0v6cqao7" path="res://assets/visuals/environment/tile_0048.png" id="2_k3p2a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o88nd"]
 size = Vector2(8, 8)
@@ -15,8 +15,7 @@ script = ExtResource("1_vbtrl")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-visible = false
-texture = ExtResource("2_d0adi")
+texture = ExtResource("2_k3p2a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true

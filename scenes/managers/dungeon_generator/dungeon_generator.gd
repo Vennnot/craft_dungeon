@@ -25,11 +25,6 @@ var dungeon_rooms : Array[Room]
 func _ready() -> void:
 	_generate_dungeon()
 	%Button.pressed.connect(_generate_dungeon)
-	#TODO connect the rooms and their exits
-	#TODO fetch room from vector2D
-	#then continue until all rooms are generated
-	#TODO create more connections in rooms before setting in stone
-	#then generate special rooms and connect them
 
 
 func _generate_dungeon() -> void:
@@ -45,6 +40,10 @@ func _generate_dungeon() -> void:
 	_initialize_grid()
 	_generate_spawn_room()
 	_generate_base_rooms()
+	#TODO generate special rooms x+randint 0,and floor number
+	#TODO generate boss room
+	#TODO room layouts, how to create and save them
+	#TODO create tool to design them? When they spawn they fetch relevant enemy and stuff?
 
 
 func _generate_base_rooms() -> void:
