@@ -33,7 +33,7 @@ func _on_doorway_entered(body:Node2D, doorway:DoorwayComponent) -> void:
 	if not body is Player:
 		return
 	
-	var new_room : Room = doorway.get_parent().get_parent()
+	var new_room : Room = doorway.get_parent().get_parent().get_parent()
 	var room_path : String = Camera.get_path_to(new_room.camera_collision.get_child(0))
 	var final_path := "../"+room_path
 	Camera.set_limit_target(final_path)
@@ -65,7 +65,7 @@ func set_room_position(pos:Vector2) -> void:
 	elif is_equal_approx(room_shape.rotation, 90):
 		if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
 			position.x += 0
-			position.y += cell_size*8.5
+			position.y += cell_size*9.5
 
 	
 	elif is_equal_approx(room_shape.rotation, 180):

@@ -165,7 +165,7 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 		4:
 			room = ROOM_4.instantiate()
 	
-	add_child(room)
+	get_parent().call_deferred("add_child",room)
 	room.set_room_shape(room_shape)
 	return room
 
@@ -221,8 +221,7 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 4
-	#4 + (floor_modifier * 2) + randi_range(0,2)
+	number_of_rooms_to_generate = 4 + (floor_modifier * 2) + randi_range(0,2)
 
 
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:
@@ -264,8 +263,7 @@ func does_room_fit(room: RoomShape, position: Vector2) -> bool:
 
 # Find a fit for the room in a randomized order, returns true if a fit was found
 func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
-#, 180,270
-	var rotations = [0.0,90,180]
+	var rotations = [0.0,90,180,270]
 	rotations.shuffle()
 
 	var flips = [false, true]

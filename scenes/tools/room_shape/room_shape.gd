@@ -10,40 +10,33 @@ enum ROOM_TYPE {ONE=1,TWO=2,THREE=3,FOUR=4}
 func _init(type:String)-> void:
 	match type:
 		"1":
-			shape.assign(room_shapes["1"])
-			exits.assign(room_exits["1"])
 			room_type = ROOM_TYPE.ONE
 		"2":
-			shape.assign(room_shapes["2"])
-			exits.assign(room_exits["2"])
 			room_type = ROOM_TYPE.TWO
 		"3":
-			shape.assign(room_shapes["3"])
-			exits.assign(room_exits["3"])
 			room_type = ROOM_TYPE.THREE
 		"4":
-			shape.assign(room_shapes["4"])
-			exits.assign(room_exits["4"])
 			room_type = ROOM_TYPE.FOUR
+		
+	reset_room_shape()
 
 # Apply a rotation to the room
 func rotate(degrees: float) -> void:
-	if room_type == ROOM_TYPE.ONE:
+	if room_type == ROOM_TYPE.ONE or room_type == ROOM_TYPE.FOUR:
 		return
 	
-	if (room_type == ROOM_TYPE.FOUR) and is_equal_approx(degrees,180):
-		return
 	
-	if room_type == ROOM_TYPE.FOUR and is_equal_approx(degrees,90):
+	if room_type == ROOM_TYPE.TWO and not is_equal_approx(degrees,90):
 		return
 	
 	rotation += degrees
 	rotation = fmod(rotation, 360)
+
 	var rotated_shape :Array[Vector2]= []
 	for c in shape:
 		rotated_shape.append(rotate_vector(c, degrees))
 		shape = rotated_shape
-	
+
 	var rotated_exits :Array[Vector2]= []
 	for e in exits:
 		rotated_exits.append(rotate_vector(e, degrees))
@@ -81,9 +74,17 @@ func rotate_vector(v: Vector2, degrees: float) -> Vector2:
 	)
 
 func reset_rotation() -> void:
-	rotate(-rotation)
 	rotation = 0
+	reset_room_shape()
 
+func reset_room_shape() -> void:
+	shape = []
+	exits = []
+	for cell in room_shapes[room_type]:
+		shape.append(cell)
+	
+	for cell in room_exits[room_type]:
+		exits.append(cell)
 
 #Translate the room to a new position
 func move_to(position: Vector2) -> Array[Vector2]:
@@ -93,34 +94,34 @@ func move_to(position: Vector2) -> Array[Vector2]:
 	return moved_shape
 
 # Define basic shapes
-var room_shapes = {
-	"1": [
+const room_shapes = {
+	1: [
 		Vector2(0, 0)
 	],
-	"4": [
+	4: [
 		Vector2(0, 0), Vector2(1, 0), Vector2(0, 1), Vector2(1, 1)
 	],
-	"2": [
+	2: [
 		Vector2(0, 0), Vector2(1, 0)
 	],
-	"3": [
+	3: [
 		Vector2(0, 0), Vector2(1, 0), Vector2(1, 1)
 	]
 }
 
-var room_exits = {
-	"1": [
+const room_exits = {
+	1: [
 		Vector2(-1, 0), Vector2(1, 0), Vector2(0, -1), Vector2(0, 1)
 	],
-	"4": [
+	4: [
 		Vector2(-1, 0), Vector2(-1, 1), Vector2(0, -1), Vector2(1, -1),
 		Vector2(2, 0), Vector2(2, 1), Vector2(1, 2), Vector2(0, 2)
 	],
-	"2": [
+	2: [
 		Vector2(-1, 0), Vector2(0, -1), Vector2(1, -1),
 		Vector2(2, 0), Vector2(1, 1), Vector2(0, 1)
 	],
-	"3": [
+	3: [
 		Vector2(-1, 0), Vector2(0, -1), Vector2(1, -1),
 		Vector2(2, 0), Vector2(2, 1), Vector2(1, 2), Vector2(0, 1)
 	]
