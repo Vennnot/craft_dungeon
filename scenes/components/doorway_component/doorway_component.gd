@@ -4,8 +4,15 @@ class_name DoorwayComponent
 signal active_room(room:Room)
 
 @onready var teleport_marker : Marker2D = %Marker2D
+@onready var sprite: Sprite2D = %Sprite2D
 
-@export var other_doorway : DoorwayComponent
+
+@export var other_doorway : DoorwayComponent :
+	set(value):
+		other_doorway = value
+		if value != null:
+			sprite.visible = true
+
 @export var doorway_room_vector : Vector2 =  Vector2.ZERO
 
 var is_locked : bool = false
@@ -27,6 +34,7 @@ func _on_area_entered(other_area:Area2D) -> void:
 		return
 	
 	if other_doorway == null:
+		print("Other doorway was null, nowhere to teleport to")
 		return
 	
 	if is_locked:
@@ -39,8 +47,11 @@ func _on_area_entered(other_area:Area2D) -> void:
 	if not other_area.get_parent().is_in_group("player"):
 		return
 	
+	if not other_area.is_in_group("hurtbox_component"):
+		return
+	
 	var player : Player = other_area.get_parent()
-	player.teleport(other_doorway.teleport_marker.global_position)
+	player.call_deferred("teleport",other_doorway.teleport_marker.global_position)
 	other_doorway.active_room.emit()
 
 

@@ -74,6 +74,7 @@ func _connect_room(room:Room) -> void:
 func _connect_doorways(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent)->void:
 	doorway_1.other_doorway = doorway_2
 	doorway_2.other_doorway = doorway_1
+	print("Conencted Doorways! %s, %s" % [doorway_1,doorway_2])
 
 
 # All non-special rooms should have at least 2 connected doorways
@@ -165,7 +166,7 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 		4:
 			room = ROOM_4.instantiate()
 	
-	get_parent().call_deferred("add_child",room)
+	add_child(room)
 	room.set_room_shape(room_shape)
 	return room
 

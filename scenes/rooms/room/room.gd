@@ -26,15 +26,15 @@ func _ready() -> void:
 func _initialize_doorways() -> void:
 	for doorway in doorways.get_children():
 		doorway_array.append(doorway)
-		doorway.body_entered.connect(_on_doorway_entered.bind(doorway))
+		doorway.active_room.connect(_on_doorway_entered)
 
 
-func _on_doorway_entered(body:Node2D, doorway:DoorwayComponent) -> void:
-	if not body is Player:
-		return
-	
-	var new_room : Room = doorway.get_parent().get_parent().get_parent()
-	var room_path : String = Camera.get_path_to(new_room.camera_collision.get_child(0))
+func _on_doorway_entered() -> void:
+	_set_camera_path()
+
+
+func _set_camera_path() -> void:
+	var room_path : String = Camera.get_path_to(camera_collision.get_child(0))
 	var final_path := "../"+room_path
 	Camera.set_limit_target(final_path)
 
@@ -84,8 +84,6 @@ func set_dungeon_grid_position(grid_pos:Vector2) -> void:
 	dungeon_grid_position = grid_pos
 	for cell in room_shape.shape:
 		dungeon_grid_cells_occupied.append(grid_pos+cell)
-	print("Position: %s" % dungeon_grid_position)
-	print(dungeon_grid_cells_occupied)
 
 
 func set_rotate() -> void:

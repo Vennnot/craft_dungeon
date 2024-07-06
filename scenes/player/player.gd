@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 @export_group("Movement","movement")
-@export var movement_speed : float = 100
+@export var movement_speed : float = 300
 @export var movement_friction : float = 0.18
 
 @onready var interaction_area: Area2D = $InteractionArea
@@ -83,3 +83,4 @@ func _on_interaction_area_exited(other_area:Area2D) -> void:
 
 func teleport(teleport_position:Vector2) -> void:
 	global_position = teleport_position
+	velocity = Vector2.ZERO

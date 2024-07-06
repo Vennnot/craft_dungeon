@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://lyap1tgv6rec"]
+[gd_scene load_steps=4 format=3 uid="uid://lyap1tgv6rec"]
 
 [ext_resource type="Script" path="res://scenes/components/doorway_component/doorway_component.gd" id="1_vbtrl"]
+[ext_resource type="Texture2D" uid="uid://17dsf78fx3xd" path="res://assets/visuals/environment/tile_0045.png" id="2_d0adi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ftpfd"]
 size = Vector2(4, 4)
@@ -14,3 +15,9 @@ shape = SubResource("RectangleShape2D_ftpfd")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 unique_name_in_owner = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("2_d0adi")
+offset = Vector2(8, 8)

@@ -9,12 +9,13 @@
 
 [node name="Test" type="Node2D"]
 
+[node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
+
 [node name="DungeonGenerator" parent="." instance=ExtResource("6_aro84")]
 
 [node name="Player" parent="." instance=ExtResource("1_hvcfw")]
+z_index = 1
 position = Vector2(138, 149)
-
-[node name="GameManager" parent="." instance=ExtResource("1_dkhun")]
 
 [node name="Main_UI" parent="." instance=ExtResource("2_4a8o8")]
 
