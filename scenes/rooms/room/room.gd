@@ -1,6 +1,10 @@
 extends Node2D
 class_name Room
 
+const room_length : int = 272
+
+const cell_size : int = 16
+
 var room_shape : RoomShape
 
 var dungeon_grid_position : Vector2
@@ -8,7 +12,7 @@ var dungeon_grid_cells_occupied : Array[Vector2]
 
 var doorway_array : Array[DoorwayComponent]
 
-@onready var camera_collision: Area2D = $CameraCollisionAreaComponent
+@onready var camera_collision: Area2D = %CameraCollisionAreaComponent
 @onready var tile_map: TileMap = %TileMap
 @onready var doorways: Node2D = %Doorways
 
@@ -37,45 +41,59 @@ func _on_doorway_entered(body:Node2D, doorway:DoorwayComponent) -> void:
 
 func set_room_shape(new_room_shape:RoomShape)->void:
 	room_shape = new_room_shape
-	set_rotation(deg_to_rad(room_shape.rotation))
-	set_flipped(room_shape.flip_h)
-
-
-func _load_debug_shapes() -> void:
-	var color : Color
-	
-	match room_shape.room_type:
-		0:
-			color = Color.RED
-		1:
-			color = Color.YELLOW
-		2:
-			color = Color.PURPLE
-		3:
-			color = Color.GREEN
-	
-	#TODO exit visuals
-	for cell in room_shape.shape:
-		var sprite := Sprite2D.new()
-		add_child(sprite)
-		sprite.global_position = position + cell*32
-		sprite.texture = load("res://icon.svg")
-		sprite.scale = Vector2(0.25,0.25)
-		sprite.self_modulate = color
+	set_rotate()
+	set_flip(room_shape.flip_h)
 
 func set_room_position(pos:Vector2) -> void:
-	position.x = pos.x
-	position.y = pos.y
-	_load_debug_shapes()
+	set_dungeon_grid_position(pos)
+	adjust_doorways()
+	
+	position.x = pos.x * room_length
+	position.y = pos.y * room_length
+	
+	#center rooms
+	if is_equal_approx(room_shape.rotation, 0):
+		if room_shape.room_type != room_shape.ROOM_TYPE.ONE:
+			position.x += cell_size*8.5
+			if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
+				position.y += cell_size*3
+			else:
+				position.y += cell_size*12
+		else:
+			position.y += cell_size*3
+	
+	elif is_equal_approx(room_shape.rotation, 90):
+		if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
+			position.x += 0
+			position.y += cell_size*8.5
+
+	
+	elif is_equal_approx(room_shape.rotation, 180):
+		if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
+			position.x -= cell_size*8.5
+			position.y += cell_size*3
+		else:
+			position.x += cell_size*8.5
+			position.y += cell_size*12
+#
+	#elif is_equal_approx(room_shape.rotation, 270):
+		#position.x += cell_size*10.5*2
 
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
 	dungeon_grid_position = grid_pos
 	for cell in room_shape.shape:
 		dungeon_grid_cells_occupied.append(grid_pos+cell)
+	print("Position: %s" % dungeon_grid_position)
+	print(dungeon_grid_cells_occupied)
 
 
-func set_flipped(flip_h:bool) -> void:
+func set_rotate() -> void:
+	if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
+		set_rotation(deg_to_rad(room_shape.rotation))
+
+
+func set_flip(flip_h:bool) -> void:
 	if flip_h:
 		scale.y = -1
 	else:
@@ -101,16 +119,10 @@ func has_cell(cell:Vector2) -> bool:
 
 
 func adjust_doorways() -> void:
-	print("Position: %s" % dungeon_grid_position)
-	print("Cells Occupied:")
-	print(dungeon_grid_cells_occupied)
-	print("Exits:")
 	for doorway in doorway_array:
 		doorway.doorway_room_vector += dungeon_grid_position
 		doorway.rotate_vector(deg_to_rad(room_shape.rotation))
 		doorway.flip_vector_horizontally(room_shape.flip_h)
-		print(doorway.doorway_room_vector)
-
 
 func get_doorway(v:Vector2) -> DoorwayComponent:
 	for doorway in doorway_array:

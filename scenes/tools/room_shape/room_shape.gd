@@ -1,6 +1,6 @@
 class_name RoomShape
 
-var shape: Array[Vector2]  # Current cells occupied by the room
+var shape: Array[Vector2] # Current cells occupied by the room
 var exits: Array[Vector2]  # Exits relative to the room's position
 var rotation: float = 0 # Current rotation angle
 var flip_h: bool = false # Flipped on the H axis
@@ -28,9 +28,17 @@ func _init(type:String)-> void:
 
 # Apply a rotation to the room
 func rotate(degrees: float) -> void:
+	if room_type == ROOM_TYPE.ONE:
+		return
+	
+	if (room_type == ROOM_TYPE.FOUR) and is_equal_approx(degrees,180):
+		return
+	
+	if room_type == ROOM_TYPE.FOUR and is_equal_approx(degrees,90):
+		return
+	
 	rotation += degrees
 	rotation = fmod(rotation, 360)
-	
 	var rotated_shape :Array[Vector2]= []
 	for c in shape:
 		rotated_shape.append(rotate_vector(c, degrees))
@@ -43,10 +51,10 @@ func rotate(degrees: float) -> void:
 
 	# Apply a flip to the room
 func flip(horizontal: bool)->void:
-	if not horizontal:
+	if not room_type == ROOM_TYPE.THREE:
 		return
 	
-	if not room_type == ROOM_TYPE.THREE:
+	if not horizontal:
 		return
 	
 	flip_h = not flip_h
@@ -71,6 +79,10 @@ func rotate_vector(v: Vector2, degrees: float) -> Vector2:
 		round(v.x * cos(radians) - v.y * sin(radians)),
 		round(v.x * sin(radians) + v.y * cos(radians))
 	)
+
+func reset_rotation() -> void:
+	rotate(-rotation)
+	rotation = 0
 
 
 #Translate the room to a new position

@@ -5,8 +5,6 @@ const ROOM_2 = preload("res://scenes/rooms/room_2/room_2.tscn")
 const ROOM_3 = preload("res://scenes/rooms/room_3/room_3.tscn")
 const ROOM_4 = preload("res://scenes/rooms/room_4/room_4.tscn")
 
-const base_point : Vector2 = Vector2(500,300)
-const cell_size : float = 16
 const base_double_room_chance : float = 0.4
 const base_triple_room_chance : float = 0.2
 const base_quadruple_room_chance : float = 0.1
@@ -26,7 +24,7 @@ var dungeon_rooms : Array[Room]
 
 func _ready() -> void:
 	_generate_dungeon()
-	$Button.pressed.connect(_generate_dungeon)
+	%Button.pressed.connect(_generate_dungeon)
 	#TODO connect the rooms and their exits
 	#TODO fetch room from vector2D
 	#then continue until all rooms are generated
@@ -69,7 +67,7 @@ func _connect_room(room:Room) -> void:
 	if unconnected_doorways.is_empty():
 		return
 	
-	var doorways_to_connect : Array = unconnected_doorways.pick_random()
+	var doorways_to_connect : Array= unconnected_doorways.pick_random()
 	_connect_doorways(doorways_to_connect[0],doorways_to_connect[1])
 
 
@@ -85,7 +83,7 @@ func _validate_minimum_room_connections(room:Room) -> bool:
 
 
 func _get_unconnected_doorway_pairs(room_1:Room,room_2:Room,adjacent_cells:Array[Array])->Array[Array]:
-	var unconnected_doorway_pairs : Array[Array]
+	var unconnected_doorway_pairs : Array[Array] = []
 	for cell_pair in adjacent_cells:
 		var doorway_1 : DoorwayComponent = room_1.get_doorway(cell_pair[1])
 		var doorway_2 : DoorwayComponent = room_2.get_doorway(cell_pair[0])
@@ -106,7 +104,6 @@ func _get_room_from_cell(c:Vector2) -> Room:
 		for cell in room.get_cells():
 			if c == cell:
 				return room
-	print("No matching room was found")
 	return null
 
 
@@ -174,19 +171,18 @@ func _instantiate_room(room_shape:RoomShape) -> Room:
 
 
 func _set_room_position(room:Room,position:Vector2) -> void:
-	room.set_room_position((position*cell_size))
-	room.set_dungeon_grid_position(position)
-	room.adjust_doorways()
+	room.set_room_position(position)
 
 
 func _create_and_place_room() -> Room:
 	var room_location : Vector2 = _get_all_empty_adjacent_cells().pick_random()
-	var room_shape := _get_random_room_type()
+	var room_shape : RoomShape = _get_random_room_type()
 	var attempts : int = 0
 	while not find_fit(room_location,room_shape):
 		room_location = _get_all_empty_adjacent_cells().pick_random()
 		attempts += 1
 		if attempts > 10:
+			print("No possible room could fit, choosing base room")
 			room_shape = RoomShape.new("1")
 	
 	var room : Room = _instantiate_room(room_shape)
@@ -225,7 +221,7 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 2
+	number_of_rooms_to_generate = 4
 	#4 + (floor_modifier * 2) + randi_range(0,2)
 
 
@@ -268,10 +264,8 @@ func does_room_fit(room: RoomShape, position: Vector2) -> bool:
 
 # Find a fit for the room in a randomized order, returns true if a fit was found
 func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
-	if room_shape.room_type == 0:
-		return does_room_fit(room_shape, potential_position)
-	
-	var rotations = [0.0, 90.0, 180.0, 270.0]
+#, 180,270
+	var rotations = [0.0,90,180]
 	rotations.shuffle()
 
 	var flips = [false, true]
@@ -279,15 +273,14 @@ func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
 
 	for rotation in rotations:
 		for flip in flips:
-			room_shape.rotation = 0
+			room_shape.reset_rotation()
+			#TODO probably need to do the same reset for flipping the thing
 			room_shape.flip_h = false
 			room_shape.rotate(rotation) 
 			room_shape.flip(flip)
 			
 			if does_room_fit(room_shape, potential_position):
 				return true
-
-	print("No possible room could fit")
 	return false
 
 # 2. Connects room as they are placed. Connections are chosen at random.
