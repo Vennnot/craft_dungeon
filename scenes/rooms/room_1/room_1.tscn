@@ -30,44 +30,32 @@ disabled = true
 unique_name_in_owner = true
 
 [node name="North" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
-position = Vector2(128, 0)
+position = Vector2(136, 8)
 doorway_room_vector = Vector2(0, -1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/North" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/North" index="2"]
-position = Vector2(8, 40)
+[node name="Marker2D" parent="RotationAxis/Doorways/North" index="3"]
+position = Vector2(0, 40)
 
 [node name="South" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
-position = Vector2(128, 160)
+position = Vector2(136, 168)
 doorway_room_vector = Vector2(0, 1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/South" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/South" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/South" index="3"]
 position = Vector2(8, -24)
 
 [node name="West" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
-position = Vector2(0, 80)
+position = Vector2(8, 88)
 doorway_room_vector = Vector2(-1, 0)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/West" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/West" index="2"]
-position = Vector2(40, 8)
+[node name="Marker2D" parent="RotationAxis/Doorways/West" index="3"]
+position = Vector2(40, 0)
 
 [node name="East" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
-position = Vector2(256, 80)
+position = Vector2(264, 88)
 doorway_room_vector = Vector2(1, 0)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/East" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/East" index="2"]
-position = Vector2(-24, 8)
+[node name="Marker2D" parent="RotationAxis/Doorways/East" index="3"]
+position = Vector2(-32, 0)
 
 [editable path="RotationAxis/Doorways/North"]
 [editable path="RotationAxis/Doorways/South"]

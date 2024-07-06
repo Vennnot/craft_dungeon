@@ -6,6 +6,7 @@ signal active_room(room:Room)
 @onready var teleport_marker : Marker2D = %Marker2D
 @onready var sprite: Sprite2D = %Sprite2D
 @onready var area: Area2D = %Area2D
+@onready var collision_shape: CollisionShape2D = %CollisionShape2D
 
 
 @export var other_doorway : DoorwayComponent :
@@ -13,8 +14,7 @@ signal active_room(room:Room)
 		other_doorway = value
 		if value != null:
 			sprite.visible = true
-		else:
-			print("Connecting to a null value!!!")
+			collision_shape.disabled = true
 
 @export var doorway_room_vector : Vector2 =  Vector2.ZERO
 
@@ -60,6 +60,7 @@ func _on_area_entered(other_area:Area2D) -> void:
 
 func rotate_vector(degrees: float) -> void:
 	var radians = deg_to_rad(degrees)
+	sprite.rotation -= radians
 	doorway_room_vector = Vector2(
 		round(doorway_room_vector.x * cos(radians) - doorway_room_vector.y * sin(radians)),
 		round(doorway_room_vector.x * sin(radians) + doorway_room_vector.y * cos(radians))

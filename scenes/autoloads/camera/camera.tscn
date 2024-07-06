@@ -31,6 +31,5 @@ tween_resource = SubResource("Resource_slidj")
 tween_on_load = false
 inactive_update_mode = 1
 follow_damping = true
-follow_damping_value = Vector2(0.25, 0.25)
 dead_zone_width = 0.2
 dead_zone_height = 0.2

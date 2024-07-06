@@ -3,14 +3,24 @@
 [ext_resource type="Script" path="res://scenes/components/doorway_component/doorway_component.gd" id="1_vbtrl"]
 [ext_resource type="Texture2D" uid="uid://17dsf78fx3xd" path="res://assets/visuals/environment/tile_0045.png" id="2_d0adi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ftpfd"]
-size = Vector2(4, 4)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o88nd"]
 size = Vector2(8, 8)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ftpfd"]
+size = Vector2(4, 4)
+
 [node name="DoorwayComponent" type="StaticBody2D"]
+collision_layer = 8
 script = ExtResource("1_vbtrl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("2_d0adi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_o88nd")
 
 [node name="Area2D" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -19,15 +29,5 @@ collision_layer = 16
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ftpfd")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-shape = SubResource("RectangleShape2D_o88nd")
-
 [node name="Marker2D" type="Marker2D" parent="."]
 unique_name_in_owner = true
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-unique_name_in_owner = true
-visible = false
-texture = ExtResource("2_d0adi")
-offset = Vector2(8, 8)

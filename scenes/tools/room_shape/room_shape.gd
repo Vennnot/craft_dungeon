@@ -38,13 +38,10 @@ func rotate(degrees: float) -> void:
 		shape = rotated_shape
 
 	var rotated_exits :Array[Vector2]= []
-	print("Exits before rotation")
-	print(exits)
 	for e in exits:
 		rotated_exits.append(rotate_vector(e, degrees))
 		exits = rotated_exits
-	print("Exits after rotation")
-	print(exits)
+
 
 	# Apply a flip to the room
 func flip(horizontal: bool)->void:

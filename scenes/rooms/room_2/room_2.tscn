@@ -31,63 +31,45 @@ disabled = true
 unique_name_in_owner = true
 
 [node name="NorthWest" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(128, 0)
+position = Vector2(136, 8)
 doorway_room_vector = Vector2(0, -1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/NorthWest" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/NorthWest" index="2"]
-position = Vector2(8, 32)
+[node name="Marker2D" parent="RotationAxis/Doorways/NorthWest" index="3"]
+position = Vector2(0, 32)
 
 [node name="NorthEast" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(368, 0)
+position = Vector2(376, 8)
 doorway_room_vector = Vector2(1, -1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/NorthEast" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/NorthEast" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/NorthEast" index="3"]
 position = Vector2(8, 32)
 
 [node name="SouthWest" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(128, 160)
+position = Vector2(136, 168)
 doorway_room_vector = Vector2(0, 1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/SouthWest" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/SouthWest" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/SouthWest" index="3"]
 position = Vector2(8, -16)
 
 [node name="SouthEast" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(368, 160)
+position = Vector2(376, 168)
 doorway_room_vector = Vector2(1, 1)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/SouthEast" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/SouthEast" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/SouthEast" index="3"]
 position = Vector2(8, -16)
 
 [node name="West" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(0, 80)
+position = Vector2(8, 88)
 doorway_room_vector = Vector2(-1, 0)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/West" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/West" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/West" index="3"]
 position = Vector2(32, 8)
 
 [node name="East" parent="RotationAxis/Doorways" instance=ExtResource("3_aqhia")]
-position = Vector2(496, 80)
+position = Vector2(504, 88)
 doorway_room_vector = Vector2(2, 0)
 
-[node name="CollisionShape2D" parent="RotationAxis/Doorways/East" index="1"]
-position = Vector2(8, 8)
-
-[node name="Marker2D" parent="RotationAxis/Doorways/East" index="2"]
+[node name="Marker2D" parent="RotationAxis/Doorways/East" index="3"]
 position = Vector2(-16, 8)
 
 [editable path="RotationAxis/Doorways/NorthWest"]

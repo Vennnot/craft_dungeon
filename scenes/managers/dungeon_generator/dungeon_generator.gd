@@ -221,8 +221,7 @@ func _get_random_room_type() -> RoomShape:
 
 
 func _initialize_number_of_rooms() -> void:
-	number_of_rooms_to_generate = 2
-	#4 + (floor_modifier * 2) + randi_range(0,2)
+	number_of_rooms_to_generate = 4  + (floor_modifier * 2) + randi_range(0,2)
 
 
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:
