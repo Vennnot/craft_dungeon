@@ -13,6 +13,9 @@ size = Vector2(4, 4)
 collision_layer = 8
 script = ExtResource("1_vbtrl")
 
+[node name="TeleportMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 texture = ExtResource("2_k3p2a")
@@ -27,6 +30,3 @@ collision_layer = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_ftpfd")
-
-[node name="Marker2D" type="Marker2D" parent="."]
-unique_name_in_owner = true

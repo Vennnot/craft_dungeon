@@ -5,8 +5,9 @@
 [node name="DungeonGenerator" type="Node"]
 script = ExtResource("1_3yofu")
 
-[node name="Button" type="Button" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
 unique_name_in_owner = true
-visible = false
 offset_right = 8.0
 offset_bottom = 8.0

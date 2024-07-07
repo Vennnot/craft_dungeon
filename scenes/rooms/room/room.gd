@@ -1,7 +1,9 @@
 extends Node2D
 class_name Room
 
-const room_length : int = 272
+#176 if rooms should be close
+#240 if far
+const room_length : int = 176
 
 const cell_size : int = 16
 
@@ -42,7 +44,6 @@ func _set_camera_path() -> void:
 func set_room_shape(new_room_shape:RoomShape)->void:
 	room_shape = new_room_shape
 	set_rotate()
-	set_flip(room_shape.flip_h)
 
 func set_room_position(pos:Vector2) -> void:
 	set_dungeon_grid_position(pos)
@@ -52,32 +53,30 @@ func set_room_position(pos:Vector2) -> void:
 	position.y = pos.y * room_length
 	
 	#center rooms
+	#for normal x and y rooms no actions is required
+	#for twice as long x or y the room needs to be moved by one length to the right
 	if is_equal_approx(room_shape.rotation, 0):
 		if room_shape.room_type != room_shape.ROOM_TYPE.ONE:
-			position.x += cell_size*8.5
+			position.x += cell_size*5.5
 			if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
-				position.y += cell_size*3
+				pass
 			else:
-				position.y += cell_size*12
-		else:
-			position.y += cell_size*3
+				position.y += cell_size*5.5
 	
 	elif is_equal_approx(room_shape.rotation, 90):
-		if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
-			position.x += 0
-			position.y += cell_size*9.5
+		position.y += cell_size*5.5
+		if room_shape.room_type == room_shape.ROOM_TYPE.THREE:
+			position.x -= cell_size*5.5
 
-	
 	elif is_equal_approx(room_shape.rotation, 180):
-		if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
-			position.x -= cell_size*8.5
-			position.y += cell_size*3
-		else:
-			position.x += cell_size*8.5
-			position.y += cell_size*12
-	#FIXME when L rooms are added
-	#elif is_equal_approx(room_shape.rotation, 270):
-		#position.x += cell_size*10.5*2
+		if room_shape.room_type == room_shape.ROOM_TYPE.THREE:
+			position.x -= cell_size*5.5
+			position.y -= cell_size*5.5
+	
+	elif is_equal_approx(room_shape.rotation, 270):
+		if room_shape.room_type == room_shape.ROOM_TYPE.THREE:
+			position.x += cell_size*5.5
+			position.y -= cell_size*5.5
 
 
 func set_dungeon_grid_position(grid_pos:Vector2) -> void:
@@ -87,15 +86,9 @@ func set_dungeon_grid_position(grid_pos:Vector2) -> void:
 
 
 func set_rotate() -> void:
-	if room_shape.room_type == room_shape.ROOM_TYPE.TWO:
+	if room_shape.room_type == room_shape.ROOM_TYPE.TWO or room_shape.room_type == room_shape.ROOM_TYPE.THREE:
 		set_rotation(deg_to_rad(room_shape.rotation))
 
-
-func set_flip(flip_h:bool) -> void:
-	if flip_h:
-		scale.y = -1
-	else:
-		scale.y = 1
 
 
 func get_exits()-> Array[Vector2]:
@@ -126,11 +119,19 @@ func has_cell(cell:Vector2) -> bool:
 func adjust_doorways() -> void:
 	for doorway in doorway_array:
 		doorway.rotate_vector(room_shape.rotation)
-		doorway.flip_vector_horizontally(room_shape.flip_h)
 		doorway.doorway_room_vector += dungeon_grid_position
+		doorway.current_room_cell_vector += dungeon_grid_position
 
 func get_doorway(v:Vector2) -> DoorwayComponent:
 	for doorway in doorway_array:
 		if doorway.doorway_room_vector == v:
 			return doorway
-	return null 
+	return null
+
+
+func get_doorways(v:Vector2) -> Array[DoorwayComponent]:
+	var dw_array : Array[DoorwayComponent] = []
+	for doorway in doorway_array:
+		if doorway.doorway_room_vector == v:
+			dw_array.append(doorway)
+	return dw_array

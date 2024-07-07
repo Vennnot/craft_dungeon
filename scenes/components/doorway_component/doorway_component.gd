@@ -3,10 +3,10 @@ class_name DoorwayComponent
 
 signal active_room(room:Room)
 
-@onready var teleport_marker : Marker2D = %Marker2D
 @onready var sprite: Sprite2D = %Sprite2D
 @onready var area: Area2D = %Area2D
 @onready var collision_shape: CollisionShape2D = %CollisionShape2D
+@onready var teleport_marker: Marker2D = %TeleportMarker
 
 const door : Texture = preload("res://assets/visuals/environment/tile_0045.png")
 
@@ -18,6 +18,7 @@ const door : Texture = preload("res://assets/visuals/environment/tile_0045.png")
 			collision_shape.disabled = true
 
 @export var doorway_room_vector : Vector2 =  Vector2.ZERO
+@export var current_room_cell_vector : Vector2 = Vector2.ZERO
 
 var is_locked : bool = false
 var is_hidden : bool = false
@@ -31,7 +32,6 @@ func _ready() -> void:
 
 func enable() -> void:
 	is_disabled = false
-
 
 
 func _on_area_entered(other_area:Area2D) -> void:
@@ -66,9 +66,8 @@ func rotate_vector(degrees: float) -> void:
 		round(doorway_room_vector.x * cos(radians) - doorway_room_vector.y * sin(radians)),
 		round(doorway_room_vector.x * sin(radians) + doorway_room_vector.y * cos(radians))
 	)
-
-
-func flip_vector_horizontally(flip:bool) -> void:
-	if not flip:
-		return
-	doorway_room_vector = Vector2(doorway_room_vector.x * -1, doorway_room_vector.y)
+	
+	current_room_cell_vector = Vector2(
+		round(current_room_cell_vector.x * cos(radians) - current_room_cell_vector.y * sin(radians)),
+		round(current_room_cell_vector.x * sin(radians) + current_room_cell_vector.y * cos(radians))
+	)

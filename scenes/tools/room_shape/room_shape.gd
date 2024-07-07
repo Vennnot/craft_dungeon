@@ -3,7 +3,6 @@ class_name RoomShape
 var shape: Array[Vector2] # Current cells occupied by the room
 var exits: Array[Vector2]  # Exits relative to the room's position
 var rotation: float = 0 # Current rotation angle
-var flip_h: bool = false # Flipped on the H axis
 var room_type : ROOM_TYPE
 enum ROOM_TYPE {ONE=1,TWO=2,THREE=3,FOUR=4}
 
@@ -42,31 +41,6 @@ func rotate(degrees: float) -> void:
 		rotated_exits.append(rotate_vector(e, degrees))
 		exits = rotated_exits
 
-
-	# Apply a flip to the room
-func flip(horizontal: bool)->void:
-	if not room_type == ROOM_TYPE.THREE:
-		return
-	
-	if not horizontal:
-		return
-	
-	flip_h = not flip_h
-	
-	var flipped_shape :Array[Vector2]= []
-	for c in shape:
-		flipped_shape.append(flip_vector_horizontally(c))
-	shape = flipped_shape
-	
-	var flipped_exits :Array[Vector2]= []
-	for e in exits:
-		flipped_exits.append(flip_vector_horizontally(e))
-	exits = flipped_exits
-
-
-func flip_vector_horizontally(v: Vector2) -> Vector2:
-	return Vector2(v.x * -1, v.y)
-
 func rotate_vector(v: Vector2, degrees: float) -> Vector2:
 	var radians = deg_to_rad(degrees)
 	return Vector2(
@@ -74,7 +48,7 @@ func rotate_vector(v: Vector2, degrees: float) -> Vector2:
 		round(v.x * sin(radians) + v.y * cos(radians))
 	)
 
-func reset_rotation() -> void:
+func reset() -> void:
 	rotation = 0
 	reset_room_shape()
 

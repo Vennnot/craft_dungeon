@@ -44,7 +44,9 @@ func _generate_dungeon() -> void:
 	#TODO generate boss room
 	#TODO room layouts, how to create and save them
 	#TODO create tool to design them? When they spawn they fetch relevant enemy and stuff?
-
+	#TODO where do room layouts fetch their tiles from according to the level?
+	#TODO consider layouts that block exits
+	#TODO lock room on enter if layout hasn't been completed.
 
 func _generate_base_rooms() -> void:
 	while number_of_rooms_to_generate > 0:
@@ -77,6 +79,8 @@ func _connect_doorways(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent)->v
 
 # All non-special rooms should have at least 2 connected doorways
 func _validate_minimum_room_connections(room:Room) -> bool:
+	# at least 2 for all rooms
+	# connect all doorways that are possible if layout is unblocked
 	return false
 
 
@@ -84,14 +88,33 @@ func _validate_minimum_room_connections(room:Room) -> bool:
 func _get_unconnected_doorway_pairs(room_1:Room,room_2:Room,adjacent_cells:Array[Array])->Array[Array]:
 	var unconnected_doorway_pairs : Array[Array] = []
 	for cell_pair in adjacent_cells:
-		var doorway_1 : DoorwayComponent = room_1.get_doorway(cell_pair[1])
-		var doorway_2 : DoorwayComponent = room_2.get_doorway(cell_pair[0])
-		if (doorway_1 == null or doorway_2 == null) or (doorway_1.other_doorway != null and doorway_2.other_doorway):
-			continue
-		
-		unconnected_doorway_pairs.append([doorway_1,doorway_2])
+		var adjacent_doorways := _get_adjacent_doorway(room_1,room_2,cell_pair)
+		if not adjacent_doorways.is_empty():
+			unconnected_doorway_pairs.append(adjacent_doorways)
 	
 	return unconnected_doorway_pairs
+
+
+func _get_adjacent_doorway(room_1:Room,room_2:Room,cell_pair:Array) -> Array[DoorwayComponent]:
+	var doorway_array_1 : Array[DoorwayComponent] = room_1.get_doorways(cell_pair[1])
+	var doorway_array_2 : Array[DoorwayComponent] = room_2.get_doorways(cell_pair[0])
+	
+	for doorway_1 in doorway_array_1:
+		for doorway_2 in doorway_array_2:
+			if (doorway_1 == null or doorway_2 == null) or (doorway_1.other_doorway != null and doorway_2.other_doorway != null):
+				continue
+			
+			if doorway_array_1.size() > 1:
+				if doorway_1.current_room_cell_vector == doorway_2.doorway_room_vector:
+					return [doorway_1,doorway_2]
+			elif doorway_array_2.size() > 1:
+				if doorway_2.current_room_cell_vector == doorway_1.doorway_room_vector:
+					return [doorway_1,doorway_2]
+			elif _are_cells_adjacent(doorway_1.doorway_room_vector,doorway_2.doorway_room_vector):
+				return [doorway_1,doorway_2]
+	
+	return []
+
 
 
 func _are_doorways_connected(doorway_1:DoorwayComponent,doorway_2:DoorwayComponent) -> bool:
@@ -110,11 +133,16 @@ func _get_adjacent_cells(room_1:Room,room_2:Room) -> Array[Array]:
 	var adjacent_cells : Array[Array] = []
 	for cell_1 in room_1.dungeon_grid_cells_occupied:
 		for cell_2 in room_2.dungeon_grid_cells_occupied:
-			var delta_x = abs(cell_1.x - cell_2.x)
-			var delta_y = abs(cell_1.y - cell_2.y)
-			if delta_x + delta_y == 1:
+			if _are_cells_adjacent(cell_1,cell_2):
 				adjacent_cells.append([cell_1,cell_2])
+
 	return adjacent_cells
+
+
+func _are_cells_adjacent(cell_1:Vector2,cell_2:Vector2) -> bool:
+	var delta_x = abs(cell_1.x - cell_2.x)
+	var delta_y = abs(cell_1.y - cell_2.y)
+	return delta_x + delta_y == 1
 
 
 func _get_neighbors(room:Room)-> Array[Room]:
@@ -206,13 +234,13 @@ func _get_random_room_type() -> RoomShape:
 	if random_float < quadruple_room_chance:
 		#FIXME this random ass decrease needs to make more sense
 		quadruple_room_chance /= (8-float(floor_modifier))
-		room_type = "2"
-	#elif random_float < quadruple_room_chance + triple_room_chance:
-		#triple_room_chance /= (8-float(floor_modifier)/2)
-		#room_type = "3"
+		room_type = "3"
+	elif random_float < quadruple_room_chance + triple_room_chance:
+		triple_room_chance /= (8-float(floor_modifier)/2)
+		room_type = "3"
 	elif random_float < quadruple_room_chance + triple_room_chance + double_room_chance:
 		double_room_chance /= (8-float(floor_modifier)/4)
-		room_type = "2"
+		room_type = "3"
 	else:
 		room_type = "1"
 	
@@ -265,25 +293,10 @@ func find_fit(potential_position: Vector2, room_shape:RoomShape) -> bool:
 	var rotations = [0.0,90,180,270]
 	rotations.shuffle()
 
-	var flips = [false, true]
-	flips.shuffle()
-
 	for rotation in rotations:
-		for flip in flips:
-			room_shape.reset_rotation()
-			#TODO probably need to do the same reset for flipping the thing
-			room_shape.flip_h = false
-			room_shape.rotate(rotation) 
-			room_shape.flip(flip)
-			
-			if does_room_fit(room_shape, potential_position):
-				return true
+		room_shape.reset()
+		room_shape.rotate(rotation) 
+		
+		if does_room_fit(room_shape, potential_position):
+			return true
 	return false
-
-# 2. Connects room as they are placed. Connections are chosen at random.
-# 2.5 All rooms that have more than one neighbor should have two connections each
-# 3. Once complete place special rooms. They only have one entrance to a non-special room.
-# 3.5 boss room should be at least two spaces away from entrance
-# 4. RoomShapes select their layout randomly, based on doors and type of room
-# 5. generate mini-map from this?
-# 6. spawn player
