@@ -1,17 +1,26 @@
 extends Node2D
 class_name Room
 
-#176 if rooms should be close
-#240 if far
-const room_length : int = 176
+enum TYPE {DEFAULT=0,BOSS=1,ITEM=2,CRAFTING=3,SHOP=4}
+var room_type : TYPE = 0 :
+	set(value):
+		room_type = value
+		match room_type:
+			1:
+				modulate = Color.RED
+			2:
+				modulate = Color.BLUE
+			3:
+				modulate = Color.WEB_GREEN
+			4:
+				modulate = Color.YELLOW
 
+const room_length : int = 176
 const cell_size : int = 16
 
 var room_shape : RoomShape
-
 var dungeon_grid_position : Vector2
 var dungeon_grid_cells_occupied : Array[Vector2]
-
 var doorway_array : Array[DoorwayComponent]
 
 @onready var camera_collision: Area2D = %CameraCollisionAreaComponent
@@ -135,3 +144,11 @@ func get_doorways(v:Vector2) -> Array[DoorwayComponent]:
 		if doorway.doorway_room_vector == v:
 			dw_array.append(doorway)
 	return dw_array
+
+
+func number_connected_doorways() -> int:
+	var i : int = 0
+	for doorway in doorway_array:
+		if doorway.other_doorway != null:
+			i+=1
+	return i

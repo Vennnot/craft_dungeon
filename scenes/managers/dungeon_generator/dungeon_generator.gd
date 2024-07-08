@@ -15,6 +15,7 @@ var quadruple_room_chance : float
 
 # used to iterate over empty adjacent cells and generate new rooms
 var dungeon_grid : Array = []
+var special_room_types : Array[int] = []
 
 var floor_modifier : int = 1
 var number_of_rooms_to_generate : int
@@ -28,11 +29,13 @@ func _ready() -> void:
 
 
 func _generate_dungeon() -> void:
+	randomize()
 	for room in dungeon_rooms:
 		room.queue_free()
 	
 	dungeon_rooms = []
 	dungeon_grid = []
+	special_room_types = []
 	number_of_rooms_to_generate = 0
 	
 	_initialize_number_of_rooms()
@@ -40,6 +43,7 @@ func _generate_dungeon() -> void:
 	_initialize_grid()
 	_generate_spawn_room()
 	_generate_base_rooms()
+	_generate_special_rooms()
 	#TODO generate special rooms x+randint 0,and floor number
 	#TODO generate boss room
 	#TODO room layouts, how to create and save them
@@ -48,15 +52,44 @@ func _generate_dungeon() -> void:
 	#TODO consider layouts that block exits
 	#TODO lock room on enter if layout hasn't been completed.
 
+
+func _generate_boss_room() -> void:
+	pass
+
+
+func _generate_special_rooms() -> void:
+	var special_rooms_to_generate : int = 0
+	special_rooms_to_generate = randi_range(2,int(ceil(float(floor_modifier)/2))+2)
+	
+	var room_shape : RoomShape = RoomShape.new("1")
+	
+	for i in Room.TYPE.size():
+		if i <= 1:
+			continue
+		special_room_types.append(i)
+	special_room_types.shuffle()
+	
+	while special_rooms_to_generate > 0 or not special_room_types.is_empty():
+		var new_room := _place_room(room_shape)
+		new_room.room_type = special_room_types.pop_front()
+		dungeon_rooms.append(new_room)
+		_connect_room(new_room)
+		special_rooms_to_generate -= 1
+
+
 func _generate_base_rooms() -> void:
 	while number_of_rooms_to_generate > 0:
-		var new_room := _create_and_place_room()
+		var room_shape : RoomShape = _get_random_room_type()
+		var new_room := _place_room(room_shape)
 		dungeon_rooms.append(new_room)
 		_connect_room(new_room)
 		number_of_rooms_to_generate -= 1
 
 
 func _connect_room(room:Room) -> void:
+	if room.room_type > 0 and room.number_connected_doorways() > 0:
+		return
+	
 	var unconnected_doorways : Array[Array] = []
 	var neighbors : Array[Room] = _get_neighbors(room)
 	neighbors.shuffle()
@@ -130,6 +163,9 @@ func _get_room_from_cell(c:Vector2) -> Room:
 
 
 func _get_adjacent_cells(room_1:Room,room_2:Room) -> Array[Array]:
+	#if room_1.room_type > 0 and room_2.room_type > 0:
+		#return []
+	
 	var adjacent_cells : Array[Array] = []
 	for cell_1 in room_1.dungeon_grid_cells_occupied:
 		for cell_2 in room_2.dungeon_grid_cells_occupied:
@@ -150,6 +186,8 @@ func _get_neighbors(room:Room)-> Array[Room]:
 	for exit in room.get_exits():
 		var current_room := _get_room_from_cell(exit)
 		if current_room != null:
+			if current_room.room_type > 0 and current_room.number_connected_doorways()>0:
+				continue
 			if not neighbors.has(current_room):
 				neighbors.append(current_room)
 	return neighbors
@@ -201,9 +239,8 @@ func _set_room_position(room:Room,position:Vector2) -> void:
 	room.set_room_position(position)
 
 
-func _create_and_place_room() -> Room:
+func _place_room(room_shape:RoomShape) -> Room:
 	var room_location : Vector2 = _get_all_empty_adjacent_cells().pick_random()
-	var room_shape : RoomShape = _get_random_room_type()
 	var attempts : int = 0
 	while not find_fit(room_location,room_shape):
 		room_location = _get_all_empty_adjacent_cells().pick_random()
@@ -254,6 +291,9 @@ func _initialize_number_of_rooms() -> void:
 func _get_all_empty_adjacent_cells() -> Array[Vector2]:
 	var empty_adjacent_cells : Array[Vector2] = []
 	for room in dungeon_rooms:
+		if room.room_type > 0:
+			continue
+		
 		var empty_room_cells : Array[Vector2] = []
 		empty_room_cells = _get_empty_adjacent_cells_to_room(room)
 		for cell in empty_room_cells:
