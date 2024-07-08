@@ -2,7 +2,7 @@ extends Node2D
 class_name Room
 
 enum TYPE {DEFAULT=0,BOSS=1,ITEM=2,CRAFTING=3,SHOP=4}
-var room_type : TYPE = 0 :
+var room_type : TYPE = TYPE.DEFAULT :
 	set(value):
 		room_type = value
 		match room_type:

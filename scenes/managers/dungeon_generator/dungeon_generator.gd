@@ -44,8 +44,7 @@ func _generate_dungeon() -> void:
 	_generate_spawn_room()
 	_generate_base_rooms()
 	_generate_special_rooms()
-	#TODO generate special rooms x+randint 0,and floor number
-	#TODO generate boss room
+	_generate_boss_room()
 	#TODO room layouts, how to create and save them
 	#TODO create tool to design them? When they spawn they fetch relevant enemy and stuff?
 	#TODO where do room layouts fetch their tiles from according to the level?
@@ -54,7 +53,11 @@ func _generate_dungeon() -> void:
 
 
 func _generate_boss_room() -> void:
-	pass
+	var room_shape : RoomShape = RoomShape.new("1")
+	var new_room := _place_room(room_shape)
+	new_room.room_type = Room.TYPE.BOSS
+	dungeon_rooms.append(new_room)
+	_connect_room(new_room)
 
 
 func _generate_special_rooms() -> void:
@@ -64,10 +67,11 @@ func _generate_special_rooms() -> void:
 	var room_shape : RoomShape = RoomShape.new("1")
 	
 	for i in Room.TYPE.size():
-		if i <= 1:
+		if i <= 2:
 			continue
 		special_room_types.append(i)
 	special_room_types.shuffle()
+	print(special_room_types)
 	
 	while special_rooms_to_generate > 0 or not special_room_types.is_empty():
 		var new_room := _place_room(room_shape)
@@ -240,12 +244,14 @@ func _set_room_position(room:Room,position:Vector2) -> void:
 
 
 func _place_room(room_shape:RoomShape) -> Room:
-	var room_location : Vector2 = _get_all_empty_adjacent_cells().pick_random()
+	var all_possible_cells : Array[Vector2] = _get_all_empty_adjacent_cells()
+	all_possible_cells.shuffle()
+	var room_location : Vector2 = all_possible_cells.pop_front()
 	var attempts : int = 0
 	while not find_fit(room_location,room_shape):
-		room_location = _get_all_empty_adjacent_cells().pick_random()
+		room_location = all_possible_cells.pop_front()
 		attempts += 1
-		if attempts > 10:
+		if attempts > 10 or all_possible_cells.is_empty():
 			print("No possible room could fit, choosing base room")
 			room_shape = RoomShape.new("1")
 	
