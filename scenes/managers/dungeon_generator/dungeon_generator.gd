@@ -73,7 +73,7 @@ func _generate_special_rooms() -> void:
 	special_room_types.shuffle()
 	print(special_room_types)
 	
-	while special_rooms_to_generate > 0 or not special_room_types.is_empty():
+	while special_rooms_to_generate > 0 and not special_room_types.is_empty():
 		var new_room := _place_room(room_shape)
 		new_room.room_type = special_room_types.pop_front()
 		dungeon_rooms.append(new_room)

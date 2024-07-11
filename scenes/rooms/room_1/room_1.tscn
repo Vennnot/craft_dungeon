@@ -40,6 +40,7 @@ position = Vector2(0, 16)
 [node name="South" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
 position = Vector2(136, 168)
 doorway_room_vector = Vector2(0, 1)
+id = 2
 
 [node name="TeleportMarker" parent="RotationAxis/Doorways/South" index="0"]
 position = Vector2(0, -16)
@@ -47,6 +48,7 @@ position = Vector2(0, -16)
 [node name="West" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
 position = Vector2(56, 88)
 doorway_room_vector = Vector2(-1, 0)
+id = 3
 
 [node name="TeleportMarker" parent="RotationAxis/Doorways/West" index="0"]
 position = Vector2(16, 0)
@@ -54,6 +56,7 @@ position = Vector2(16, 0)
 [node name="East" parent="RotationAxis/Doorways" instance=ExtResource("2_hq8nc")]
 position = Vector2(216, 88)
 doorway_room_vector = Vector2(1, 0)
+id = 1
 
 [node name="TeleportMarker" parent="RotationAxis/Doorways/East" index="0"]
 position = Vector2(-16, 0)

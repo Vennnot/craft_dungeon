@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmutb2kc5gjdo"]
+
+[ext_resource type="Script" path="res://scenes/tools/cell_layout_button/cell_layout_button.gd" id="1_0g7pk"]
+
+[node name="CellLayoutButton" type="Button"]
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("1_0g7pk")

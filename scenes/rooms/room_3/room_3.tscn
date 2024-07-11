@@ -32,6 +32,7 @@ position = Vector2(0, 16)
 position = Vector2(344, -8)
 doorway_room_vector = Vector2(1, -1)
 current_room_cell_vector = Vector2(1, 0)
+id = 1
 
 [node name="TeleportMarker" parent="Doorways/NorthEast" index="0"]
 position = Vector2(0, 16)
@@ -40,6 +41,7 @@ position = Vector2(0, 16)
 position = Vector2(344, 328)
 doorway_room_vector = Vector2(1, 2)
 current_room_cell_vector = Vector2(1, 1)
+id = 4
 
 [node name="TeleportMarker" parent="Doorways/South" index="0"]
 position = Vector2(0, -16)
@@ -47,6 +49,7 @@ position = Vector2(0, -16)
 [node name="WestSouth" parent="Doorways" instance=ExtResource("3_d8xpx")]
 position = Vector2(168, 152)
 doorway_room_vector = Vector2(0, 1)
+id = 6
 
 [node name="TeleportMarker" parent="Doorways/WestSouth" index="0"]
 position = Vector2(0, -16)
@@ -55,6 +58,7 @@ position = Vector2(0, -16)
 position = Vector2(264, 248)
 doorway_room_vector = Vector2(0, 1)
 current_room_cell_vector = Vector2(1, 1)
+id = 5
 
 [node name="TeleportMarker" parent="Doorways/SouthWest" index="0"]
 position = Vector2(16, 0)
@@ -62,6 +66,7 @@ position = Vector2(16, 0)
 [node name="West" parent="Doorways" instance=ExtResource("3_d8xpx")]
 position = Vector2(88, 72)
 doorway_room_vector = Vector2(-1, 0)
+id = 7
 
 [node name="TeleportMarker" parent="Doorways/West" index="0"]
 position = Vector2(16, 0)
@@ -70,6 +75,7 @@ position = Vector2(16, 0)
 position = Vector2(424, 72)
 doorway_room_vector = Vector2(2, 0)
 current_room_cell_vector = Vector2(1, 0)
+id = 2
 
 [node name="TeleportMarker" parent="Doorways/East" index="0"]
 position = Vector2(-16, 0)
@@ -78,6 +84,7 @@ position = Vector2(-16, 0)
 position = Vector2(424, 248)
 doorway_room_vector = Vector2(2, 1)
 current_room_cell_vector = Vector2(1, 1)
+id = 3
 
 [node name="TeleportMarker" parent="Doorways/SouthEast" index="0"]
 position = Vector2(-16, 0)

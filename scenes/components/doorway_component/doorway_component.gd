@@ -19,6 +19,7 @@ const door : Texture = preload("res://assets/visuals/environment/tile_0045.png")
 
 @export var doorway_room_vector : Vector2 =  Vector2.ZERO
 @export var current_room_cell_vector : Vector2 = Vector2.ZERO
+@export var id : int
 
 var is_locked : bool = false
 var is_hidden : bool = false
