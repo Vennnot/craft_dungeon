@@ -49,6 +49,10 @@ folder_colors={
 "res://scenes/": "orange"
 }
 
+[gui]
+
+theme/custom="res://resources/theme/default.tres"
+
 [input]
 
 move_up={
