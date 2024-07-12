@@ -25,6 +25,10 @@ InventoryManager="*res://scenes/autoloads/inventory_manager/inventory_manager.ts
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Camera="*res://scenes/autoloads/camera/camera.tscn"
 
+[debug]
+
+gdscript/warnings/integer_division=0
+
 [display]
 
 window/size/viewport_width=544
