@@ -161,10 +161,21 @@ func _on_room_selected(active_room:int) -> void:
 	_create_room()
 
 
-func _update_exits_dictionary() -> void:
+func _initialize_exits_dictionary() -> void:
 	exits = {}
 	for exit in exit_cells.get_children():
-		exits[exit.id] = "open"
+		exits[exit.id] = true
+
+
+func _update_exits_dictionary(id:int)->void:
+	exits[id] = selected_button.is_exit_locked
+
+
+func _update_cells_dictionary()->void:
+	if selected_button.type == CellButton.TYPE.NONE:
+		if cells[selected_button.vector_location]:
+			cells.erase(selected_button.vector_location)
+			return
 
 
 func _create_room() -> void:
@@ -176,6 +187,7 @@ func _create_room() -> void:
 		_create_room_3()
 	elif room_4:
 		_create_room_4()
+	cells = {}
 
 
 func _create_room_1() -> void:
@@ -221,7 +233,7 @@ func _create_exits() -> void:
 		_create_exits_room_3()
 	elif room_4:
 		_create_exits_room_4()
-	_update_exits_dictionary()
+	_initialize_exits_dictionary()
 
 
 func _create_exits_room_1() -> void:
