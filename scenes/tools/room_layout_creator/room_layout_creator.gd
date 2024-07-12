@@ -6,7 +6,7 @@ var room_3 : bool
 var room_4 : bool
 
 var difficulty : int = 0
-var room_type : int = 0
+var room_type : Room.TYPE = Room.TYPE.DEFAULT
 var exits : Dictionary = {}
 var cells : Dictionary = {}
 
@@ -38,6 +38,8 @@ var current_layout : RoomLayout
 
 func _ready():
 	room_select_button.item_selected.connect(_on_room_selected)
+	difficulty_select_button.item_selected.connect(_on_difficulty_selected)
+	special_room_select_button.item_selected.connect(_on_special_room_selected)
 	cell_clear_button.pressed.connect(_on_clear_options_button_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
 
@@ -64,6 +66,7 @@ func _update_highlight(mouse_pos):
 		mouse_pos.y -= 8
 	_highlight_pos = mouse_pos.snapped(Vector2(cell_size, cell_size))
 	queue_redraw()
+
 
 func _draw_l_shape() -> void:
 	var l_shape := room_3_size*cell_size
@@ -95,6 +98,8 @@ func _update_options()->void:
 		for i in CellButton.TYPE:
 			if i == "NONE":
 				continue
+			if i == "EXIT":
+				continue
 			var button_to_add : Button = Button.new()
 			options_container.add_child(button_to_add)
 			var x : String = i
@@ -120,12 +125,16 @@ func _clear_options_buttons() -> void:
 
 func _instantiate_cell(exit:bool, id=-1) -> CellButton:
 	var cell_button_instance : CellButton = cell_button_scene.instantiate()
-	if exit:
-		exit_cells.add_child(cell_button_instance)
-	else:
-		room_cells.add_child(cell_button_instance)
 	if id != -1:
 		cell_button_instance.id = id
+	
+	if exit:
+		exit_cells.add_child(cell_button_instance)
+		cell_button_instance.exit_changed.connect(_update_exits_dictionary)
+	else:
+		room_cells.add_child(cell_button_instance)
+		cell_button_instance.type_changed.connect(_update_cells_dictionary)
+	
 	cell_button_instance.selected.connect(_on_button_selected)
 	return cell_button_instance
 
@@ -161,6 +170,24 @@ func _on_room_selected(active_room:int) -> void:
 	_create_room()
 
 
+func _on_difficulty_selected(index:int) -> void:
+	difficulty = index
+
+
+func _on_special_room_selected(index:int) -> void:
+	match index:
+		0:
+			room_type = Room.TYPE.DEFAULT
+		1:
+			room_type = Room.TYPE.BOSS
+		2:
+			room_type = Room.TYPE.ITEM
+		3:
+			room_type = Room.TYPE.CRAFTING
+		4:
+			room_type = Room.TYPE.SHOP
+
+
 func _initialize_exits_dictionary() -> void:
 	exits = {}
 	for exit in exit_cells.get_children():
@@ -171,11 +198,21 @@ func _update_exits_dictionary(id:int)->void:
 	exits[id] = selected_button.is_exit_locked
 
 
-func _update_cells_dictionary()->void:
+func _update_cells_dictionary(vector_location:Vector2)->void:
 	if selected_button.type == CellButton.TYPE.NONE:
 		if cells[selected_button.vector_location]:
 			cells.erase(selected_button.vector_location)
-			return
+	
+	elif selected_button.type == CellButton.TYPE.ENEMY:
+		cells[selected_button.vector_location] = "enemy"
+	
+	
+	elif selected_button.type == CellButton.TYPE.ITEM:
+		pass
+	
+	
+	elif selected_button.type == CellButton.TYPE.INTERACTABLE:
+		pass
 
 
 func _create_room() -> void:
@@ -313,18 +350,99 @@ func _set_button_type(type:String)->void:
 
 func _on_save_button_pressed()->void:
 	var room_layout : RoomLayout = _create_room_layout()
-	if current_layout != null:
-		var file_path : String = current_layout.get_path()
-		ResourceSaver.save(room_layout,file_path)
-		current_layout = room_layout
-	else:
-		pass
+	var file_path := _get_file_path()
+	room_layout.file_path = file_path
+	ResourceSaver.save(room_layout,room_layout.file_path)
+	current_layout = room_layout
 
 
 func _create_room_layout()->RoomLayout:
 	var room_layout : RoomLayout = RoomLayout.new()
 	room_layout.difficulty = difficulty
+	@warning_ignore("int_as_enum_without_cast")
 	room_layout.type = room_type
 	room_layout.exits = exits
 	room_layout.cells = cells
 	return room_layout
+
+
+func _get_file_path()->String:
+	var file_path : String = "res://resources/room_layouts/"
+	if current_layout != null:
+		file_path = current_layout.file_path
+	else:
+		file_path = _get_room_folder(file_path)
+		if room_type == Room.TYPE.DEFAULT:
+			file_path += "special/"
+		else:
+			file_path += "default/"
+		file_path += _create_file_name(file_path)
+	return file_path
+
+
+func _create_file_name(file_path:String) -> String:
+	var file_name : String = ""
+	file_name += str(_get_file_count(file_path)).pad_zeros(4)
+	if room_1:
+		file_name += "_r1_"
+	if room_2:
+		file_name += "_r2_"
+	if room_3:
+		file_name += "_r3_"
+	if room_4:
+		file_name += "_r4_"
+	
+	match difficulty:
+		0:
+			file_name += "easy"
+		1:
+			file_name += "medium"
+		2:
+			file_name += "hard"
+	
+	match room_type:
+		Room.TYPE.DEFAULT:
+			pass
+		Room.TYPE.BOSS:
+			file_name += "_boss"
+		Room.TYPE.ITEM:
+			file_name += "_item"
+		Room.TYPE.CRAFTING:
+			file_name += "_crafting"
+		Room.TYPE.SHOP:
+			file_name += "_shop"
+	
+	file_name+=".tres"
+	return file_name
+
+
+func _get_room_folder(file_path:String)->String:
+	if room_1:
+		file_path += "room_1/"
+	if room_2:
+		file_path += "room_2/"
+	if room_3:
+		file_path += "room_3/"
+	if room_4:
+		file_path += "room_4/"
+	return file_path
+
+
+func _get_file_count(file_path:String)->int:
+	var file_count = 0
+	var dir = DirAccess.open(file_path)
+	
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		
+		while file_name != "":
+			if dir.current_is_dir() == false:
+				file_count += 1
+			file_name = dir.get_next()
+		
+		dir.list_dir_end()
+	else:
+		print("Failed to open directory: ", file_path)
+	
+	return file_count
