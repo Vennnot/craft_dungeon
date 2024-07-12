@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="RoomLayout" load_steps=2 format=3 uid="uid://btsiafg3610i8"]
+[gd_resource type="Resource" script_class="RoomLayout" load_steps=2 format=3]
 
-[ext_resource type="Script" path="res://resources/room_layouts/room_layout.gd" id="1_1posb"]
+[ext_resource type="Script" path="res://resources/room_layouts/room_layout.gd" id="1_o6fel"]
 
 [resource]
-script = ExtResource("1_1posb")
+script = ExtResource("1_o6fel")
 file_path = "res://resources/room_layouts/room_1/special/0000_r1_easy.tres"
 difficulty = 0
+room = 0
 type = 0
 exits = {
-0: true,
+0: false,
 1: true,
 2: true,
 3: true

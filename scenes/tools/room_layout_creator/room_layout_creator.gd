@@ -12,8 +12,8 @@ var cells : Dictionary = {}
 
 var cell_size : int = 16
 var _outline_color := Color(1, 0, 0)
-var _highlight_pos : Vector2 = Vector2.ZERO
-var selected_button : CellButton
+var selected_cell : CellButton
+var current_layout : RoomLayout
 
 const room_1_size :=  Vector2(9,9)
 const room_2_size :=  Vector2(18,9)
@@ -31,10 +31,12 @@ const room_4_size :=  Vector2(18,18)
 @onready var options_container: VBoxContainer = %OptionsContainer
 @onready var cell_clear_button: Button = %CellClearButton
 @onready var save_button: Button = %SaveButton
+@onready var load_line_edit: LineEdit = %LoadLineEdit
+@onready var load_button: Button = %LoadButton
+@onready var clear_button: Button = %ClearButton
 
 
 var cell_button_scene : PackedScene = preload("res://scenes/tools/cell_layout_button/cell_layout_button.tscn")
-var current_layout : RoomLayout
 
 func _ready():
 	room_select_button.item_selected.connect(_on_room_selected)
@@ -42,6 +44,7 @@ func _ready():
 	special_room_select_button.item_selected.connect(_on_special_room_selected)
 	cell_clear_button.pressed.connect(_on_clear_options_button_pressed)
 	save_button.pressed.connect(_on_save_button_pressed)
+	load_button.pressed.connect(_on_load_button_pressed)
 
 
 func _process(_delta: float) -> void:
@@ -59,15 +62,6 @@ func _draw():
 		draw_rect(Rect2(-(room_4_size*cell_size/2), room_4_size*cell_size), _outline_color, false,2)
 
 
-func _update_highlight(mouse_pos):
-	if not room_1:
-		mouse_pos.x -= 8
-	if room_3 or room_4:
-		mouse_pos.y -= 8
-	_highlight_pos = mouse_pos.snapped(Vector2(cell_size, cell_size))
-	queue_redraw()
-
-
 func _draw_l_shape() -> void:
 	var l_shape := room_3_size*cell_size
 	draw_line(-(l_shape/2), Vector2(l_shape.x/2,-(l_shape.y/2)), _outline_color, 2)
@@ -78,21 +72,20 @@ func _draw_l_shape() -> void:
 	draw_line(Vector2(-l_shape.x/2,0), -(l_shape/2), _outline_color, 2)
 
 
-func _on_button_selected(cell_button:CellButton)->void:
+func _on_cell_selected(cell_button:CellButton)->void:
 	_unhighlight_button()
-	selected_button = cell_button
-	selected_button.modulate = Color.GREEN_YELLOW
+	selected_cell = cell_button
+	selected_cell.modulate = Color.GREEN_YELLOW
 	_update_options()
 
 
 func _update_options()->void:
 	_clear_options_buttons()
-	if selected_button == null:
+	if selected_cell == null:
 		return
 	
-	if selected_button.type != CellButton.TYPE.NONE:
-		pass
-		#TODO add specific options for that type of button
+	if selected_cell.type == CellButton.TYPE.EXIT:
+		_create_exit_options()
 	
 	else:
 		for i in CellButton.TYPE:
@@ -106,16 +99,23 @@ func _update_options()->void:
 			button_to_add.pressed.connect(_set_button_type.bind(x))
 			button_to_add.text = i
 
+func _create_exit_options()->void:
+	var button_to_add : CheckBox = CheckBox.new()
+	options_container.add_child(button_to_add)
+	button_to_add.button_pressed = selected_cell.is_exit_open
+	button_to_add.toggled.connect(func(toggled_on:bool):
+		selected_cell.is_exit_open = toggled_on)
+
 
 func _unhighlight_button()->void:
-	if selected_button != null:
-		selected_button.modulate = Color.WHITE
+	if selected_cell != null:
+		selected_cell.modulate = Color.WHITE
 
 
 func _clear_selection() -> void:
 	_clear_options_buttons()
 	_unhighlight_button()
-	selected_button = null
+	selected_cell = null
 
 
 func _clear_options_buttons() -> void:
@@ -135,7 +135,7 @@ func _instantiate_cell(exit:bool, id=-1) -> CellButton:
 		room_cells.add_child(cell_button_instance)
 		cell_button_instance.type_changed.connect(_update_cells_dictionary)
 	
-	cell_button_instance.selected.connect(_on_button_selected)
+	cell_button_instance.selected.connect(_on_cell_selected)
 	return cell_button_instance
 
 
@@ -195,23 +195,25 @@ func _initialize_exits_dictionary() -> void:
 
 
 func _update_exits_dictionary(id:int)->void:
-	exits[id] = selected_button.is_exit_locked
+	if selected_cell == null:
+		return
+	exits[id] = selected_cell.is_exit_open
 
 
 func _update_cells_dictionary(vector_location:Vector2)->void:
-	if selected_button.type == CellButton.TYPE.NONE:
-		if cells[selected_button.vector_location]:
-			cells.erase(selected_button.vector_location)
+	if selected_cell.type == CellButton.TYPE.NONE:
+		if cells[selected_cell.vector_location]:
+			cells.erase(selected_cell.vector_location)
 	
-	elif selected_button.type == CellButton.TYPE.ENEMY:
-		cells[selected_button.vector_location] = "enemy"
+	elif selected_cell.type == CellButton.TYPE.ENEMY:
+		cells[selected_cell.vector_location] = "enemy"
 	
 	
-	elif selected_button.type == CellButton.TYPE.ITEM:
+	elif selected_cell.type == CellButton.TYPE.ITEM:
 		pass
 	
 	
-	elif selected_button.type == CellButton.TYPE.INTERACTABLE:
+	elif selected_cell.type == CellButton.TYPE.INTERACTABLE:
 		pass
 
 
@@ -339,12 +341,12 @@ func _clear_current_room() -> void:
 
 
 func _on_clear_options_button_pressed() -> void:
-	selected_button.reset()
+	selected_cell.reset()
 	_update_options()
 
 
 func _set_button_type(type:String)->void:
-	selected_button.set_type(type)
+	selected_cell.set_type(type)
 	_update_options()
 
 
@@ -363,6 +365,14 @@ func _create_room_layout()->RoomLayout:
 	room_layout.type = room_type
 	room_layout.exits = exits
 	room_layout.cells = cells
+	if room_1:
+		room_layout.room = 0
+	if room_2:
+		room_layout.room = 1
+	if room_3:
+		room_layout.room = 2
+	if room_4:
+		room_layout.room = 3
 	return room_layout
 
 
@@ -446,3 +456,24 @@ func _get_file_count(file_path:String)->int:
 		print("Failed to open directory: ", file_path)
 	
 	return file_count
+
+
+func _on_load_button_pressed()->void:
+	var file_path : String = load_line_edit.text
+	load_line_edit.text = ""
+	current_layout = ResourceLoader.load(file_path)
+	room_select_button.select(current_layout.room)
+	room_select_button.item_selected.emit(current_layout.room)
+	difficulty_select_button.select(current_layout.difficulty)
+	difficulty_select_button.item_selected.emit(current_layout.room)
+	special_room_select_button.select(int(current_layout.type))
+	special_room_select_button.item_selected.emit(current_layout.room)
+	
+	exits = current_layout.exits
+	for exit in exits.keys():
+		for e in exit_cells.get_children():
+			if exit == e.id:
+				e.is_exit_open = exits[exit]
+	
+	#TODO update actual cells
+	cells = current_layout.cells
