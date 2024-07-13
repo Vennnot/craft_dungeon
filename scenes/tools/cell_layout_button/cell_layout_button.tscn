@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmutb2kc5gjdo"]
+[gd_scene load_steps=3 format=3 uid="uid://bmutb2kc5gjdo"]
 
 [ext_resource type="Script" path="res://scenes/tools/cell_layout_button/cell_layout_button.gd" id="1_0g7pk"]
+[ext_resource type="Theme" uid="uid://brrttxx7t0nse" path="res://resources/theme/room_layout_creator.tres" id="1_6vaad"]
 
 [node name="CellLayoutButton" type="Button"]
 offset_right = 16.0
 offset_bottom = 16.0
+theme = ExtResource("1_6vaad")
 script = ExtResource("1_0g7pk")

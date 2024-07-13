@@ -7,11 +7,12 @@ var cell_button_scene : PackedScene = preload("res://scenes/tools/cell_layout_bu
 
 #only load chosen default rooms and cache them
 
-func get_layout() -> RoomLayout:
+func get_layout(room:Room) -> RoomLayout:
 	return load("res://resources/room_layouts/room_1/special/0000_r1_easy.tres")
 	#room size
 	#floor number
 	#type of room
+	#connected exits
 
 
 func load_layout(room:Room) -> void:

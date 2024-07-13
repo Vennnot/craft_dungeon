@@ -23,10 +23,14 @@ const door : Texture = preload("res://assets/visuals/environment/tile_0045.png")
 
 var is_locked : bool = false
 var is_hidden : bool = false
-var is_disabled : bool = false
+var is_disabled : bool = false :
+	set(value):
+		is_disabled = value
+		if is_disabled:
+			print(id)
+			print("was disabled")
 
 
-# doorway value needs to change when it rotates
 func _ready() -> void:
 	area.area_entered.connect(_on_area_entered)
 

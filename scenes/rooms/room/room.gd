@@ -158,5 +158,15 @@ func number_connected_doorways() -> int:
 
 func get_layout() -> void:
 	if room_shape.room_type == RoomShape.ROOM_TYPE.ONE:
-		room_layout = LayoutManager.get_layout()
+		room_layout = LayoutManager.get_layout(self)
 		LayoutManager.load_layout(self)
+	
+	if room_layout != null:
+		set_layout_exits()
+
+
+func set_layout_exits()-> void:
+	for doorway in doorway_array:
+		for exit in room_layout.exits.keys():
+			if doorway.id == exit:
+				doorway.is_disabled = not room_layout.exits[exit]
