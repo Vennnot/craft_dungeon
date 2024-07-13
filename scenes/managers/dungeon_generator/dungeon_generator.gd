@@ -45,8 +45,6 @@ func _generate_dungeon() -> void:
 	_generate_base_rooms()
 	_generate_special_rooms()
 	_generate_boss_room()
-	#TODO room layouts, how to create and save them
-	#TODO create tool to design them? When they spawn they fetch relevant enemy and stuff?
 	#TODO where do room layouts fetch their tiles from according to the level?
 	#TODO consider layouts that block exits
 	#TODO lock room on enter if layout hasn't been completed.
@@ -71,7 +69,6 @@ func _generate_special_rooms() -> void:
 			continue
 		special_room_types.append(i)
 	special_room_types.shuffle()
-	print(special_room_types)
 	
 	while special_rooms_to_generate > 0 and not special_room_types.is_empty():
 		var new_room := _place_room(room_shape)
@@ -87,6 +84,7 @@ func _generate_base_rooms() -> void:
 		var new_room := _place_room(room_shape)
 		dungeon_rooms.append(new_room)
 		_connect_room(new_room)
+		new_room.get_layout()
 		number_of_rooms_to_generate -= 1
 
 

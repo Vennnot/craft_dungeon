@@ -22,10 +22,12 @@ var room_shape : RoomShape
 var dungeon_grid_position : Vector2
 var dungeon_grid_cells_occupied : Array[Vector2]
 var doorway_array : Array[DoorwayComponent]
+var room_layout : RoomLayout
 
 @onready var camera_collision: Area2D = %CameraCollisionAreaComponent
 @onready var tile_map: TileMap = %TileMap
 @onready var doorways: Node2D = %Doorways
+@onready var layout: Node2D = %Layout
 
 
 var doorway_tile_layer : int = 0
@@ -152,3 +154,9 @@ func number_connected_doorways() -> int:
 		if doorway.other_doorway != null:
 			i+=1
 	return i
+
+
+func get_layout() -> void:
+	if room_shape.room_type == RoomShape.ROOM_TYPE.ONE:
+		room_layout = LayoutManager.get_layout()
+		LayoutManager.load_layout(self)

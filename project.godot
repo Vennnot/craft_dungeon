@@ -24,6 +24,7 @@ CraftingManager="*res://scenes/autoloads/crafting_manager/crafting_manager.tscn"
 InventoryManager="*res://scenes/autoloads/inventory_manager/inventory_manager.tscn"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Camera="*res://scenes/autoloads/camera/camera.tscn"
+LayoutManager="*res://scenes/autoloads/layout_manager/layout_manager.tscn"
 
 [debug]
 

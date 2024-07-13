@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://xdshi752wsdy"]
+
+[ext_resource type="Script" path="res://scenes/autoloads/layout_manager/layout_manager.gd" id="1_iqyvr"]
+
+[node name="LayoutManager" type="Node"]
+script = ExtResource("1_iqyvr")
