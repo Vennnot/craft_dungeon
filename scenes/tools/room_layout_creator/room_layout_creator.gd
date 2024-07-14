@@ -86,7 +86,8 @@ func _update_options()->void:
 	
 	if selected_cell.type == CellButton.TYPE.EXIT:
 		_create_exit_options()
-	
+	elif selected_cell.type == CellButton.TYPE.ENEMY:
+		_create_enemy_options()
 	else:
 		for i in CellButton.TYPE:
 			if i == "NONE":
@@ -98,6 +99,16 @@ func _update_options()->void:
 			var x : String = i
 			button_to_add.pressed.connect(_set_button_type.bind(x))
 			button_to_add.text = i
+
+
+func _create_enemy_options() -> void:
+	var button_to_add : CheckBox = CheckBox.new()
+	options_container.add_child(button_to_add)
+	#TODO update button text
+	#TODO update button state with tags assigned to cell
+	#TODO connect toggle to adding or removing the tag
+	#TODO enemy index, load all enemies
+
 
 func _create_exit_options()->void:
 	var button_to_add : CheckBox = CheckBox.new()

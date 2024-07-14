@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Enemy
 
 @export var max_speed = 40
 

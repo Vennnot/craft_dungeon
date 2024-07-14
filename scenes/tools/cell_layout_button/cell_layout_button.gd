@@ -18,13 +18,15 @@ var id : int = -1 :
 		if id!=-1:
 			type = TYPE.EXIT
 
-
 var is_exit_open : bool = true :
 	set(value):
 		is_exit_open = value
 		exit_changed.emit(id)
 
 var vector_location : Vector2 = Vector2.ZERO
+
+var enemy_tags : PackedInt32Array = []
+
 
 func _pressed() -> void:
 	selected.emit(self)
