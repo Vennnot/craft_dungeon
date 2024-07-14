@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://r2p0u0c02dtk"]
+
+[ext_resource type="Script" path="res://scenes/autoloads/scene_indexer/scene_indexer.gd" id="1_36dmr"]
+
+[node name="SceneIndexer" type="Node"]
+script = ExtResource("1_36dmr")
