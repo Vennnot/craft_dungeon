@@ -1,15 +1,19 @@
 extends Node
 
 var enemies_folder : String = "res://scenes/enemies/"
+
+#format is: scenename, array of packedint array
 var enemies_dictionary : Dictionary = {}
+
+#expand for other objects that require instantiation
 
 func _ready():
 	_initialize()
+	print(enemies_dictionary)
 
 
 func _initialize()->void:
 	load_enemies()
-	print(enemies_dictionary)
 
 
 func load_enemies() -> void:
@@ -39,7 +43,6 @@ func find_scene_files(parent_folder_path:String) -> PackedStringArray:
 	return scene_file_array
 
 
-
 func find_scene_file(folder_path) -> String:
 	var dir = DirAccess.open(folder_path)
 	if dir:
@@ -52,11 +55,14 @@ func find_scene_file(folder_path) -> String:
 		dir.list_dir_end()
 	return ""
 
+
 func load_and_store_scene(scene_file) -> void:
 	var packed_scene := load(scene_file)
 	if packed_scene:
 		var instance : Node2D = packed_scene.instantiate()
 		if instance:
-			enemies_dictionary[scene_file] = instance.tags
+			enemies_dictionary[scene_file] = [[-1],[-1]]
+			enemies_dictionary[scene_file][0] = instance.tags
+			enemies_dictionary[scene_file][1] = instance.region_tags
 			instance.queue_free()
 
