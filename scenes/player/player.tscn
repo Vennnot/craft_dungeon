@@ -34,7 +34,6 @@ crafting_material = ExtResource("3_bg8yn")
 health_component = NodePath("../HealthComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(5, 5)
 texture = ExtResource("2_n72ov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

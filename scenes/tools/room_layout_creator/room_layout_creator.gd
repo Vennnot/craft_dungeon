@@ -75,7 +75,6 @@ func _draw_l_shape() -> void:
 func _on_cell_selected(cell_button:CellButton)->void:
 	_unhighlight_button()
 	selected_cell = cell_button
-	selected_cell.modulate = Color.GREEN_YELLOW
 	_update_options()
 
 
@@ -102,12 +101,15 @@ func _update_options()->void:
 
 
 func _create_enemy_options() -> void:
-	var button_to_add : CheckBox = CheckBox.new()
-	options_container.add_child(button_to_add)
-	#TODO update button text
-	#TODO update button state with tags assigned to cell
-	#TODO connect toggle to adding or removing the tag
-	#TODO enemy index, load all enemies
+	for i in range(len(Enemy.TYPE.values())):
+		var key = Enemy.TYPE.keys()[i]
+		var value = Enemy.TYPE.values()[i]
+		var button_to_add : CheckBox = CheckBox.new()
+		options_container.add_child(button_to_add)
+		button_to_add.text = key
+		button_to_add.button_pressed = selected_cell.contains_tag(value)
+		button_to_add.toggled.connect(func(toggled_on:bool):
+			selected_cell.toggle_enemy_tag(value,toggled_on))
 
 
 func _create_exit_options()->void:
@@ -120,7 +122,7 @@ func _create_exit_options()->void:
 
 func _unhighlight_button()->void:
 	if selected_cell != null:
-		selected_cell.modulate = Color.WHITE
+		selected_cell.toggle_highlight(false)
 
 
 func _clear_selection() -> void:
@@ -210,7 +212,7 @@ func _update_exits_dictionary(id:int)->void:
 		return
 	exits[id] = selected_cell.is_exit_open
 
-
+#updates the dictionary so it knows that a particular cell is of a type
 func _update_cells_dictionary(vector_location:Vector2)->void:
 	if selected_cell.type == CellButton.TYPE.NONE:
 		if cells[selected_cell.vector_location]:
@@ -224,7 +226,7 @@ func _update_cells_dictionary(vector_location:Vector2)->void:
 		pass
 	
 	
-	elif selected_cell.type == CellButton.TYPE.INTERACTABLE:
+	elif selected_cell.type == CellButton.TYPE.OBSTACLE:
 		pass
 
 
@@ -413,13 +415,14 @@ func _create_file_name(file_path:String) -> String:
 	if room_4:
 		file_name += "_r4_"
 	
-	match difficulty:
-		0:
-			file_name += "easy"
-		1:
-			file_name += "medium"
-		2:
-			file_name += "hard"
+	if room_type == Room.TYPE.DEFAULT:
+		match difficulty:
+			0:
+				file_name += "easy"
+			1:
+				file_name += "medium"
+			2:
+				file_name += "hard"
 	
 	match room_type:
 		Room.TYPE.DEFAULT:

@@ -1,19 +1,45 @@
 extends Node
 
+@export var boss_rooms_group : ResourceGroup
+@export var item_rooms_group : ResourceGroup
+@export var crafting_rooms_group : ResourceGroup
+@export var shop_rooms_group : ResourceGroup
 
-var cell_button_scene : PackedScene = preload("res://scenes/tools/cell_layout_button/cell_layout_button.tscn")
+@export var room_1_group : ResourceGroup
+@export var room_2_group : ResourceGroup
+@export var room_3_group : ResourceGroup
+@export var room_4_group : ResourceGroup
 
-#load and cache all special rooms
+var boss_rooms : Array[RoomLayout]
+var item_rooms : Array[RoomLayout]
+var crafting_rooms : Array[RoomLayout]
+var shop_rooms : Array[RoomLayout]
 
-#only load chosen default rooms and cache them
+var r1_rooms : Array[RoomLayout]
+var r2_rooms : Array[RoomLayout]
+var r3_rooms : Array[RoomLayout]
+var r4_rooms : Array[RoomLayout]
+
+
+
+func _ready() -> void:
+	pass
+
 
 func get_layout(room:Room) -> RoomLayout:
+	#TODO search correct room folder according to size
+	#TODO choose correct folder based on special or default
+	#TODO limit it to have exits open that exist
+	#TODO difficulty based on floor. This is ignored if room is special
+	#also ignored if results are null due to exits
 	return load("res://resources/room_layouts/room_1/special/0000_r1_easy.tres")
-	#room size
-	#floor number
-	#type of room
-	#connected exits
 
+
+
+
+
+
+var cell_button_scene : PackedScene = preload("res://scenes/tools/cell_layout_button/cell_layout_button.tscn")
 
 func load_layout(room:Room) -> void:
 	#spawn and load shit
