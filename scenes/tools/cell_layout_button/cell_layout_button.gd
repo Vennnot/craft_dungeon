@@ -52,8 +52,8 @@ func set_type(x:String) -> void:
 			type = TYPE.OBSTACLE
 
 
-func toggle_highlight(selected:bool)->void:
-	if selected:
+func toggle_highlight(is_selected:bool)->void:
+	if is_selected:
 		modulate = Color.GREEN
 	else:
 		if type==TYPE.ENEMY:
